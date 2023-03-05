@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:FunctionalOption xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="4fce8ee1-64f8-4183-8372-f64a22d2fd89">
+  <name>РазделятьДоступПоБазам</name>
+  <synonym>
+    <key>ru</key>
+    <value>Разделять доступ по базам</value>
+  </synonym>
+  <location>Constant.РазделятьДоступПоБазам</location>
+  <privilegedGetMode>true</privilegedGetMode>
+  <content>Catalog.Базы</content>
+</mdclass:FunctionalOption>

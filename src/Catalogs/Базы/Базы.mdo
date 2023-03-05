@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="003fb10c-b951-4d66-b281-d41efbb54cd8">
+  <producedTypes>
+    <objectType typeId="b4733516-1693-49f8-bd43-78a2c63e8718" valueTypeId="3f51a1ab-bb16-414d-b647-3cfe6b689ea8"/>
+    <refType typeId="06f42e99-9768-4483-a6e6-dcca7de5900d" valueTypeId="fd8cf4a7-5abd-4b28-9cf4-e66d461cf3d1"/>
+    <selectionType typeId="7edd3531-84d6-49e6-9293-ff20dcae0ef7" valueTypeId="dd56f8d3-27fe-4627-a079-c3e5c132fd2d"/>
+    <listType typeId="87f99850-beea-4d2e-9f8d-2df7eac1299d" valueTypeId="8210f9f5-e0aa-4b68-b2a2-964a52f83112"/>
+    <managerType typeId="cf2fd15f-84cb-4edd-ac8d-75ecc3803d1c" valueTypeId="3646cf7e-de54-4e94-bccb-a14b6270b9de"/>
+  </producedTypes>
+  <name>Базы</name>
+  <synonym>
+    <key>ru</key>
+    <value>Базы</value>
+  </synonym>
+  <useStandardCommands>true</useStandardCommands>
+  <inputByString>Catalog.Базы.StandardAttribute.Description</inputByString>
+  <inputByString>Catalog.Базы.StandardAttribute.Code</inputByString>
+  <fullTextSearchOnInputByString>DontUse</fullTextSearchOnInputByString>
+  <createOnInput>Use</createOnInput>
+  <dataLockControlMode>Managed</dataLockControlMode>
+  <fullTextSearch>Use</fullTextSearch>
+  <levelCount>2</levelCount>
+  <foldersOnTop>true</foldersOnTop>
+  <codeLength>3</codeLength>
+  <descriptionLength>50</descriptionLength>
+  <codeType>String</codeType>
+  <codeAllowedLength>Variable</codeAllowedLength>
+  <checkUnique>true</checkUnique>
+  <autonumbering>true</autonumbering>
+  <defaultPresentation>AsDescription</defaultPresentation>
+  <editType>InDialog</editType>
+  <choiceMode>BothWays</choiceMode>
+  <attributes uuid="e7002ba5-2914-4bc7-8739-e84c4198db71">
+    <name>НаименованиеПростое</name>
+    <synonym>
+      <key>ru</key>
+      <value>Наименование простое</value>
+    </synonym>
+    <type>
+      <types>String</types>
+      <stringQualifiers>
+        <length>20</length>
+      </stringQualifiers>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:StringValue">
+      <value></value>
+    </fillValue>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+  </attributes>
+  <attributes uuid="4a5a4a9e-d725-4f32-ae4c-f3a036007913">
+    <name>ДоступРазрешен</name>
+    <synonym>
+      <key>ru</key>
+      <value>Доступ разрешен</value>
+    </synonym>
+    <type>
+      <types>Boolean</types>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+  </attributes>
+  <attributes uuid="bbd3b57b-d131-4800-bc79-3e951955139b">
+    <name>ЯзыкПоУмолчанию</name>
+    <synonym>
+      <key>ru</key>
+      <value>Язык по умолчанию</value>
+    </synonym>
+    <type>
+      <types>String</types>
+      <stringQualifiers>
+        <length>10</length>
+      </stringQualifiers>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:StringValue">
+      <value></value>
+    </fillValue>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+  </attributes>
+  <attributes uuid="ac0ec1c8-c5e1-4e06-a600-3a5a23d3d1c1">
+    <name>ДопОтветНаПолучениеИнформации</name>
+    <synonym>
+      <key>ru</key>
+      <value>Доп ответ на получение информации</value>
+    </synonym>
+    <type>
+      <types>CatalogRef.ОтветыСервиса</types>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+  </attributes>
+  <attributes uuid="9d29f594-6a7c-4a44-9b04-1b34f049b622">
+    <name>ОтдельнаяРассылка</name>
+    <synonym>
+      <key>ru</key>
+      <value>Отдельная рассылка</value>
+    </synonym>
+    <type>
+      <types>Boolean</types>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+  </attributes>
+  <attributes uuid="2a10bb18-4465-4d32-9f3c-7a5e8afdedb3">
+    <name>АдресаДляРассылки</name>
+    <synonym>
+      <key>ru</key>
+      <value>Адреса для рассылки</value>
+    </synonym>
+    <type>
+      <types>String</types>
+      <stringQualifiers/>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:StringValue">
+      <value></value>
+    </fillValue>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+  </attributes>
+</mdclass:Catalog>

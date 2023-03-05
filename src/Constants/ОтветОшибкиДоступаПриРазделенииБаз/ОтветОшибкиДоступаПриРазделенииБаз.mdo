@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Constant xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="0dcd5165-39c6-496f-a645-f5a3e9789700">
+  <producedTypes>
+    <managerType typeId="b3bbdbf9-6f8c-4ee3-8a28-3abf07eb856f" valueTypeId="6a109e26-1de2-4b7d-a6a1-8c495b8d6ca8"/>
+    <valueManagerType typeId="e1a149fa-e594-44c7-a7ef-49aeb58c3ff0" valueTypeId="7bdbc22f-6ffd-4b7a-a468-9719728b945d"/>
+    <valueKeyType typeId="eaac18cd-2928-419a-b986-65cf6aa95758" valueTypeId="8e2e138d-dc7e-4d15-9bce-c5287e5b9b8a"/>
+  </producedTypes>
+  <name>ОтветОшибкиДоступаПриРазделенииБаз</name>
+  <synonym>
+    <key>ru</key>
+    <value>Ответ ошибки доступа при разделении баз</value>
+  </synonym>
+  <type>
+    <types>CatalogRef.ОтветыСервиса</types>
+  </type>
+  <toolTip>
+    <key>ru</key>
+    <value>Если разделён доступ по базам и получен запрос без имени базы - будет выдан этот текст</value>
+  </toolTip>
+  <multiLine>true</multiLine>
+  <minValue xsi:type="core:UndefinedValue"/>
+  <maxValue xsi:type="core:UndefinedValue"/>
+  <dataLockControlMode>Managed</dataLockControlMode>
+</mdclass:Constant>

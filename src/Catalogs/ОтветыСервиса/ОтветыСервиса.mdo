@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="398d7bcb-625f-4eaa-ad2d-e487d95398b0">
+  <producedTypes>
+    <objectType typeId="3d197fe8-fb02-4407-b7a7-cf0084cf2a7a" valueTypeId="33b30cc5-9f6c-4972-803c-2465f9a63553"/>
+    <refType typeId="6562bbdd-ddf3-4566-84f6-4b8532e4fbc5" valueTypeId="6c2a8bb0-d24a-47ce-aede-2bce2b96d7f0"/>
+    <selectionType typeId="ff88b764-1333-4338-a835-6463165eeea6" valueTypeId="258fe013-3598-4f4c-8c3e-be383cfb7595"/>
+    <listType typeId="0bb96991-e85d-4070-a8b0-9e98f3a96020" valueTypeId="84b06519-e8f9-4a9b-bc9d-e3a5755bf510"/>
+    <managerType typeId="3f4986bf-657d-46c1-bd6e-b390e807f4a5" valueTypeId="62a3f4bd-a315-4725-9da2-e175f042a0ee"/>
+  </producedTypes>
+  <name>ОтветыСервиса</name>
+  <synonym>
+    <key>ru</key>
+    <value>Ответы сервиса</value>
+  </synonym>
+  <useStandardCommands>true</useStandardCommands>
+  <inputByString>Catalog.ОтветыСервиса.StandardAttribute.Description</inputByString>
+  <inputByString>Catalog.ОтветыСервиса.StandardAttribute.Code</inputByString>
+  <fullTextSearchOnInputByString>DontUse</fullTextSearchOnInputByString>
+  <createOnInput>Use</createOnInput>
+  <dataLockControlMode>Managed</dataLockControlMode>
+  <fullTextSearch>Use</fullTextSearch>
+  <levelCount>2</levelCount>
+  <foldersOnTop>true</foldersOnTop>
+  <codeLength>3</codeLength>
+  <descriptionLength>50</descriptionLength>
+  <codeType>String</codeType>
+  <codeAllowedLength>Variable</codeAllowedLength>
+  <checkUnique>true</checkUnique>
+  <autonumbering>true</autonumbering>
+  <defaultPresentation>AsDescription</defaultPresentation>
+  <editType>InDialog</editType>
+  <choiceMode>BothWays</choiceMode>
+  <defaultObjectForm>Catalog.ОтветыСервиса.Form.ФормаЭлемента</defaultObjectForm>
+  <tabularSections uuid="f87b09f3-f80c-49bd-ab55-f1989ce49e0b">
+    <producedTypes>
+      <objectType typeId="e873281a-abe2-43cc-978f-91629665a990" valueTypeId="b3816fcb-d01e-4073-807b-b151ce98929e"/>
+      <rowType typeId="b4bea350-fb7e-4c9b-b13e-08c705a72459" valueTypeId="83c287b2-7298-4407-9d82-9ffb841a5779"/>
+    </producedTypes>
+    <name>ПолучитьИнформацию</name>
+    <synonym>
+      <key>ru</key>
+      <value>Получить информацию</value>
+    </synonym>
+    <attributes uuid="722d78db-29f2-47a6-bd51-8e9dac66c4ec">
+      <name>КодЯзыка</name>
+      <synonym>
+        <key>ru</key>
+        <value>Код языка</value>
+      </synonym>
+      <type>
+        <types>String</types>
+        <stringQualifiers>
+          <length>6</length>
+        </stringQualifiers>
+      </type>
+      <minValue xsi:type="core:UndefinedValue"/>
+      <maxValue xsi:type="core:UndefinedValue"/>
+      <dataHistory>Use</dataHistory>
+      <fullTextSearch>Use</fullTextSearch>
+    </attributes>
+    <attributes uuid="114ce89f-37dc-4ee1-9aea-6cd4e97d537c">
+      <name>Сообщение</name>
+      <synonym>
+        <key>ru</key>
+        <value>Сообщение</value>
+      </synonym>
+      <type>
+        <types>String</types>
+        <stringQualifiers/>
+      </type>
+      <multiLine>true</multiLine>
+      <minValue xsi:type="core:UndefinedValue"/>
+      <maxValue xsi:type="core:UndefinedValue"/>
+      <dataHistory>Use</dataHistory>
+      <fullTextSearch>Use</fullTextSearch>
+    </attributes>
+  </tabularSections>
+  <forms uuid="eff80377-a6e2-4c5d-a0bc-1dcb5ad107ac">
+    <name>ФормаЭлемента</name>
+    <synonym>
+      <key>ru</key>
+      <value>Форма элемента</value>
+    </synonym>
+    <usePurposes>PersonalComputer</usePurposes>
+    <usePurposes>MobileDevice</usePurposes>
+  </forms>
+</mdclass:Catalog>

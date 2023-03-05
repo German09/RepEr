@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Subsystem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="34923400-3c39-43c5-9bc6-f42c672e8b5e">
+  <name>RepEr</name>
+  <synonym>
+    <key>ru</key>
+    <value>Rep er</value>
+  </synonym>
+  <includeHelpInContents>true</includeHelpInContents>
+  <picture xsi:type="core:PictureRef">
+    <picture>CommonPicture.МетаданныеБоты</picture>
+  </picture>
+  <content>Catalog.ОтветыСервиса</content>
+  <content>Catalog.Базы</content>
+  <content>Document.ОтчетыОбОшибках_RepEr</content>
+  <content>DataProcessor.ПереносЛоговВДокументы</content>
+  <content>InformationRegister.ДокументыДляРассылки</content>
+  <content>InformationRegister.Отчеты_RepEr</content>
+  <content>CommonCommand.НастройкиЛогов</content>
+  <content>Constant.ОтветИнформация</content>
+  <content>Constant.ОтветОшибкиДоступаПриРазделенииБаз</content>
+  <content>Constant.ОтветБазаНеНастроена</content>
+  <content>Constant.ИспользоватьРассылку</content>
+  <content>Constant.УчетнаяЗаписьДляРассылки</content>
+  <content>Constant.ТемаРассылки</content>
+  <content>Constant.ОбщийСписокРассылки</content>
+  <content>CommonForm.ФормаКонстантЛогов</content>
+  <content>ScheduledJob.РаспаковкаОтчетов_Reper</content>
+  <content>CommonModule.ОбщегоНазначенияЛоггерПовтИсп</content>
+  <content>CommonModule.ОбновлениеИнформационнойБазы_RepEr</content>
+  <content>FunctionalOption.РазделятьДоступПоБазам</content>
+  <content>HTTPService.Logger</content>
+  <content>CommonModule.СтроковыеФукнцииЛоггер</content>
+  <content>Role.ПросмотрЛогов</content>
+  <content>Role.УправлениеЛогами</content>
+  <content>Constant.РазделятьДоступПоБазам</content>
+  <content>CommonModule.РегламентныеОперации_RepEr</content>
+</mdclass:Subsystem>

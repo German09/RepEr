@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:InformationRegister xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="95e9c2bd-ed21-4476-9008-4e6ad636a712">
+  <producedTypes>
+    <selectionType typeId="4ecec49d-5ed4-48a2-a1f7-effb15811be6" valueTypeId="f4a460a2-221a-4933-a18b-86e6982b360f"/>
+    <listType typeId="ff20c5a6-4732-4fa8-bba2-439146495b7e" valueTypeId="b733c5f6-86be-4e28-9c16-6dd7782c2a7a"/>
+    <managerType typeId="d67187b0-e0f8-45b3-bd7c-a5153ec1f722" valueTypeId="9a3f58d6-2a43-4e4f-9f6d-bd8b19952ef8"/>
+    <recordSetType typeId="1fccafca-370d-4c9e-8c00-321757102695" valueTypeId="6f8c2166-fee6-4d2f-8465-25c92b14e024"/>
+    <recordKeyType typeId="343a6c59-3452-4ee4-bfd8-3bc5a30c7a06" valueTypeId="5c6782c8-eaa5-49ae-8170-e9790b54d981"/>
+    <recordType typeId="cf269e8a-5d96-4e11-b914-a822a2d62844" valueTypeId="4c67d370-eed4-45ee-9b3e-4eb541176aa9"/>
+    <recordManagerType typeId="5d4a9b50-eba5-4a0d-a749-82afb7dd453e" valueTypeId="4d58a94d-f79f-4786-89a5-94657224f1ce"/>
+  </producedTypes>
+  <name>ДокументыДляРассылки</name>
+  <synonym>
+    <key>ru</key>
+    <value>Документы для рассылки</value>
+  </synonym>
+  <useStandardCommands>true</useStandardCommands>
+  <editType>InDialog</editType>
+  <dataLockControlMode>Managed</dataLockControlMode>
+  <dimensions uuid="df2049c3-86dd-4538-98d0-b286986a42fe">
+    <name>Отчет</name>
+    <synonym>
+      <key>ru</key>
+      <value>Отчет</value>
+    </synonym>
+    <type>
+      <types>DocumentRef.ОтчетыОбОшибках_RepEr</types>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <denyIncompleteValues>true</denyIncompleteValues>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+    <fillFromFillingValue>true</fillFromFillingValue>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <master>true</master>
+    <mainFilter>true</mainFilter>
+  </dimensions>
+</mdclass:InformationRegister>

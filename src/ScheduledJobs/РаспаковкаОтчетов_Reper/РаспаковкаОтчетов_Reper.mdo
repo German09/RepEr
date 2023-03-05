@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:ScheduledJob xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="e64a4a76-613e-46f9-88e6-625f05c4bfba">
+  <name>РаспаковкаОтчетов_Reper</name>
+  <synonym>
+    <key>ru</key>
+    <value>Распаковка отчетов</value>
+  </synonym>
+  <methodName>CommonModule.РегламентныеОперации_RepEr.Распаковка</methodName>
+  <use>true</use>
+  <predefined>true</predefined>
+  <restartCountOnFailure>3</restartCountOnFailure>
+  <restartIntervalOnFailure>10</restartIntervalOnFailure>
+</mdclass:ScheduledJob>

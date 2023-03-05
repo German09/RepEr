@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:InformationRegister xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="9df25d97-cf8d-4018-8873-d54d964e053f">
+  <producedTypes>
+    <selectionType typeId="b0052aed-d69d-4b44-842b-29d0f9ca18d4" valueTypeId="29f97a86-1d42-4232-8feb-61c3611cb240"/>
+    <listType typeId="92406eca-edd7-4a19-8ac4-de2181738202" valueTypeId="7926c00e-adeb-45cf-bd3e-89e429324f2b"/>
+    <managerType typeId="a6ae7cfc-fc13-4671-97b3-24e1c41e921f" valueTypeId="db5f6482-52d6-4ccb-b6cd-e102699c2456"/>
+    <recordSetType typeId="51add0bd-92bb-4bed-bd36-f5119e0c5667" valueTypeId="72e11914-80f7-4bfd-bd92-9a898ad74919"/>
+    <recordKeyType typeId="23229836-39b5-449a-b1f1-22b9cdcb9b82" valueTypeId="eb7ad7f1-7abf-432f-bff3-e9a55fd993b0"/>
+    <recordType typeId="6a300e75-6147-4e25-9f80-01c36fee8065" valueTypeId="88bea60c-a84a-41f3-8476-ef0f3e55a72b"/>
+    <recordManagerType typeId="de9a7771-b1cd-4f01-b9fc-ae317ac2ca2e" valueTypeId="c2173c43-cda0-4bf0-a034-2938f9df0fb4"/>
+  </producedTypes>
+  <name>Отчеты_RepEr</name>
+  <synonym>
+    <key>ru</key>
+    <value>Отчеты rep er</value>
+  </synonym>
+  <useStandardCommands>true</useStandardCommands>
+  <editType>InDialog</editType>
+  <dataLockControlMode>Managed</dataLockControlMode>
+  <resources uuid="716e7a85-94f3-4088-b13e-17abc2a45531">
+    <name>Дата</name>
+    <synonym>
+      <key>ru</key>
+      <value>Дата</value>
+    </synonym>
+    <type>
+      <types>Date</types>
+      <dateQualifiers/>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+    <fillValue xsi:type="core:UndefinedValue"/>
+  </resources>
+  <resources uuid="cf0764dd-a0b3-4d99-9563-0f48ad39e502">
+    <name>Содержимое</name>
+    <synonym>
+      <key>ru</key>
+      <value>Содержимое</value>
+    </synonym>
+    <type>
+      <types>ValueStorage</types>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+    <fillValue xsi:type="core:UndefinedValue"/>
+  </resources>
+  <resources uuid="5d9bc7f6-2ed4-4603-95db-c32d1d67fd51">
+    <name>ИнформационнаяБаза</name>
+    <synonym>
+      <key>ru</key>
+      <value>Информационная база</value>
+    </synonym>
+    <type>
+      <types>CatalogRef.ИнформационныеБазы_RepEr</types>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+    <fillValue xsi:type="core:UndefinedValue"/>
+  </resources>
+  <resources uuid="91d8563f-05e6-4ba6-a188-1ee2381f15c3">
+    <name>МоментВремени</name>
+    <synonym>
+      <key>ru</key>
+      <value>Момент времени</value>
+    </synonym>
+    <type>
+      <types>Number</types>
+      <numberQualifiers>
+        <precision>15</precision>
+      </numberQualifiers>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+    <fillValue xsi:type="core:UndefinedValue"/>
+  </resources>
+  <dimensions uuid="d165901a-0a46-4e8e-929a-0e6dbb7f3199">
+    <name>Идентификатор</name>
+    <synonym>
+      <key>ru</key>
+      <value>Идентификатор</value>
+    </synonym>
+    <type>
+      <types>UUID</types>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <denyIncompleteValues>true</denyIncompleteValues>
+    <dataHistory>Use</dataHistory>
+    <fillFromFillingValue>true</fillFromFillingValue>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <master>true</master>
+    <mainFilter>true</mainFilter>
+  </dimensions>
+  <commands uuid="056ac8e8-d3b8-47c5-a757-619ec4935c4b">
+    <name>Распаковать</name>
+    <synonym>
+      <key>ru</key>
+      <value>Распаковать</value>
+    </synonym>
+    <group>FormCommandBarImportant</group>
+    <parameterUseMode>Multiple</parameterUseMode>
+    <modifiesData>true</modifiesData>
+    <representation>Auto</representation>
+  </commands>
+</mdclass:InformationRegister>

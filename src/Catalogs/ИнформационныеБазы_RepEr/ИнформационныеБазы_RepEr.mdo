@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="f2ef035d-ceaa-4773-a905-50975dacb541">
+  <producedTypes>
+    <objectType typeId="e67b1838-e4f6-4f97-93e4-8b534e6ea7ac" valueTypeId="185a8045-790e-4309-bc1e-3e41e050f64a"/>
+    <refType typeId="e6cfed3c-cbe8-490c-abd2-78a62214d372" valueTypeId="1d8dad03-76ee-4e29-b787-28b736032047"/>
+    <selectionType typeId="59a5c3a5-6c9b-40dc-a2d0-ea279d0c31c2" valueTypeId="bde12e36-300b-4492-b924-ad9a540a3afb"/>
+    <listType typeId="ff71be3f-b46f-40b2-b656-2d203e755ec3" valueTypeId="ea1287d3-3475-4f90-b403-0d13745e2dc6"/>
+    <managerType typeId="6bf6c106-2858-4cd7-baab-02f81f32c00f" valueTypeId="1c616ede-2c33-4f51-ba09-54707c1e9a62"/>
+  </producedTypes>
+  <name>ИнформационныеБазы_RepEr</name>
+  <synonym>
+    <key>ru</key>
+    <value>Информационные базы</value>
+  </synonym>
+  <useStandardCommands>true</useStandardCommands>
+  <inputByString>Catalog.ИнформационныеБазы_RepEr.StandardAttribute.Code</inputByString>
+  <inputByString>Catalog.ИнформационныеБазы_RepEr.StandardAttribute.Description</inputByString>
+  <fullTextSearchOnInputByString>DontUse</fullTextSearchOnInputByString>
+  <createOnInput>Use</createOnInput>
+  <dataLockControlMode>Managed</dataLockControlMode>
+  <fullTextSearch>Use</fullTextSearch>
+  <levelCount>2</levelCount>
+  <foldersOnTop>true</foldersOnTop>
+  <codeLength>30</codeLength>
+  <descriptionLength>100</descriptionLength>
+  <codeType>String</codeType>
+  <codeAllowedLength>Variable</codeAllowedLength>
+  <checkUnique>true</checkUnique>
+  <predefined>
+    <items id="611c2026-81a2-43a1-b29e-eeda5ab9b52a">
+      <name>Предопределенный</name>
+      <description>Инфомационная база</description>
+      <code xsi:type="core:StringValue">
+        <value>InfoBase</value>
+      </code>
+    </items>
+  </predefined>
+  <editType>InDialog</editType>
+  <choiceMode>BothWays</choiceMode>
+</mdclass:Catalog>

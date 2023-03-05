@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Constant xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="dbf0bd89-b333-4f58-ad20-c40402ae56c6">
+  <producedTypes>
+    <managerType typeId="93b64e76-46d4-470d-a623-a8a7521a981b" valueTypeId="27eae4e1-3702-4b15-83aa-5d5ef6dc2694"/>
+    <valueManagerType typeId="75ac9d8b-f149-43ac-a336-60e110eb505f" valueTypeId="81c532d2-74bf-4105-b929-c950aa94a893"/>
+    <valueKeyType typeId="8e6d6375-a09e-40e2-94c3-d30b27630554" valueTypeId="5425cf28-66db-4b8e-be13-75b53f614187"/>
+  </producedTypes>
+  <name>ОбщийСписокРассылки</name>
+  <synonym>
+    <key>ru</key>
+    <value>Общий список рассылки</value>
+  </synonym>
+  <type>
+    <types>String</types>
+    <stringQualifiers/>
+  </type>
+  <minValue xsi:type="core:UndefinedValue"/>
+  <maxValue xsi:type="core:UndefinedValue"/>
+  <dataLockControlMode>Managed</dataLockControlMode>
+</mdclass:Constant>

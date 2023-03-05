@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Enum xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="70ba7b45-7cab-4506-b724-a45fc3507de6">
+  <producedTypes>
+    <refType typeId="26ccc810-0ff4-436e-a35e-c5c913d3246b" valueTypeId="d0bf5aa8-9b4e-490f-b3a8-bc80dc6e6507"/>
+    <listType typeId="40889975-504a-4612-9710-f14f9f026158" valueTypeId="a2c28713-7db7-446c-8412-949cec872e15"/>
+    <managerType typeId="b0b5ab8c-4ce4-4902-ac8f-0b9067cc7240" valueTypeId="b15794cb-1124-4450-8fca-27cdb3a64991"/>
+  </producedTypes>
+  <name>ТипыТекстовЭлектронныхПисем</name>
+  <synonym>
+    <key>ru</key>
+    <value>Типы текстов электронных писем</value>
+  </synonym>
+  <useStandardCommands>true</useStandardCommands>
+  <standardAttributes>
+    <dataHistory>Use</dataHistory>
+    <name>Order</name>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+  </standardAttributes>
+  <standardAttributes>
+    <dataHistory>Use</dataHistory>
+    <name>Ref</name>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+  </standardAttributes>
+  <quickChoice>true</quickChoice>
+  <choiceMode>BothWays</choiceMode>
+  <enumValues uuid="c03eaf56-0ae7-479e-9edb-9db2d2c6ab8f">
+    <name>HTML</name>
+    <synonym>
+      <key>ru</key>
+      <value>HTML</value>
+    </synonym>
+  </enumValues>
+  <enumValues uuid="079fb872-61a6-4b2c-a61d-199fd3146693">
+    <name>ПростойТекст</name>
+    <synonym>
+      <key>ru</key>
+      <value>Простой текст</value>
+    </synonym>
+  </enumValues>
+  <enumValues uuid="0697c362-646e-449a-9245-276f4aa7b7b9">
+    <name>РазмеченныйТекст</name>
+    <synonym>
+      <key>ru</key>
+      <value>Размеченный текст</value>
+    </synonym>
+  </enumValues>
+  <enumValues uuid="5054e7d3-2aae-43dd-b61f-add91b5baced">
+    <name>HTMLСКартинками</name>
+    <synonym>
+      <key>ru</key>
+      <value>HTML с картинками</value>
+    </synonym>
+  </enumValues>
+</mdclass:Enum>
