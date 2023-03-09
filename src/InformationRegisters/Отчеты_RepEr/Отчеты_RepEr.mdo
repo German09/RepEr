@@ -12,7 +12,7 @@
   <name>Отчеты_RepEr</name>
   <synonym>
     <key>ru</key>
-    <value>Отчеты rep er</value>
+    <value>Отчеты</value>
   </synonym>
   <useStandardCommands>true</useStandardCommands>
   <editType>InDialog</editType>
@@ -99,15 +99,4 @@
     <master>true</master>
     <mainFilter>true</mainFilter>
   </dimensions>
-  <commands uuid="056ac8e8-d3b8-47c5-a757-619ec4935c4b">
-    <name>Распаковать</name>
-    <synonym>
-      <key>ru</key>
-      <value>Распаковать</value>
-    </synonym>
-    <group>FormCommandBarImportant</group>
-    <parameterUseMode>Multiple</parameterUseMode>
-    <modifiesData>true</modifiesData>
-    <representation>Auto</representation>
-  </commands>
 </mdclass:InformationRegister>

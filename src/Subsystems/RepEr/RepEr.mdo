@@ -3,9 +3,10 @@
   <name>RepEr</name>
   <synonym>
     <key>ru</key>
-    <value>Rep er</value>
+    <value>RepEr</value>
   </synonym>
   <includeHelpInContents>true</includeHelpInContents>
+  <includeInCommandInterface>true</includeInCommandInterface>
   <picture xsi:type="core:PictureRef">
     <picture>CommonPicture.МетаданныеБоты</picture>
   </picture>
@@ -34,4 +35,9 @@
   <content>Role.УправлениеЛогами</content>
   <content>Constant.РазделятьДоступПоБазам</content>
   <content>CommonModule.РегламентныеОперации_RepEr</content>
+  <content>InformationRegister.Ошибки_RepEr</content>
+  <content>Catalog.НастройкиПодключений_RepEx</content>
+  <content>Enum.ТипыОповещений_RepEx</content>
+  <content>InformationRegister.КлючиОповещений_RepEx</content>
+  <content>Catalog.ИнформационныеБазы_RepEr</content>
 </mdclass:Subsystem>

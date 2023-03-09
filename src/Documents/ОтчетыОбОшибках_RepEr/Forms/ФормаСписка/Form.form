@@ -56,10 +56,9 @@
     <items xsi:type="form:FormField">
       <name>Ссылка</name>
       <id>16</id>
+      <visible>true</visible>
       <enabled>true</enabled>
-      <userVisible>
-        <common>true</common>
-      </userVisible>
+      <userVisible/>
       <dataPath xsi:type="form:DataPath">
         <segments>Список.Ref</segments>
       </dataPath>

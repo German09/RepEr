@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="ca1c1daa-bb7b-4f3f-a82e-83142ba6f0d9">
+  <producedTypes>
+    <objectType typeId="1b000d62-e524-462a-88d3-78b7a6516931" valueTypeId="0a1b2899-9d91-41dd-a460-455d32ebce00"/>
+    <refType typeId="cfad0da1-c549-4633-9515-9699004d45a6" valueTypeId="88320cab-a027-40d7-a4c6-68ff9c051624"/>
+    <selectionType typeId="081738b2-83f4-4709-ab86-9f8c7749e90a" valueTypeId="7fbed4ae-675d-4f88-8d99-988ec0cbc91f"/>
+    <listType typeId="513d7c9f-94d8-4757-a3d5-73110f8a5b30" valueTypeId="107905d4-4efa-4000-8af1-b06bff8a2b5d"/>
+    <managerType typeId="32c7bd43-3a02-4ecc-b370-8977abbcedf7" valueTypeId="0a9c4a9d-edb4-47dd-b1f4-1eb8fd7810a9"/>
+  </producedTypes>
+  <name>НастройкиПодключений_RepEx</name>
+  <synonym>
+    <key>ru</key>
+    <value>Настройки подключений</value>
+  </synonym>
+  <useStandardCommands>true</useStandardCommands>
+  <inputByString>Catalog.НастройкиПодключений_RepEx.StandardAttribute.Code</inputByString>
+  <inputByString>Catalog.НастройкиПодключений_RepEx.StandardAttribute.Description</inputByString>
+  <fullTextSearchOnInputByString>DontUse</fullTextSearchOnInputByString>
+  <createOnInput>Use</createOnInput>
+  <dataLockControlMode>Managed</dataLockControlMode>
+  <fullTextSearch>Use</fullTextSearch>
+  <levelCount>2</levelCount>
+  <foldersOnTop>true</foldersOnTop>
+  <codeLength>9</codeLength>
+  <descriptionLength>25</descriptionLength>
+  <codeType>String</codeType>
+  <codeAllowedLength>Variable</codeAllowedLength>
+  <checkUnique>true</checkUnique>
+  <autonumbering>true</autonumbering>
+  <defaultPresentation>AsDescription</defaultPresentation>
+  <editType>InDialog</editType>
+  <choiceMode>BothWays</choiceMode>
+  <attributes uuid="50deb516-3870-4309-9eb3-b2998f76588d">
+    <name>Адрес</name>
+    <synonym>
+      <key>ru</key>
+      <value>Адрес</value>
+    </synonym>
+    <type>
+      <types>String</types>
+      <stringQualifiers>
+        <length>150</length>
+      </stringQualifiers>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+  </attributes>
+  <attributes uuid="09a592e8-8958-4b1d-84e5-77ff6284523f">
+    <name>Логин</name>
+    <synonym>
+      <key>ru</key>
+      <value>Логин</value>
+    </synonym>
+    <type>
+      <types>String</types>
+      <stringQualifiers>
+        <length>150</length>
+      </stringQualifiers>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+  </attributes>
+  <attributes uuid="f4f67b7b-4230-4cc3-8625-c5b9d58bd37a">
+    <name>Разделитель</name>
+    <synonym>
+      <key>ru</key>
+      <value>Разделитель</value>
+    </synonym>
+    <type>
+      <types>String</types>
+      <stringQualifiers>
+        <length>150</length>
+      </stringQualifiers>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+  </attributes>
+</mdclass:Catalog>

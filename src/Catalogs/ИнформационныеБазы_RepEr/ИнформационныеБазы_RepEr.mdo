@@ -37,4 +37,57 @@
   </predefined>
   <editType>InDialog</editType>
   <choiceMode>BothWays</choiceMode>
+  <tabularSections uuid="97153858-790a-4cb0-b503-0260e308a6c4">
+    <producedTypes>
+      <objectType typeId="93bf9f69-50d7-43ba-a920-1934761b8088" valueTypeId="c3443cd0-ec50-45b1-9fa0-be1e93e3ea26"/>
+      <rowType typeId="108e65ec-4576-4543-b6ac-42f764adea88" valueTypeId="c5fe41cb-dc4c-410e-8699-c4d468b56164"/>
+    </producedTypes>
+    <name>Оповещения</name>
+    <synonym>
+      <key>ru</key>
+      <value>Оповещения</value>
+    </synonym>
+    <attributes uuid="1425a67f-cae0-4398-9987-c4ea7f133bf8">
+      <name>Использовать</name>
+      <synonym>
+        <key>ru</key>
+        <value>Использовать</value>
+      </synonym>
+      <type>
+        <types>Boolean</types>
+      </type>
+      <minValue xsi:type="core:UndefinedValue"/>
+      <maxValue xsi:type="core:UndefinedValue"/>
+      <dataHistory>Use</dataHistory>
+      <fullTextSearch>Use</fullTextSearch>
+    </attributes>
+    <attributes uuid="cb2c1e25-2323-4894-9786-1cad81bfac30">
+      <name>ТипОповещения</name>
+      <synonym>
+        <key>ru</key>
+        <value>Тип оповещения</value>
+      </synonym>
+      <type>
+        <types>EnumRef.ТипыОповещений_RepEx</types>
+      </type>
+      <minValue xsi:type="core:UndefinedValue"/>
+      <maxValue xsi:type="core:UndefinedValue"/>
+      <dataHistory>Use</dataHistory>
+      <fullTextSearch>Use</fullTextSearch>
+    </attributes>
+    <attributes uuid="7ba8914f-9eb5-4f0d-aa9c-c70a7431b2c3">
+      <name>НастройкаПодключения</name>
+      <synonym>
+        <key>ru</key>
+        <value>Настройка подключения</value>
+      </synonym>
+      <type>
+        <types>CatalogRef.НастройкиПодключений_RepEx</types>
+      </type>
+      <minValue xsi:type="core:UndefinedValue"/>
+      <maxValue xsi:type="core:UndefinedValue"/>
+      <dataHistory>Use</dataHistory>
+      <fullTextSearch>Use</fullTextSearch>
+    </attributes>
+  </tabularSections>
 </mdclass:Catalog>

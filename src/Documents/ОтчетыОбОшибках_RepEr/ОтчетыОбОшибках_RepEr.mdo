@@ -10,7 +10,7 @@
   <name>ОтчетыОбОшибках_RepEr</name>
   <synonym>
     <key>ru</key>
-    <value>Отчеты об ошибках rep er</value>
+    <value>Отчеты об ошибках</value>
   </synonym>
   <useStandardCommands>true</useStandardCommands>
   <inputByString>Document.ОтчетыОбОшибках_RepEr.StandardAttribute.Number</inputByString>
@@ -25,6 +25,7 @@
   <autonumbering>true</autonumbering>
   <defaultObjectForm>Document.ОтчетыОбОшибках_RepEr.Form.ФормаДокумента</defaultObjectForm>
   <defaultListForm>Document.ОтчетыОбОшибках_RepEr.Form.ФормаСписка</defaultListForm>
+  <registerRecords>InformationRegister.КлючиОповещений_RepEx</registerRecords>
   <postInPrivilegedMode>true</postInPrivilegedMode>
   <unpostInPrivilegedMode>true</unpostInPrivilegedMode>
   <attributes uuid="c453360b-b233-4a59-bdf7-83ea42205d2f">
@@ -106,10 +107,101 @@
     <name>ИнформационнаяБаза</name>
     <synonym>
       <key>ru</key>
-      <value>Информационная база</value>
+      <value>Инф. база</value>
     </synonym>
     <type>
       <types>CatalogRef.ИнформационныеБазы_RepEr</types>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <indexing>Index</indexing>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+  </attributes>
+  <attributes uuid="a374d0b2-b587-435f-867e-c4673356f2c6">
+    <name>configHash</name>
+    <synonym>
+      <key>ru</key>
+      <value>Config hash</value>
+    </synonym>
+    <type>
+      <types>String</types>
+      <stringQualifiers>
+        <length>32</length>
+      </stringQualifiers>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <indexing>Index</indexing>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+  </attributes>
+  <attributes uuid="04d5023d-7fa9-4f9f-80ba-22af862741e1">
+    <name>appStackHash</name>
+    <synonym>
+      <key>ru</key>
+      <value>App stack hash</value>
+    </synonym>
+    <type>
+      <types>String</types>
+      <stringQualifiers>
+        <length>32</length>
+      </stringQualifiers>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+  </attributes>
+  <attributes uuid="dc421362-3181-41b0-b7a4-e9828d80e948">
+    <name>clientStackHash</name>
+    <synonym>
+      <key>ru</key>
+      <value>Client stack hash</value>
+    </synonym>
+    <type>
+      <types>String</types>
+      <stringQualifiers>
+        <length>32</length>
+      </stringQualifiers>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <indexing>Index</indexing>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+  </attributes>
+  <attributes uuid="c30bcb02-8cfb-467b-b156-ad1a3e54196f">
+    <name>serverStackHash</name>
+    <synonym>
+      <key>ru</key>
+      <value>Server stack hash</value>
+    </synonym>
+    <type>
+      <types>String</types>
+      <stringQualifiers>
+        <length>32</length>
+      </stringQualifiers>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <indexing>Index</indexing>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+  </attributes>
+  <attributes uuid="b352eadc-dd1c-4c26-9347-31da19d65405">
+    <name>Основание</name>
+    <synonym>
+      <key>ru</key>
+      <value>Основание</value>
+    </synonym>
+    <type>
+      <types>DocumentRef.ОтчетыОбОшибках_RepEr</types>
     </type>
     <minValue xsi:type="core:UndefinedValue"/>
     <maxValue xsi:type="core:UndefinedValue"/>

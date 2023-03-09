@@ -3,7 +3,7 @@
   <name>RepEr</name>
   <synonym>
     <key>ru</key>
-    <value>Rep er</value>
+    <value>RepEr</value>
   </synonym>
   <containedObjects classId="9cd510cd-abfc-11d4-9434-004095e12fc7" objectId="e1065b70-b0c8-4147-9881-664f48f95bf8"/>
   <containedObjects classId="9fcd25a0-4822-11d4-9414-008048da11f9" objectId="c6b85af3-4c97-4315-ad83-20a3173a5132"/>
@@ -463,13 +463,13 @@
   <definedTypes>DefinedType.Подразделение</definedTypes>
   <definedTypes>DefinedType.Пользователь</definedTypes>
   <definedTypes>DefinedType.ФизическоеЛицо</definedTypes>
+  <commonCommands>CommonCommand.НастройкиЛогов</commonCommands>
   <commonCommands>CommonCommand.ВремяТекущегоСеанса</commonCommands>
   <commonCommands>CommonCommand.НастройкаСистемнойУчетнойЗаписиЭлектроннойПочты</commonCommands>
   <commonCommands>CommonCommand.ПредупрежденияПриЗавершенииРаботы</commonCommands>
   <commonCommands>CommonCommand.СведенияОПользователе</commonCommands>
   <commonCommands>CommonCommand.СменитьПароль</commonCommands>
   <commonCommands>CommonCommand.УстановитьРасширениеДляРаботыС1СПредприятием</commonCommands>
-  <commonCommands>CommonCommand.НастройкиЛогов</commonCommands>
   <commandGroups>CommandGroup.Информация</commandGroups>
   <commandGroups>CommandGroup.Органайзер</commandGroups>
   <constants>Constant.АдресПубликацииИнформационнойБазыВИнтернете</constants>
@@ -537,8 +537,10 @@
   <commonForms>CommonForm.СменаПароля</commonForms>
   <commonForms>CommonForm.СравнениеТабличныхДокументов</commonForms>
   <commonForms>CommonForm.ФормаКонстантЛогов</commonForms>
+  <catalogs>Catalog.НастройкиПодключений_RepEx</catalogs>
   <catalogs>Catalog.ИнформационныеБазы_RepEr</catalogs>
   <catalogs>Catalog.Базы</catalogs>
+  <catalogs>Catalog.ОтветыСервиса</catalogs>
   <catalogs>Catalog.ВерсииРасширений</catalogs>
   <catalogs>Catalog.ВнешниеПользователи</catalogs>
   <catalogs>Catalog.ГруппыВнешнихПользователей</catalogs>
@@ -548,8 +550,8 @@
   <catalogs>Catalog.Пользователи</catalogs>
   <catalogs>Catalog.УчетныеЗаписиЭлектроннойПочты</catalogs>
   <catalogs>Catalog.ЯзыкиПечатныхФорм</catalogs>
-  <catalogs>Catalog.ОтветыСервиса</catalogs>
   <documents>Document.ОтчетыОбОшибках_RepEr</documents>
+  <enums>Enum.ТипыОповещений_RepEx</enums>
   <enums>Enum.РежимыВыполненияОбработчиков</enums>
   <enums>Enum.РежимыВыполненияОтложенныхОбработчиков</enums>
   <enums>Enum.СервисыПереводаТекста</enums>
@@ -560,6 +562,7 @@
   <enums>Enum.ФорматыСохраненияОтчетов</enums>
   <reports>Report.ПрогрессОтложенногоОбновления</reports>
   <reports>Report.СведенияОПользователях</reports>
+  <dataProcessors>DataProcessor.ПереносЛоговВДокументы</dataProcessors>
   <dataProcessors>DataProcessor.ЖурналРегистрации</dataProcessors>
   <dataProcessors>DataProcessor.НастройкиПользователей</dataProcessors>
   <dataProcessors>DataProcessor.ОписаниеОбработчиковОбновления</dataProcessors>
@@ -567,8 +570,9 @@
   <dataProcessors>DataProcessor.РегламентныеИФоновыеЗадания</dataProcessors>
   <dataProcessors>DataProcessor.РезультатыОбновленияПрограммы</dataProcessors>
   <dataProcessors>DataProcessor.РекомендацияПоПовышениюСкоростиРаботы</dataProcessors>
-  <dataProcessors>DataProcessor.ПереносЛоговВДокументы</dataProcessors>
   <dataProcessors>DataProcessor.ПанельАдминистрированияБСП</dataProcessors>
+  <informationRegisters>InformationRegister.КлючиОповещений_RepEx</informationRegisters>
+  <informationRegisters>InformationRegister.ДокументыДляРассылки</informationRegisters>
   <informationRegisters>InformationRegister.Отчеты_RepEr</informationRegisters>
   <informationRegisters>InformationRegister.Ошибки_RepEr</informationRegisters>
   <informationRegisters>InformationRegister.БезопасноеХранилищеДанных</informationRegisters>
@@ -586,5 +590,4 @@
   <informationRegisters>InformationRegister.ПрогрессОбновления</informationRegisters>
   <informationRegisters>InformationRegister.СведенияОПользователях</informationRegisters>
   <informationRegisters>InformationRegister.СоставыГруппПользователей</informationRegisters>
-  <informationRegisters>InformationRegister.ДокументыДляРассылки</informationRegisters>
 </mdclass:Configuration>

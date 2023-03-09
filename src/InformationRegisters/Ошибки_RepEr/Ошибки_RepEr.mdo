@@ -78,7 +78,7 @@
     <type>
       <types>String</types>
       <stringQualifiers>
-        <length>100</length>
+        <length>32</length>
       </stringQualifiers>
     </type>
     <minValue xsi:type="core:UndefinedValue"/>
@@ -86,6 +86,7 @@
     <fullTextSearch>Use</fullTextSearch>
     <dataHistory>Use</dataHistory>
     <fillValue xsi:type="core:UndefinedValue"/>
+    <indexing>Index</indexing>
   </resources>
   <resources uuid="01113fb8-cbf8-4b95-bc85-c28464ebbb83">
     <name>appVersion</name>
@@ -114,7 +115,7 @@
     <type>
       <types>String</types>
       <stringQualifiers>
-        <length>100</length>
+        <length>32</length>
       </stringQualifiers>
     </type>
     <minValue xsi:type="core:UndefinedValue"/>
@@ -122,6 +123,7 @@
     <fullTextSearch>Use</fullTextSearch>
     <dataHistory>Use</dataHistory>
     <fillValue xsi:type="core:UndefinedValue"/>
+    <indexing>Index</indexing>
   </resources>
   <resources uuid="76234a6d-16dd-4053-a64c-79518393ecbd">
     <name>configHash</name>
@@ -132,7 +134,7 @@
     <type>
       <types>String</types>
       <stringQualifiers>
-        <length>100</length>
+        <length>32</length>
       </stringQualifiers>
     </type>
     <minValue xsi:type="core:UndefinedValue"/>
@@ -140,6 +142,7 @@
     <fullTextSearch>Use</fullTextSearch>
     <dataHistory>Use</dataHistory>
     <fillValue xsi:type="core:UndefinedValue"/>
+    <indexing>Index</indexing>
   </resources>
   <resources uuid="c9efe256-2ad2-4a84-ba71-4e9452e4c1ed">
     <name>configName</name>
@@ -240,7 +243,7 @@
     <type>
       <types>String</types>
       <stringQualifiers>
-        <length>100</length>
+        <length>32</length>
       </stringQualifiers>
     </type>
     <minValue xsi:type="core:UndefinedValue"/>
@@ -248,6 +251,7 @@
     <fullTextSearch>Use</fullTextSearch>
     <dataHistory>Use</dataHistory>
     <fillValue xsi:type="core:UndefinedValue"/>
+    <indexing>Index</indexing>
   </resources>
   <resources uuid="e1f16049-dd1a-4364-ab63-e06fe54e116e">
     <name>systemCrash</name>
@@ -260,21 +264,6 @@
       <stringQualifiers>
         <length>100</length>
       </stringQualifiers>
-    </type>
-    <minValue xsi:type="core:UndefinedValue"/>
-    <maxValue xsi:type="core:UndefinedValue"/>
-    <fullTextSearch>Use</fullTextSearch>
-    <dataHistory>Use</dataHistory>
-    <fillValue xsi:type="core:UndefinedValue"/>
-  </resources>
-  <resources uuid="90048eac-e7df-4998-a873-a08a6f29c7ea">
-    <name>Отчет</name>
-    <synonym>
-      <key>ru</key>
-      <value>Отчет</value>
-    </synonym>
-    <type>
-      <types>DocumentRef.ОтчетыОбОшибках_RepEr</types>
     </type>
     <minValue xsi:type="core:UndefinedValue"/>
     <maxValue xsi:type="core:UndefinedValue"/>

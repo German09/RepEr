@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:InformationRegister xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="f05ea9cb-1008-45a2-808e-d737aff93dce">
+  <producedTypes>
+    <selectionType typeId="55d0c141-85aa-46c2-a4fc-474893e55aa5" valueTypeId="4e560927-20f2-431f-b88f-c264718d4576"/>
+    <listType typeId="c945aae3-2dff-4b61-855d-71fb79bd79e4" valueTypeId="58916d61-1873-4518-bffa-e356597d19b6"/>
+    <managerType typeId="721995ca-6d99-42ef-9ea0-c7f3b6d286f7" valueTypeId="c192af72-c3ea-4718-b168-9273c9057f6c"/>
+    <recordSetType typeId="db31354c-f675-494e-8615-e97ecdc29280" valueTypeId="cc92e0b2-3e62-470b-b587-2ae11deb4d0b"/>
+    <recordKeyType typeId="fdcfb986-9c3e-4b7e-888a-4735f50b3ef3" valueTypeId="1c06f8a8-e6b5-4a57-8bcb-29ff5fa41eec"/>
+    <recordType typeId="39e04066-eb84-4dc6-805f-6f952971b925" valueTypeId="db0aa0a4-448e-4c21-8f60-0cabaac2ef1d"/>
+    <recordManagerType typeId="74c7e001-6518-44d5-94f5-86aad23d5e58" valueTypeId="0538bcd2-9bd8-4c93-8e8e-6504027a4f16"/>
+  </producedTypes>
+  <name>КлючиОповещений_RepEx</name>
+  <synonym>
+    <key>ru</key>
+    <value>Ключи оповещений rep ex</value>
+  </synonym>
+  <useStandardCommands>true</useStandardCommands>
+  <editType>InDialog</editType>
+  <writeMode>RecorderSubordinate</writeMode>
+  <dataLockControlMode>Managed</dataLockControlMode>
+  <resources uuid="2545b1f6-5ea7-4e82-824d-4da69f196a5b">
+    <name>Идентификатор</name>
+    <synonym>
+      <key>ru</key>
+      <value>Идентификатор</value>
+    </synonym>
+    <type>
+      <types>String</types>
+      <stringQualifiers>
+        <length>150</length>
+      </stringQualifiers>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+    <fillValue xsi:type="core:UndefinedValue"/>
+  </resources>
+  <dimensions uuid="fa92b295-9b71-462e-babd-2ce3bfb634cd">
+    <name>ТипОповещения</name>
+    <synonym>
+      <key>ru</key>
+      <value>Тип оповещения</value>
+    </synonym>
+    <type>
+      <types>EnumRef.ТипыОповещений_RepEx</types>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+  </dimensions>
+  <dimensions uuid="ef33917f-f8c7-43b1-8e13-d5463418d82c">
+    <name>НастройкаПодключения</name>
+    <synonym>
+      <key>ru</key>
+      <value>Настройка подключения</value>
+    </synonym>
+    <type>
+      <types>CatalogRef.НастройкиПодключений_RepEx</types>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+  </dimensions>
+</mdclass:InformationRegister>
