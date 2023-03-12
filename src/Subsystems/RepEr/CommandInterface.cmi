@@ -7,10 +7,6 @@
         <common>true</common>
       </visible>
     </visibilityFragments>
-    <visibilityFragments>
-      <command>DataProcessor.ПереносЛоговВДокументы.StandardCommand.Open</command>
-      <visible/>
-    </visibilityFragments>
   </commandsVisibility>
   <commandsPlacement>
     <placementFragments>
@@ -22,7 +18,6 @@
     <orderFragments>
       <group>NavigationPanelImportant</group>
       <commands>Document.ОтчетыОбОшибках_RepEr.StandardCommand.OpenList</commands>
-      <commands>CommonCommand.НастройкиЛогов</commands>
     </orderFragments>
   </commandsOrder>
 </cmi:CommandInterface>

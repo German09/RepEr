@@ -3,16 +3,15 @@
 	<filter>
 		<item xsi:type="FilterItemComparison">
 			<use>false</use>
-			<left xsi:type="dcscor:Field">База</left>
-			<comparisonType>Equal</comparisonType>
-			<userSettingID>9d3209dd-e066-44ee-9288-b273a8431680</userSettingID>
-		</item>
-		<item xsi:type="FilterItemComparison">
-			<use>false</use>
 			<left xsi:type="dcscor:Field">Пользователь</left>
 			<comparisonType>Contains</comparisonType>
 			<right xsi:type="xs:string"/>
 			<userSettingID>0d24e4ed-6d72-4d42-9fbd-f149d46f9c87</userSettingID>
+		</item>
+		<item xsi:type="FilterItemComparison">
+			<left xsi:type="dcscor:Field">Основание</left>
+			<comparisonType>NotFilled</comparisonType>
+			<right xsi:nil="true"/>
 		</item>
 		<viewMode>Normal</viewMode>
 		<userSettingID>dfcece9d-5077-440b-b6b3-45a5cb4538eb</userSettingID>

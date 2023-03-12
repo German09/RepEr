@@ -12,13 +12,6 @@
   </synonym>
   <quickChoice>true</quickChoice>
   <choiceMode>BothWays</choiceMode>
-  <enumValues uuid="acf2ec3d-963e-4212-87c5-338178788319">
-    <name>ЭлПочта</name>
-    <synonym>
-      <key>ru</key>
-      <value>Эл. почта</value>
-    </synonym>
-  </enumValues>
   <enumValues uuid="b17cde61-8b69-4fff-b4b0-8b156e8b9064">
     <name>Jira</name>
     <synonym>

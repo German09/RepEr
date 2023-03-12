@@ -10,31 +10,13 @@
   <picture xsi:type="core:PictureRef">
     <picture>CommonPicture.МетаданныеБоты</picture>
   </picture>
-  <content>Catalog.ОтветыСервиса</content>
-  <content>Catalog.Базы</content>
   <content>Document.ОтчетыОбОшибках_RepEr</content>
-  <content>DataProcessor.ПереносЛоговВДокументы</content>
-  <content>InformationRegister.ДокументыДляРассылки</content>
   <content>InformationRegister.Отчеты_RepEr</content>
-  <content>CommonCommand.НастройкиЛогов</content>
-  <content>Constant.ОтветИнформация</content>
-  <content>Constant.ОтветОшибкиДоступаПриРазделенииБаз</content>
-  <content>Constant.ОтветБазаНеНастроена</content>
-  <content>Constant.ИспользоватьРассылку</content>
-  <content>Constant.УчетнаяЗаписьДляРассылки</content>
-  <content>Constant.ТемаРассылки</content>
-  <content>Constant.ОбщийСписокРассылки</content>
-  <content>CommonForm.ФормаКонстантЛогов</content>
   <content>ScheduledJob.РаспаковкаОтчетов_Reper</content>
-  <content>CommonModule.ОбщегоНазначенияЛоггерПовтИсп</content>
   <content>CommonModule.ОбновлениеИнформационнойБазы_RepEr</content>
-  <content>FunctionalOption.РазделятьДоступПоБазам</content>
-  <content>HTTPService.Logger</content>
-  <content>CommonModule.СтроковыеФукнцииЛоггер</content>
   <content>Role.ПросмотрЛогов</content>
   <content>Role.УправлениеЛогами</content>
-  <content>Constant.РазделятьДоступПоБазам</content>
-  <content>CommonModule.РегламентныеОперации_RepEr</content>
+  <content>CommonModule.РегламентныеОперацииСервер_RepEr</content>
   <content>InformationRegister.Ошибки_RepEr</content>
   <content>Catalog.НастройкиПодключений_RepEx</content>
   <content>Enum.ТипыОповещений_RepEx</content>

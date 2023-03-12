@@ -5,7 +5,7 @@
     <key>ru</key>
     <value>Распаковка отчетов</value>
   </synonym>
-  <methodName>CommonModule.РегламентныеОперации_RepEr.Распаковка</methodName>
+  <methodName>CommonModule.РегламентныеОперацииСервер_RepEr.Распаковка</methodName>
   <use>true</use>
   <predefined>true</predefined>
   <restartCountOnFailure>3</restartCountOnFailure>

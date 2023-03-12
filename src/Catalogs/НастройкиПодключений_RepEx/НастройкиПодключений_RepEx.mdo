@@ -30,6 +30,7 @@
   <defaultPresentation>AsDescription</defaultPresentation>
   <editType>InDialog</editType>
   <choiceMode>BothWays</choiceMode>
+  <defaultObjectForm>Catalog.НастройкиПодключений_RepEx.Form.ФормаЭлемента</defaultObjectForm>
   <attributes uuid="50deb516-3870-4309-9eb3-b2998f76588d">
     <name>Адрес</name>
     <synonym>
@@ -84,4 +85,13 @@
     <fullTextSearch>Use</fullTextSearch>
     <dataHistory>Use</dataHistory>
   </attributes>
+  <forms uuid="b0861940-df4b-4070-8a62-09efbb09df9a">
+    <name>ФормаЭлемента</name>
+    <synonym>
+      <key>ru</key>
+      <value>Форма элемента</value>
+    </synonym>
+    <usePurposes>PersonalComputer</usePurposes>
+    <usePurposes>MobileDevice</usePurposes>
+  </forms>
 </mdclass:Catalog>

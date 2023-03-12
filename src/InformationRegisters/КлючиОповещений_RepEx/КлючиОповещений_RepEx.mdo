@@ -12,7 +12,7 @@
   <name>КлючиОповещений_RepEx</name>
   <synonym>
     <key>ru</key>
-    <value>Ключи оповещений rep ex</value>
+    <value>Ключи оповещений</value>
   </synonym>
   <useStandardCommands>true</useStandardCommands>
   <editType>InDialog</editType>
