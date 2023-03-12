@@ -136,6 +136,7 @@
 				systemErrorInfo = Неопределено;
 				Если элемОшибки.Значение.Свойство("systemErrorInfo",systemErrorInfo) Тогда
 					systemErrorInfo.Свойство("clientStackHash",ОтчетОбОшибке.clientStackHash);	
+					systemErrorInfo.Свойство("serverStackHash",ОтчетОбОшибке.serverStackHash);	
 					//элемОшибки.Значение.Удалить("systemErrorInfo"); //почему то терям clientStackHash
 				КонецЕсли;
 				//заполним clientStackHash
@@ -151,7 +152,8 @@
 									ОтчетОбОшибке.Наименование = Ошибка;
 									Прервать;
 								КонецЕсли;		
-							КонецЦикла;		
+							КонецЦикла;
+							Прервать;		
 						КонецЕсли;			
 					КонецЦикла;		
 				КонецЕсли;					
