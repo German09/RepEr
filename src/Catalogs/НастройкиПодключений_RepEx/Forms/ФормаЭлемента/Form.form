@@ -148,10 +148,6 @@
       <chooseType>true</chooseType>
       <typeDomainEnabled>true</typeDomainEnabled>
       <textEdit>true</textEdit>
-      <inputHint>
-        <key>ru</key>
-        <value>https://jira.company.ru/</value>
-      </inputHint>
     </extInfo>
   </items>
   <items xsi:type="form:FormField">
@@ -308,10 +304,6 @@
       <chooseType>true</chooseType>
       <typeDomainEnabled>true</typeDomainEnabled>
       <textEdit>true</textEdit>
-      <inputHint>
-        <key>ru</key>
-        <value>RET</value>
-      </inputHint>
     </extInfo>
   </items>
   <autoCommandBar>

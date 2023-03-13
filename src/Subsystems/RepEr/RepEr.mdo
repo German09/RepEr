@@ -14,8 +14,7 @@
   <content>InformationRegister.Отчеты_RepEr</content>
   <content>ScheduledJob.РаспаковкаОтчетов_Reper</content>
   <content>CommonModule.ОбновлениеИнформационнойБазы_RepEr</content>
-  <content>Role.ПросмотрЛогов</content>
-  <content>Role.УправлениеЛогами</content>
+  <content>Role.ПросмотрИРегистрация_RepEr</content>
   <content>CommonModule.РегламентныеОперацииСервер_RepEr</content>
   <content>InformationRegister.Ошибки_RepEr</content>
   <content>Catalog.НастройкиПодключений_RepEx</content>

@@ -300,6 +300,7 @@
   <sessionParameters>SessionParameter.ТекущийВнешнийПользователь</sessionParameters>
   <sessionParameters>SessionParameter.ТекущийПользователь</sessionParameters>
   <sessionParameters>SessionParameter.УстановленныеРасширения</sessionParameters>
+  <roles>Role.ПросмотрИРегистрация_RepEr</roles>
   <roles>Role.АдминистраторСистемы</roles>
   <roles>Role.Администрирование</roles>
   <roles>Role.БазовыеПраваБСП</roles>
@@ -324,8 +325,6 @@
   <roles>Role.УдаленныйДоступБазоваяФункциональность</roles>
   <roles>Role.ЧтениеВнешнихПользователей</roles>
   <roles>Role.ЧтениеУчетныхЗаписейЭлектроннойПочты</roles>
-  <roles>Role.ПросмотрЛогов</roles>
-  <roles>Role.УправлениеЛогами</roles>
   <commonTemplates>CommonTemplate.ПолучениеДереваОбработчиковОбновления</commonTemplates>
   <commonModules>CommonModule.ОповещенияСерверJira_RepEx</commonModules>
   <commonModules>CommonModule.ОповещенияПереопредСервер_RepEr</commonModules>
