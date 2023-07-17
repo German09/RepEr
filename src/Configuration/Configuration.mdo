@@ -18,7 +18,7 @@
   <defaultRoles>Role.ПолныеПрава</defaultRoles>
   <defaultRoles>Role.АдминистраторСистемы</defaultRoles>
   <defaultRoles>Role.ИнтерактивноеОткрытиеВнешнихОтчетовИОбработок</defaultRoles>
-  <version>1.0.0.0</version>
+  <version>2.0.0.0</version>
   <usedMobileApplicationFunctionalities>
     <functionality>
       <use>true</use>
@@ -286,6 +286,7 @@
   <commonPictures>CommonPicture.ШтампЭлектроннойПодписи</commonPictures>
   <commonPictures>CommonPicture.УдалитьИнформация</commonPictures>
   <commonPictures>CommonPicture.РазделАдминистрирование</commonPictures>
+  <commonPictures>CommonPicture.RepEr</commonPictures>
   <sessionParameters>SessionParameter.АвторизованныйПользователь</sessionParameters>
   <sessionParameters>SessionParameter.БуферОбмена</sessionParameters>
   <sessionParameters>SessionParameter.ВерсияРасширений</sessionParameters>
@@ -326,6 +327,7 @@
   <roles>Role.ЧтениеВнешнихПользователей</roles>
   <roles>Role.ЧтениеУчетныхЗаписейЭлектроннойПочты</roles>
   <commonTemplates>CommonTemplate.ПолучениеДереваОбработчиковОбновления</commonTemplates>
+  <commonModules>CommonModule.ОбщегоНазначенияВызовСервера_RepEr</commonModules>
   <commonModules>CommonModule.ОповещенияСерверJira_RepEx</commonModules>
   <commonModules>CommonModule.ОповещенияПереопредСервер_RepEr</commonModules>
   <commonModules>CommonModule.КоннекторHTTP_RepEr</commonModules>

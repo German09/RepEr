@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataCompositionSchema xmlns="http://v8.1c.ru/8.1/data-composition-system/schema" xmlns:dcscom="http://v8.1c.ru/8.1/data-composition-system/common" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<dataSet xsi:type="DataSetQuery">
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Ссылка</dataPath>
+			<field>Ссылка</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ПометкаУдаления</dataPath>
+			<field>ПометкаУдаления</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Номер</dataPath>
+			<field>Номер</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Дата</dataPath>
+			<field>Дата</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Проведен</dataPath>
+			<field>Проведен</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ТекстОтчета</dataPath>
+			<field>ТекстОтчета</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Пояснение</dataPath>
+			<field>Пояснение</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ВремяОшибки</dataPath>
+			<field>ВремяОшибки</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Пользователь</dataPath>
+			<field>Пользователь</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ИнформационнаяБаза</dataPath>
+			<field>ИнформационнаяБаза</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>configHash</dataPath>
+			<field>configHash</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>appStackHash</dataPath>
+			<field>appStackHash</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>clientStackHash</dataPath>
+			<field>clientStackHash</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>serverStackHash</dataPath>
+			<field>serverStackHash</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Основание</dataPath>
+			<field>Основание</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Наименование</dataPath>
+			<field>Наименование</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Описания.Ссылка</dataPath>
+			<field>Описания.Ссылка</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Описания.НомерСтроки</dataPath>
+			<field>Описания.НомерСтроки</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Описания.Секция</dataPath>
+			<field>Описания.Секция</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Описания.Описание</dataPath>
+			<field>Описания.Описание</field>
+		</field>
+		<field xsi:type="DataSetFieldNestedDataSet">
+			<dataPath>Описания</dataPath>
+			<field>Описания</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Скриншоты.Ссылка</dataPath>
+			<field>Скриншоты.Ссылка</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Скриншоты.НомерСтроки</dataPath>
+			<field>Скриншоты.НомерСтроки</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Скриншоты.Имя</dataPath>
+			<field>Скриншоты.Имя</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Скриншоты.Расширение</dataPath>
+			<field>Скриншоты.Расширение</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Скриншоты.Размер</dataPath>
+			<field>Скриншоты.Размер</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Скриншоты.ДанныеХранилища</dataPath>
+			<field>Скриншоты.ДанныеХранилища</field>
+		</field>
+		<field xsi:type="DataSetFieldNestedDataSet">
+			<dataPath>Скриншоты</dataPath>
+			<field>Скриншоты</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Файлы.Ссылка</dataPath>
+			<field>Файлы.Ссылка</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Файлы.НомерСтроки</dataPath>
+			<field>Файлы.НомерСтроки</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Файлы.Имя</dataPath>
+			<field>Файлы.Имя</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Файлы.Расширение</dataPath>
+			<field>Файлы.Расширение</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Файлы.Размер</dataPath>
+			<field>Файлы.Размер</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Файлы.ДанныеХранилища</dataPath>
+			<field>Файлы.ДанныеХранилища</field>
+		</field>
+		<field xsi:type="DataSetFieldNestedDataSet">
+			<dataPath>Файлы</dataPath>
+			<field>Файлы</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Ошибки.Ссылка</dataPath>
+			<field>Ошибки.Ссылка</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Ошибки.НомерСтроки</dataPath>
+			<field>Ошибки.НомерСтроки</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Ошибки.Ошибка</dataPath>
+			<field>Ошибки.Ошибка</field>
+		</field>
+		<field xsi:type="DataSetFieldNestedDataSet">
+			<dataPath>Ошибки</dataPath>
+			<field>Ошибки</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Стек.Ссылка</dataPath>
+			<field>Стек.Ссылка</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Стек.НомерСтроки</dataPath>
+			<field>Стек.НомерСтроки</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Стек.Модуль</dataPath>
+			<field>Стек.Модуль</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Стек.СтрокаМодуля</dataPath>
+			<field>Стек.СтрокаМодуля</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Стек.Выражение</dataPath>
+			<field>Стек.Выражение</field>
+		</field>
+		<field xsi:type="DataSetFieldNestedDataSet">
+			<dataPath>Стек</dataPath>
+			<field>Стек</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>МоментВремени</dataPath>
+			<field>МоментВремени</field>
+		</field>
+		<query>ВЫБРАТЬ 
+       ОтчетыОбОшибках_RepEr.Ссылка, 
+       ОтчетыОбОшибках_RepEr.ПометкаУдаления, 
+       ОтчетыОбОшибках_RepEr.Номер, 
+       ОтчетыОбОшибках_RepEr.Дата, 
+       ОтчетыОбОшибках_RepEr.Проведен, 
+       ОтчетыОбОшибках_RepEr.ТекстОтчета, 
+       ОтчетыОбОшибках_RepEr.Пояснение, 
+       ОтчетыОбОшибках_RepEr.ВремяОшибки, 
+       ОтчетыОбОшибках_RepEr.Пользователь, 
+       ОтчетыОбОшибках_RepEr.ИнформационнаяБаза, 
+       ОтчетыОбОшибках_RepEr.configHash, 
+       ОтчетыОбОшибках_RepEr.appStackHash, 
+       ОтчетыОбОшибках_RepEr.clientStackHash, 
+       ОтчетыОбОшибках_RepEr.serverStackHash, 
+       ОтчетыОбОшибках_RepEr.Основание, 
+       ОтчетыОбОшибках_RepEr.Наименование, 
+       ОтчетыОбОшибках_RepEr.Описания.*, 
+       ОтчетыОбОшибках_RepEr.Скриншоты.*, 
+       ОтчетыОбОшибках_RepEr.Файлы.*, 
+       ОтчетыОбОшибках_RepEr.Ошибки.*, 
+       ОтчетыОбОшибках_RepEr.Стек.*, 
+       ОтчетыОбОшибках_RepEr.МоментВремени
+ ИЗ 
+       Документ.ОтчетыОбОшибках_RepEr
+ КАК 
+       ОтчетыОбОшибках_RepEr</query>
+	</dataSet>
+</DataCompositionSchema>

@@ -252,50 +252,6 @@
     <usePurposes>PersonalComputer</usePurposes>
     <usePurposes>MobileDevice</usePurposes>
   </forms>
-  <tabularSections uuid="4fc9001b-84c2-4ccd-8141-f89e0388ae71">
-    <producedTypes>
-      <objectType typeId="f8836a4c-8438-40c6-bbf5-62b9f4b20138" valueTypeId="702a79fc-9005-4054-a5d3-ba02bdff6684"/>
-      <rowType typeId="751cc971-fb72-48d1-b0ec-c871ccf8977a" valueTypeId="0531d9e5-d400-4117-9669-e43c5ee39855"/>
-    </producedTypes>
-    <name>Описания</name>
-    <synonym>
-      <key>ru</key>
-      <value>Описания</value>
-    </synonym>
-    <attributes uuid="e6ae2950-0290-4575-8cca-55c53db182f9">
-      <name>Секция</name>
-      <synonym>
-        <key>ru</key>
-        <value>Секция</value>
-      </synonym>
-      <type>
-        <types>String</types>
-        <stringQualifiers>
-          <length>20</length>
-        </stringQualifiers>
-      </type>
-      <minValue xsi:type="core:UndefinedValue"/>
-      <maxValue xsi:type="core:UndefinedValue"/>
-      <dataHistory>Use</dataHistory>
-      <fullTextSearch>Use</fullTextSearch>
-    </attributes>
-    <attributes uuid="8d3375c8-1ae5-4d4a-9a4a-c000f5d4eb6e">
-      <name>Описание</name>
-      <synonym>
-        <key>ru</key>
-        <value>Описание</value>
-      </synonym>
-      <type>
-        <types>String</types>
-        <stringQualifiers/>
-      </type>
-      <multiLine>true</multiLine>
-      <minValue xsi:type="core:UndefinedValue"/>
-      <maxValue xsi:type="core:UndefinedValue"/>
-      <dataHistory>Use</dataHistory>
-      <fullTextSearch>Use</fullTextSearch>
-    </attributes>
-  </tabularSections>
   <tabularSections uuid="2b569d51-34f0-4972-b245-f63515b6fa45">
     <producedTypes>
       <objectType typeId="d291d1dd-9252-49ef-97ae-b859be6c1a1e" valueTypeId="3cb2e708-3247-41e4-b5a2-075d943f8709"/>
@@ -450,4 +406,123 @@
       <fullTextSearch>Use</fullTextSearch>
     </attributes>
   </tabularSections>
+  <tabularSections uuid="6b08d642-9e68-48bd-a196-375fc7b818d6">
+    <producedTypes>
+      <objectType typeId="68560f37-6147-4c20-b099-2e2676953ee1" valueTypeId="b1215335-052c-4981-92b5-99e531a20644"/>
+      <rowType typeId="ac0ce20d-3092-465a-807d-453312f40108" valueTypeId="88400e12-48cc-40a4-ba83-36ad8ac44be6"/>
+    </producedTypes>
+    <name>Ошибки</name>
+    <synonym>
+      <key>ru</key>
+      <value>Ошибки</value>
+    </synonym>
+    <attributes uuid="449e7c2d-50cb-42b0-9fc9-6da060a423fa">
+      <name>Ошибка</name>
+      <synonym>
+        <key>ru</key>
+        <value>Текст ошибки</value>
+      </synonym>
+      <type>
+        <types>String</types>
+        <stringQualifiers/>
+      </type>
+      <minValue xsi:type="core:UndefinedValue"/>
+      <maxValue xsi:type="core:UndefinedValue"/>
+      <dataHistory>Use</dataHistory>
+      <fullTextSearch>Use</fullTextSearch>
+    </attributes>
+    <attributes uuid="9ecb3c07-1084-49b0-aaf6-3ab0dafe2256">
+      <name>Тип</name>
+      <synonym>
+        <key>ru</key>
+        <value>Тип</value>
+      </synonym>
+      <type>
+        <types>String</types>
+        <stringQualifiers>
+          <length>100</length>
+        </stringQualifiers>
+      </type>
+      <minValue xsi:type="core:UndefinedValue"/>
+      <maxValue xsi:type="core:UndefinedValue"/>
+      <dataHistory>Use</dataHistory>
+      <fullTextSearch>Use</fullTextSearch>
+    </attributes>
+  </tabularSections>
+  <tabularSections uuid="5ce7cdab-28c7-41d4-995d-48462e9c72a4">
+    <producedTypes>
+      <objectType typeId="b8c086e8-7dab-437d-93a9-e4b97743b515" valueTypeId="bcc0fc31-dc29-48f6-ad0e-f0f48b259b17"/>
+      <rowType typeId="bb19df5c-d308-4d96-95d9-24b759c23522" valueTypeId="a574a8bb-8454-41eb-93a3-62a50a4e75e3"/>
+    </producedTypes>
+    <name>Стек</name>
+    <synonym>
+      <key>ru</key>
+      <value>Стек</value>
+    </synonym>
+    <attributes uuid="4601aca7-26b6-47c3-92ed-791e72b5ca3d">
+      <name>Модуль</name>
+      <synonym>
+        <key>ru</key>
+        <value>Модуль</value>
+      </synonym>
+      <type>
+        <types>String</types>
+        <stringQualifiers/>
+      </type>
+      <minValue xsi:type="core:UndefinedValue"/>
+      <maxValue xsi:type="core:UndefinedValue"/>
+      <dataHistory>Use</dataHistory>
+      <fullTextSearch>Use</fullTextSearch>
+    </attributes>
+    <attributes uuid="f602de9f-7e91-4054-ae00-a75a539698ee">
+      <name>НомерСтрокиМодуля</name>
+      <synonym>
+        <key>ru</key>
+        <value>Номер строки модуля</value>
+      </synonym>
+      <type>
+        <types>Number</types>
+        <numberQualifiers>
+          <precision>10</precision>
+          <nonNegative>true</nonNegative>
+        </numberQualifiers>
+      </type>
+      <minValue xsi:type="core:UndefinedValue"/>
+      <maxValue xsi:type="core:UndefinedValue"/>
+      <dataHistory>Use</dataHistory>
+      <fullTextSearch>Use</fullTextSearch>
+    </attributes>
+    <attributes uuid="682babb9-7482-45eb-bbcf-bc6b4630076e">
+      <name>СтрокаМодуля</name>
+      <synonym>
+        <key>ru</key>
+        <value>Строка модуля</value>
+      </synonym>
+      <type>
+        <types>String</types>
+        <stringQualifiers/>
+      </type>
+      <minValue xsi:type="core:UndefinedValue"/>
+      <maxValue xsi:type="core:UndefinedValue"/>
+      <dataHistory>Use</dataHistory>
+      <fullTextSearch>Use</fullTextSearch>
+    </attributes>
+  </tabularSections>
+  <commands uuid="211bfeb3-a146-4a34-9981-dccde56164ea">
+    <name>Заполнить</name>
+    <synonym>
+      <key>ru</key>
+      <value>Заполнить</value>
+    </synonym>
+    <group>FormCommandBarImportant</group>
+    <commandParameterType>
+      <types>DocumentRef.ОтчетыОбОшибках_RepEr</types>
+    </commandParameterType>
+    <parameterUseMode>Multiple</parameterUseMode>
+    <modifiesData>true</modifiesData>
+    <representation>PictureAndText</representation>
+    <picture xsi:type="core:PictureRef">
+      <picture>CommonPicture.ЗаполнитьФорму</picture>
+    </picture>
+  </commands>
 </mdclass:Document>

@@ -37,6 +37,24 @@
   </predefined>
   <editType>InDialog</editType>
   <choiceMode>BothWays</choiceMode>
+  <defaultObjectForm>Catalog.ИнформационныеБазы_RepEr.Form.ФормаЭлемента</defaultObjectForm>
+  <attributes uuid="9f4078dd-8cc1-4dc0-aef8-c51654fce526">
+    <name>Репозиторий</name>
+    <synonym>
+      <key>ru</key>
+      <value>Репозиторий</value>
+    </synonym>
+    <comment>URL</comment>
+    <type>
+      <types>String</types>
+      <stringQualifiers/>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+  </attributes>
   <tabularSections uuid="97153858-790a-4cb0-b503-0260e308a6c4">
     <producedTypes>
       <objectType typeId="93bf9f69-50d7-43ba-a920-1934761b8088" valueTypeId="c3443cd0-ec50-45b1-9fa0-be1e93e3ea26"/>
@@ -90,4 +108,41 @@
       <fullTextSearch>Use</fullTextSearch>
     </attributes>
   </tabularSections>
+  <tabularSections uuid="fad59750-f7cc-43e2-859e-562b6b2618f7">
+    <producedTypes>
+      <objectType typeId="6c0e8102-3225-4b73-a45c-23ec44e2526b" valueTypeId="c9856e59-ba4d-4eba-87de-93033583c44f"/>
+      <rowType typeId="e9c0b22d-86c6-43ae-816a-ca336c21fdb0" valueTypeId="7543569f-6971-4e38-be0c-0620137af330"/>
+    </producedTypes>
+    <name>Исключения</name>
+    <synonym>
+      <key>ru</key>
+      <value>Исключения</value>
+    </synonym>
+    <attributes uuid="d7b5d865-e593-41d2-be38-5936979f51f3">
+      <name>Ошибка</name>
+      <synonym>
+        <key>ru</key>
+        <value>Ошибка</value>
+      </synonym>
+      <type>
+        <types>String</types>
+        <stringQualifiers>
+          <length>150</length>
+        </stringQualifiers>
+      </type>
+      <minValue xsi:type="core:UndefinedValue"/>
+      <maxValue xsi:type="core:UndefinedValue"/>
+      <dataHistory>Use</dataHistory>
+      <fullTextSearch>Use</fullTextSearch>
+    </attributes>
+  </tabularSections>
+  <forms uuid="78c30a2a-5688-4fb8-b494-6ebe7f6c13b6">
+    <name>ФормаЭлемента</name>
+    <synonym>
+      <key>ru</key>
+      <value>Форма элемента</value>
+    </synonym>
+    <usePurposes>PersonalComputer</usePurposes>
+    <usePurposes>MobileDevice</usePurposes>
+  </forms>
 </mdclass:Catalog>

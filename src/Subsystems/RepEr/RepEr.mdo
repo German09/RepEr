@@ -8,7 +8,7 @@
   <includeHelpInContents>true</includeHelpInContents>
   <includeInCommandInterface>true</includeInCommandInterface>
   <picture xsi:type="core:PictureRef">
-    <picture>CommonPicture.МетаданныеБоты</picture>
+    <picture>CommonPicture.RepEr</picture>
   </picture>
   <content>Document.ОтчетыОбОшибках_RepEr</content>
   <content>InformationRegister.Отчеты_RepEr</content>
