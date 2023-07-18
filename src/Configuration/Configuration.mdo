@@ -18,7 +18,7 @@
   <defaultRoles>Role.ПолныеПрава</defaultRoles>
   <defaultRoles>Role.АдминистраторСистемы</defaultRoles>
   <defaultRoles>Role.ИнтерактивноеОткрытиеВнешнихОтчетовИОбработок</defaultRoles>
-  <version>2.0.0.0</version>
+  <version>2.1.4.0</version>
   <usedMobileApplicationFunctionalities>
     <functionality>
       <use>true</use>
@@ -327,6 +327,7 @@
   <roles>Role.ЧтениеВнешнихПользователей</roles>
   <roles>Role.ЧтениеУчетныхЗаписейЭлектроннойПочты</roles>
   <commonTemplates>CommonTemplate.ПолучениеДереваОбработчиковОбновления</commonTemplates>
+  <commonModules>CommonModule.ОбновлениеИнформационнойБазы_RepEr</commonModules>
   <commonModules>CommonModule.ОбщегоНазначенияВызовСервера_RepEr</commonModules>
   <commonModules>CommonModule.ОповещенияСерверJira_RepEx</commonModules>
   <commonModules>CommonModule.ОповещенияПереопредСервер_RepEr</commonModules>
@@ -334,7 +335,6 @@
   <commonModules>CommonModule.ОбщегоНазначенияСервер_RepEr</commonModules>
   <commonModules>CommonModule.ОбщегоНазначенияСерверПовтИсп_RepEr</commonModules>
   <commonModules>CommonModule.РегламентныеОперацииСервер_RepEr</commonModules>
-  <commonModules>CommonModule.ОбновлениеИнформационнойБазы_RepEr</commonModules>
   <commonModules>CommonModule.GoogleПереводчик</commonModules>
   <commonModules>CommonModule.АдминистрированиеКластераCOM</commonModules>
   <commonModules>CommonModule.АдминистрированиеКластераCOMКлиентСервер</commonModules>
