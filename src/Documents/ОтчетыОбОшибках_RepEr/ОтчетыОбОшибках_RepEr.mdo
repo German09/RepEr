@@ -525,4 +525,16 @@
       <picture>CommonPicture.ЗаполнитьФорму</picture>
     </picture>
   </commands>
+  <commands uuid="eacb1df2-56ad-406c-9437-8d8a1949327d">
+    <name>Исправить</name>
+    <synonym>
+      <key>ru</key>
+      <value>Исправить</value>
+    </synonym>
+    <group>FormCommandBarImportant</group>
+    <commandParameterType>
+      <types>DocumentRef.ОтчетыОбОшибках_RepEr</types>
+    </commandParameterType>
+    <representation>Auto</representation>
+  </commands>
 </mdclass:Document>
