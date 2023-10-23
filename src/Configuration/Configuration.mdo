@@ -18,7 +18,7 @@
   <defaultRoles>Role.ПолныеПрава</defaultRoles>
   <defaultRoles>Role.АдминистраторСистемы</defaultRoles>
   <defaultRoles>Role.ИнтерактивноеОткрытиеВнешнихОтчетовИОбработок</defaultRoles>
-  <version>2.1.4.0</version>
+  <version>2.1.5.0</version>
   <usedMobileApplicationFunctionalities>
     <functionality>
       <use>true</use>
