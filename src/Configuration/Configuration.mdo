@@ -327,6 +327,7 @@
   <roles>Role.ЧтениеВнешнихПользователей</roles>
   <roles>Role.ЧтениеУчетныхЗаписейЭлектроннойПочты</roles>
   <commonTemplates>CommonTemplate.ПолучениеДереваОбработчиковОбновления</commonTemplates>
+  <commonModules>CommonModule.МодификацияКонфигурацииПереопределяемый</commonModules>
   <commonModules>CommonModule.ОбновлениеИнформационнойБазы_RepEr</commonModules>
   <commonModules>CommonModule.ОбщегоНазначенияВызовСервера_RepEr</commonModules>
   <commonModules>CommonModule.ОповещенияСерверJira_RepEx</commonModules>
