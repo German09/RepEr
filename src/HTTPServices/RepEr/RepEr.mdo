@@ -42,4 +42,20 @@
       <handler>pushReport</handler>
     </methods>
   </urlTemplates>
+  <urlTemplates uuid="b84aeb50-62bb-4ced-9ada-513fc833ef21">
+    <name>Версия</name>
+    <synonym>
+      <key>ru</key>
+      <value>Версия</value>
+    </synonym>
+    <template>/version</template>
+    <methods uuid="d29c7d75-3a92-440b-aca3-ee0e119b8480">
+      <name>Получить</name>
+      <synonym>
+        <key>ru</key>
+        <value>Получить</value>
+      </synonym>
+      <handler>ВерсияПолучить</handler>
+    </methods>
+  </urlTemplates>
 </mdclass:HTTPService>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:CommonModule xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="d046b8d3-c414-4f7a-a5e5-f23e6066fbd0">
+  <name>РепозиторииGitLab_RepEr</name>
+  <synonym>
+    <key>ru</key>
+    <value>Репозитории git lab rep er</value>
+  </synonym>
+  <server>true</server>
+  <externalConnection>true</externalConnection>
+  <clientOrdinaryApplication>true</clientOrdinaryApplication>
+</mdclass:CommonModule>

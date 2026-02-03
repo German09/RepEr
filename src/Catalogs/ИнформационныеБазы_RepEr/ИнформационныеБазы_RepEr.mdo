@@ -38,23 +38,6 @@
   <editType>InDialog</editType>
   <choiceMode>BothWays</choiceMode>
   <defaultObjectForm>Catalog.ИнформационныеБазы_RepEr.Form.ФормаЭлемента</defaultObjectForm>
-  <attributes uuid="9f4078dd-8cc1-4dc0-aef8-c51654fce526">
-    <name>Репозиторий</name>
-    <synonym>
-      <key>ru</key>
-      <value>Репозиторий</value>
-    </synonym>
-    <comment>URL</comment>
-    <type>
-      <types>String</types>
-      <stringQualifiers/>
-    </type>
-    <minValue xsi:type="core:UndefinedValue"/>
-    <maxValue xsi:type="core:UndefinedValue"/>
-    <fillValue xsi:type="core:UndefinedValue"/>
-    <fullTextSearch>Use</fullTextSearch>
-    <dataHistory>Use</dataHistory>
-  </attributes>
   <tabularSections uuid="97153858-790a-4cb0-b503-0260e308a6c4">
     <producedTypes>
       <objectType typeId="93bf9f69-50d7-43ba-a920-1934761b8088" valueTypeId="c3443cd0-ec50-45b1-9fa0-be1e93e3ea26"/>
@@ -94,6 +77,59 @@
       <fullTextSearch>Use</fullTextSearch>
     </attributes>
     <attributes uuid="7ba8914f-9eb5-4f0d-aa9c-c70a7431b2c3">
+      <name>НастройкаПодключения</name>
+      <synonym>
+        <key>ru</key>
+        <value>Настройка подключения</value>
+      </synonym>
+      <type>
+        <types>CatalogRef.НастройкиПодключений_RepEx</types>
+      </type>
+      <minValue xsi:type="core:UndefinedValue"/>
+      <maxValue xsi:type="core:UndefinedValue"/>
+      <dataHistory>Use</dataHistory>
+      <fullTextSearch>Use</fullTextSearch>
+    </attributes>
+  </tabularSections>
+  <tabularSections uuid="63c8e490-3de0-4d1b-8931-8e4234f6c775">
+    <producedTypes>
+      <objectType typeId="0c117f54-62eb-4a02-8d6c-17e74e871943" valueTypeId="227ad985-0fe4-41e0-aa1e-28be6487f09d"/>
+      <rowType typeId="25f0c8cd-08a0-4fa2-b886-440bd6997510" valueTypeId="ca89a660-36bb-497e-ac30-c70f8fd69c83"/>
+    </producedTypes>
+    <name>Репозитории</name>
+    <synonym>
+      <key>ru</key>
+      <value>Репозитории</value>
+    </synonym>
+    <attributes uuid="c6c2d548-c747-4ea4-8840-a5ca116efc4f">
+      <name>Использовать</name>
+      <synonym>
+        <key>ru</key>
+        <value>Использовать</value>
+      </synonym>
+      <type>
+        <types>Boolean</types>
+      </type>
+      <minValue xsi:type="core:UndefinedValue"/>
+      <maxValue xsi:type="core:UndefinedValue"/>
+      <dataHistory>Use</dataHistory>
+      <fullTextSearch>Use</fullTextSearch>
+    </attributes>
+    <attributes uuid="deade5e2-3ceb-4b6c-823b-ef4fc5ded037">
+      <name>ТипРепозитория</name>
+      <synonym>
+        <key>ru</key>
+        <value>Тип репозитория</value>
+      </synonym>
+      <type>
+        <types>EnumRef.ТипыРепозиториев_RepEr</types>
+      </type>
+      <minValue xsi:type="core:UndefinedValue"/>
+      <maxValue xsi:type="core:UndefinedValue"/>
+      <dataHistory>Use</dataHistory>
+      <fullTextSearch>Use</fullTextSearch>
+    </attributes>
+    <attributes uuid="dd0b1ff4-5b0a-413c-9c00-c6a4a3650331">
       <name>НастройкаПодключения</name>
       <synonym>
         <key>ru</key>

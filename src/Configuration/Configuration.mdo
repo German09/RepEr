@@ -18,7 +18,8 @@
   <defaultRoles>Role.ПолныеПрава</defaultRoles>
   <defaultRoles>Role.АдминистраторСистемы</defaultRoles>
   <defaultRoles>Role.ИнтерактивноеОткрытиеВнешнихОтчетовИОбработок</defaultRoles>
-  <version>2.1.5.0</version>
+  <vendor>https://github.com/German09/RepEr</vendor>
+  <version>3.1.1.0</version>
   <usedMobileApplicationFunctionalities>
     <functionality>
       <use>true</use>
@@ -327,15 +328,20 @@
   <roles>Role.ЧтениеВнешнихПользователей</roles>
   <roles>Role.ЧтениеУчетныхЗаписейЭлектроннойПочты</roles>
   <commonTemplates>CommonTemplate.ПолучениеДереваОбработчиковОбновления</commonTemplates>
-  <commonModules>CommonModule.МодификацияКонфигурацииПереопределяемый</commonModules>
+  <commonModules>CommonModule.РепозиторииGitLab_RepEr</commonModules>
+  <commonModules>CommonModule.Репозитории_RepEr</commonModules>
   <commonModules>CommonModule.ОбновлениеИнформационнойБазы_RepEr</commonModules>
+  <commonModules>CommonModule.ОповещенияJira_RepEx</commonModules>
+  <commonModules>CommonModule.Оповещения_RepEr</commonModules>
+  <commonModules>CommonModule.ОбщегоНазначения_RepEr</commonModules>
   <commonModules>CommonModule.ОбщегоНазначенияВызовСервера_RepEr</commonModules>
-  <commonModules>CommonModule.ОповещенияСерверJira_RepEx</commonModules>
-  <commonModules>CommonModule.ОповещенияПереопредСервер_RepEr</commonModules>
+  <commonModules>CommonModule.ОбщегоНазначенияКлиентСервер_RepEr</commonModules>
+  <commonModules>CommonModule.ОбщегоНазначенияПовтИсп_RepEr</commonModules>
+  <commonModules>CommonModule.РегламентныеОперацииПолныеПрава_RepEr</commonModules>
   <commonModules>CommonModule.КоннекторHTTP_RepEr</commonModules>
-  <commonModules>CommonModule.ОбщегоНазначенияСервер_RepEr</commonModules>
-  <commonModules>CommonModule.ОбщегоНазначенияСерверПовтИсп_RepEr</commonModules>
-  <commonModules>CommonModule.РегламентныеОперацииСервер_RepEr</commonModules>
+  <commonModules>CommonModule.КоннекторHTTPКлиент_RepEr</commonModules>
+  <commonModules>CommonModule.КоннекторHTTPКлиентСервер_RepEr</commonModules>
+  <commonModules>CommonModule.МодификацияКонфигурацииПереопределяемый</commonModules>
   <commonModules>CommonModule.GoogleПереводчик</commonModules>
   <commonModules>CommonModule.АдминистрированиеКластераCOM</commonModules>
   <commonModules>CommonModule.АдминистрированиеКластераCOMКлиентСервер</commonModules>
@@ -457,6 +463,7 @@
   <functionalOptions>FunctionalOption.ИспользоватьГруппыВнешнихПользователей</functionalOptions>
   <functionalOptions>FunctionalOption.СтандартныеПодсистемыВЛокальномРежиме</functionalOptions>
   <functionalOptions>FunctionalOption.СтандартныеПодсистемыВМоделиСервиса</functionalOptions>
+  <definedTypes>DefinedType.СсылкиApi_RegExp</definedTypes>
   <definedTypes>DefinedType.ВнешнийПользователь</definedTypes>
   <definedTypes>DefinedType.ВнешнийПользовательОбъект</definedTypes>
   <definedTypes>DefinedType.МестоХраненияФункциональныхОпций</definedTypes>
@@ -464,6 +471,7 @@
   <definedTypes>DefinedType.Подразделение</definedTypes>
   <definedTypes>DefinedType.Пользователь</definedTypes>
   <definedTypes>DefinedType.ФизическоеЛицо</definedTypes>
+  <commonCommands>CommonCommand.API_RegEx</commonCommands>
   <commonCommands>CommonCommand.ВремяТекущегоСеанса</commonCommands>
   <commonCommands>CommonCommand.НастройкаСистемнойУчетнойЗаписиЭлектроннойПочты</commonCommands>
   <commonCommands>CommonCommand.ПредупрежденияПриЗавершенииРаботы</commonCommands>
@@ -540,6 +548,7 @@
   <catalogs>Catalog.УчетныеЗаписиЭлектроннойПочты</catalogs>
   <catalogs>Catalog.ЯзыкиПечатныхФорм</catalogs>
   <documents>Document.ОтчетыОбОшибках_RepEr</documents>
+  <enums>Enum.ТипыРепозиториев_RepEr</enums>
   <enums>Enum.ТипыОповещений_RepEx</enums>
   <enums>Enum.РежимыВыполненияОбработчиков</enums>
   <enums>Enum.РежимыВыполненияОтложенныхОбработчиков</enums>

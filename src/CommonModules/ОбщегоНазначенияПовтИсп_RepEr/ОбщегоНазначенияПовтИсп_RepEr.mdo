@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mdclass:CommonModule xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="864e8d0f-797f-4d9a-8fcd-2de844b24f20">
-  <name>ОбщегоНазначенияСерверПовтИсп_RepEr</name>
+  <name>ОбщегоНазначенияПовтИсп_RepEr</name>
   <synonym>
     <key>ru</key>
-    <value>Общего назначения сервер повт исп rep er</value>
+    <value>Общего назначения повт исп rep er</value>
   </synonym>
   <server>true</server>
   <externalConnection>true</externalConnection>

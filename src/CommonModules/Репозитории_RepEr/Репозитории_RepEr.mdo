@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mdclass:CommonModule xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="a0a87f35-83d6-4b57-88d2-4c2d459d3cfa">
-  <name>ОповещенияСерверJira_RepEx</name>
+<mdclass:CommonModule xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="20ed6bbd-8529-4be7-9708-3e3a0787387d">
+  <name>Репозитории_RepEr</name>
   <synonym>
     <key>ru</key>
-    <value>Оповещения сервер jira rep ex</value>
+    <value>Репозитории rep er</value>
   </synonym>
   <server>true</server>
   <externalConnection>true</externalConnection>

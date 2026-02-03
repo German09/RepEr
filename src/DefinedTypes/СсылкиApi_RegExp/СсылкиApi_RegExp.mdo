@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:DefinedType xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="f1bb7eea-490b-4ae7-9cc2-d653ea3f08ac">
+  <producedTypes>
+    <containerType typeId="325163f6-b8ad-42e7-bdb2-3a10888cb3fb" valueTypeId="9bd487f4-7f72-40ec-9ef8-2277e07d8ebc"/>
+  </producedTypes>
+  <name>СсылкиApi_RegExp</name>
+  <type>
+    <types>DocumentRef.ОтчетыОбОшибках_RepEr</types>
+  </type>
+</mdclass:DefinedType>
