@@ -328,6 +328,7 @@
   <roles>Role.ЧтениеВнешнихПользователей</roles>
   <roles>Role.ЧтениеУчетныхЗаписейЭлектроннойПочты</roles>
   <commonTemplates>CommonTemplate.ПолучениеДереваОбработчиковОбновления</commonTemplates>
+  <commonModules>CommonModule.РепозиторииПовтИсп_RepEr</commonModules>
   <commonModules>CommonModule.РепозиторииGitLab_RepEr</commonModules>
   <commonModules>CommonModule.Репозитории_RepEr</commonModules>
   <commonModules>CommonModule.ОбновлениеИнформационнойБазы_RepEr</commonModules>
