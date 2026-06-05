@@ -179,6 +179,13 @@
 		</right>
 	</object>
 	<object>
+		<name>HTTPService.RepEr.URLTemplate.Версия.Method.Получить</name>
+		<right>
+			<name>Use</name>
+			<value>true</value>
+		</right>
+	</object>
+	<object>
 		<name>Document.ОтчетыОбОшибках_RepEr</name>
 		<right>
 			<name>Read</name>
