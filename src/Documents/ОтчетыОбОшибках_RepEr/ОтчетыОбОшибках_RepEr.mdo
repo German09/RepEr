@@ -460,6 +460,23 @@
       <key>ru</key>
       <value>Стек</value>
     </synonym>
+    <attributes uuid="3c62eb9b-aa96-4a08-8553-31aeed90ec84">
+      <name>Расширение</name>
+      <synonym>
+        <key>ru</key>
+        <value>Расширение</value>
+      </synonym>
+      <type>
+        <types>String</types>
+        <stringQualifiers>
+          <length>100</length>
+        </stringQualifiers>
+      </type>
+      <minValue xsi:type="core:UndefinedValue"/>
+      <maxValue xsi:type="core:UndefinedValue"/>
+      <dataHistory>Use</dataHistory>
+      <fullTextSearch>Use</fullTextSearch>
+    </attributes>
     <attributes uuid="4601aca7-26b6-47c3-92ed-791e72b5ca3d">
       <name>Модуль</name>
       <synonym>
