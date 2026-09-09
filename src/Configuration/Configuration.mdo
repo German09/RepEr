@@ -332,6 +332,7 @@
   <commonModules>CommonModule.РепозиторииGitLab_RepEr</commonModules>
   <commonModules>CommonModule.Репозитории_RepEr</commonModules>
   <commonModules>CommonModule.ОбновлениеИнформационнойБазы_RepEr</commonModules>
+  <commonModules>CommonModule.ОповещенияGitHub_RepEx</commonModules>
   <commonModules>CommonModule.ОповещенияJira_RepEx</commonModules>
   <commonModules>CommonModule.Оповещения_RepEr</commonModules>
   <commonModules>CommonModule.ОбщегоНазначения_RepEr</commonModules>

@@ -19,4 +19,11 @@
       <value>Jira</value>
     </synonym>
   </enumValues>
+  <enumValues uuid="3576019d-0ced-40ac-9056-9c0f5a4f583f">
+    <name>GitHub</name>
+    <synonym>
+      <key>ru</key>
+      <value>GitHub</value>
+    </synonym>
+  </enumValues>
 </mdclass:Enum>
