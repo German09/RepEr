@@ -63,14 +63,18 @@
       <fullTextSearch>Use</fullTextSearch>
     </attributes>
     <attributes uuid="cb2c1e25-2323-4894-9786-1cad81bfac30">
-      <name>ТипОповещения</name>
+      <name>УдалитьТипОповещения</name>
       <synonym>
         <key>ru</key>
-        <value>Тип оповещения</value>
+        <value>Удалить тип оповещения</value>
       </synonym>
       <type>
-        <types>EnumRef.ТипыОповещений_RepEx</types>
+        <types>EnumRef.Провайдер_RepEx</types>
       </type>
+      <toolTip>
+        <key>ru</key>
+        <value>Устарел. Провайдер указывается в настройке подключения</value>
+      </toolTip>
       <minValue xsi:type="core:UndefinedValue"/>
       <maxValue xsi:type="core:UndefinedValue"/>
       <dataHistory>Use</dataHistory>
@@ -109,20 +113,6 @@
       </synonym>
       <type>
         <types>Boolean</types>
-      </type>
-      <minValue xsi:type="core:UndefinedValue"/>
-      <maxValue xsi:type="core:UndefinedValue"/>
-      <dataHistory>Use</dataHistory>
-      <fullTextSearch>Use</fullTextSearch>
-    </attributes>
-    <attributes uuid="deade5e2-3ceb-4b6c-823b-ef4fc5ded037">
-      <name>ТипРепозитория</name>
-      <synonym>
-        <key>ru</key>
-        <value>Тип репозитория</value>
-      </synonym>
-      <type>
-        <types>EnumRef.ТипыРепозиториев_RepEr</types>
       </type>
       <minValue xsi:type="core:UndefinedValue"/>
       <maxValue xsi:type="core:UndefinedValue"/>

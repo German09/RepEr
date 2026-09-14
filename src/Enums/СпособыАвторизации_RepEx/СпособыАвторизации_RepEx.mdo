@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Enum xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="801e9dbb-8fed-49ea-9393-b3df11043442">
+  <producedTypes>
+    <refType typeId="06e931ec-693a-4428-b85f-34fa95d672f1" valueTypeId="8cb73976-e9e5-4eb9-a4d0-59e04ce37210"/>
+    <listType typeId="bb9e93b8-8226-427f-95df-f1e0bc0dd325" valueTypeId="46d73781-052f-45bc-b218-d873a6fc6913"/>
+    <managerType typeId="4eab340e-3551-42f5-a51b-6d947dbba011" valueTypeId="b5350f70-b38e-4162-961a-f7b1300fa850"/>
+  </producedTypes>
+  <name>СпособыАвторизации_RepEx</name>
+  <synonym>
+    <key>ru</key>
+    <value>Способы авторизации</value>
+  </synonym>
+  <quickChoice>true</quickChoice>
+  <choiceMode>BothWays</choiceMode>
+  <enumValues uuid="c3ddf71d-2ac3-45c4-ae8c-a21077f7da94">
+    <name>Пароль</name>
+    <synonym>
+      <key>ru</key>
+      <value>По паролю</value>
+    </synonym>
+  </enumValues>
+  <enumValues uuid="51cbb278-997f-41dd-a90a-613a7cab9b4d">
+    <name>Токен</name>
+    <synonym>
+      <key>ru</key>
+      <value>По токену</value>
+    </synonym>
+  </enumValues>
+</mdclass:Enum>

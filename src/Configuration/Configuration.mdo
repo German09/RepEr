@@ -19,7 +19,7 @@
   <defaultRoles>Role.АдминистраторСистемы</defaultRoles>
   <defaultRoles>Role.ИнтерактивноеОткрытиеВнешнихОтчетовИОбработок</defaultRoles>
   <vendor>https://github.com/German09/RepEr</vendor>
-  <version>3.2.1.0</version>
+  <version>3.3.1.0</version>
   <usedMobileApplicationFunctionalities>
     <functionality>
       <use>true</use>
@@ -550,8 +550,8 @@
   <catalogs>Catalog.УчетныеЗаписиЭлектроннойПочты</catalogs>
   <catalogs>Catalog.ЯзыкиПечатныхФорм</catalogs>
   <documents>Document.ОтчетыОбОшибках_RepEr</documents>
-  <enums>Enum.ТипыРепозиториев_RepEr</enums>
-  <enums>Enum.ТипыОповещений_RepEx</enums>
+  <enums>Enum.Провайдер_RepEx</enums>
+  <enums>Enum.СпособыАвторизации_RepEx</enums>
   <enums>Enum.РежимыВыполненияОбработчиков</enums>
   <enums>Enum.РежимыВыполненияОтложенныхОбработчиков</enums>
   <enums>Enum.СервисыПереводаТекста</enums>

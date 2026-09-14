@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Enum xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="018dcbfd-8cee-4ad1-b553-3b85de98cd06">
+  <producedTypes>
+    <refType typeId="5a7ca02c-7217-4f6a-9210-a5511f440091" valueTypeId="8876a115-1384-4e44-96f5-fef377882420"/>
+    <listType typeId="bde7c2f7-8523-4a4a-9919-389fcd3f3552" valueTypeId="6fb89019-5f15-47de-a397-b96730edf465"/>
+    <managerType typeId="0618d1c3-9afe-4a29-b114-52143f7283c2" valueTypeId="aff49749-66b1-4a59-94c0-44a5bd60ffcd"/>
+  </producedTypes>
+  <name>Провайдер_RepEx</name>
+  <synonym>
+    <key>ru</key>
+    <value>Провайдер</value>
+  </synonym>
+  <quickChoice>true</quickChoice>
+  <choiceMode>BothWays</choiceMode>
+  <enumValues uuid="b17cde61-8b69-4fff-b4b0-8b156e8b9064">
+    <name>Jira</name>
+    <synonym>
+      <key>ru</key>
+      <value>Jira</value>
+    </synonym>
+  </enumValues>
+  <enumValues uuid="3576019d-0ced-40ac-9056-9c0f5a4f583f">
+    <name>GitHub</name>
+    <synonym>
+      <key>ru</key>
+      <value>GitHub</value>
+    </synonym>
+  </enumValues>
+  <enumValues uuid="73ae313e-3441-4302-bffe-00df278a1aec">
+    <name>GitLab</name>
+    <synonym>
+      <key>ru</key>
+      <value>GitLab</value>
+    </synonym>
+  </enumValues>
+</mdclass:Enum>

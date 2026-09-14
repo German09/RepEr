@@ -18,20 +18,6 @@
   <editType>InDialog</editType>
   <writeMode>RecorderSubordinate</writeMode>
   <dataLockControlMode>Managed</dataLockControlMode>
-  <dimensions uuid="fa92b295-9b71-462e-babd-2ce3bfb634cd">
-    <name>ТипОповещения</name>
-    <synonym>
-      <key>ru</key>
-      <value>Тип оповещения</value>
-    </synonym>
-    <type>
-      <types>EnumRef.ТипыОповещений_RepEx</types>
-    </type>
-    <minValue xsi:type="core:UndefinedValue"/>
-    <maxValue xsi:type="core:UndefinedValue"/>
-    <fullTextSearch>Use</fullTextSearch>
-    <dataHistory>Use</dataHistory>
-  </dimensions>
   <dimensions uuid="ef33917f-f8c7-43b1-8e13-d5463418d82c">
     <name>НастройкаПодключения</name>
     <synonym>

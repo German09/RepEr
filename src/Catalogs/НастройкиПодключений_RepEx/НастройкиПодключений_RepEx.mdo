@@ -31,6 +31,26 @@
   <editType>InDialog</editType>
   <choiceMode>BothWays</choiceMode>
   <defaultObjectForm>Catalog.НастройкиПодключений_RepEx.Form.ФормаЭлемента</defaultObjectForm>
+  <attributes uuid="ee576c08-3092-4b27-8308-80560052c7f8">
+    <name>Провайдер</name>
+    <synonym>
+      <key>ru</key>
+      <value>Провайдер</value>
+    </synonym>
+    <type>
+      <types>EnumRef.Провайдер_RepEx</types>
+    </type>
+    <toolTip>
+      <key>ru</key>
+      <value>Сервис, к которому выполняется подключение</value>
+    </toolTip>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>ShowError</fillChecking>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+  </attributes>
   <attributes uuid="50deb516-3870-4309-9eb3-b2998f76588d">
     <name>Адрес</name>
     <synonym>
@@ -43,6 +63,30 @@
         <length>150</length>
       </stringQualifiers>
     </type>
+    <toolTip>
+      <key>ru</key>
+      <value>Базовый адрес сервиса, например https://jira.company.ru</value>
+    </toolTip>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>ShowError</fillChecking>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+  </attributes>
+  <attributes uuid="c013c9e2-06ce-46ef-ac72-20306993f1f4">
+    <name>СпособАвторизации</name>
+    <synonym>
+      <key>ru</key>
+      <value>Способ авторизации</value>
+    </synonym>
+    <type>
+      <types>EnumRef.СпособыАвторизации_RepEx</types>
+    </type>
+    <toolTip>
+      <key>ru</key>
+      <value>По паролю - логин и пароль пользователя, по токену - персональный токен доступа</value>
+    </toolTip>
     <minValue xsi:type="core:UndefinedValue"/>
     <maxValue xsi:type="core:UndefinedValue"/>
     <fillChecking>ShowError</fillChecking>
@@ -62,18 +106,21 @@
         <length>150</length>
       </stringQualifiers>
     </type>
+    <toolTip>
+      <key>ru</key>
+      <value>Логин пользователя сервиса. Используется при авторизации по паролю</value>
+    </toolTip>
     <minValue xsi:type="core:UndefinedValue"/>
     <maxValue xsi:type="core:UndefinedValue"/>
-    <fillChecking>ShowError</fillChecking>
     <fillValue xsi:type="core:UndefinedValue"/>
     <fullTextSearch>Use</fullTextSearch>
     <dataHistory>Use</dataHistory>
   </attributes>
-  <attributes uuid="f4f67b7b-4230-4cc3-8625-c5b9d58bd37a">
-    <name>Разделитель</name>
+  <attributes uuid="95cc6b04-afd1-4445-a4b5-1403ce8c5530">
+    <name>Проект</name>
     <synonym>
       <key>ru</key>
-      <value>Разделитель</value>
+      <value>Проект</value>
     </synonym>
     <type>
       <types>String</types>
@@ -81,6 +128,32 @@
         <length>150</length>
       </stringQualifiers>
     </type>
+    <toolTip>
+      <key>ru</key>
+      <value>Идентификатор проекта: ключ проекта Jira, имя репозитория GitHub, идентификатор проекта GitLab</value>
+    </toolTip>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+  </attributes>
+  <attributes uuid="279b2082-70e5-4a75-971d-713af7e3f806">
+    <name>ПутьКИсходникам</name>
+    <synonym>
+      <key>ru</key>
+      <value>Путь к исходникам</value>
+    </synonym>
+    <type>
+      <types>String</types>
+      <stringQualifiers>
+        <length>150</length>
+      </stringQualifiers>
+    </type>
+    <toolTip>
+      <key>ru</key>
+      <value>Путь к папке с выгрузкой конфигурации внутри репозитория (папка, содержащая src)</value>
+    </toolTip>
     <minValue xsi:type="core:UndefinedValue"/>
     <maxValue xsi:type="core:UndefinedValue"/>
     <fillValue xsi:type="core:UndefinedValue"/>
@@ -99,7 +172,29 @@
     </type>
     <minValue xsi:type="core:UndefinedValue"/>
     <maxValue xsi:type="core:UndefinedValue"/>
-    <fillValue xsi:type="core:StringValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+  </attributes>
+  <attributes uuid="f4f67b7b-4230-4cc3-8625-c5b9d58bd37a">
+    <name>УдалитьРазделитель</name>
+    <synonym>
+      <key>ru</key>
+      <value>Удалить разделитель</value>
+    </synonym>
+    <type>
+      <types>String</types>
+      <stringQualifiers>
+        <length>150</length>
+      </stringQualifiers>
+    </type>
+    <toolTip>
+      <key>ru</key>
+      <value>Устарел. Значение перенесено в реквизиты Проект и Путь к исходникам</value>
+    </toolTip>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/>
     <fullTextSearch>Use</fullTextSearch>
     <dataHistory>Use</dataHistory>
   </attributes>

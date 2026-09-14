@@ -18,6 +18,13 @@
 		</right>
 	</object>
 	<object>
+		<name>Catalog.НастройкиПодключений_RepEx.Attribute.ПутьКИсходникам</name>
+		<right>
+			<name>Edit</name>
+			<value>false</value>
+		</right>
+	</object>
+	<object>
 		<name>HTTPService.RepEr.URLTemplate.Отчет.Method.pushReport</name>
 		<right>
 			<name>Use</name>
@@ -65,6 +72,13 @@
 		</right>
 	</object>
 	<object>
+		<name>Catalog.НастройкиПодключений_RepEx.Attribute.Проект</name>
+		<right>
+			<name>Edit</name>
+			<value>false</value>
+		</right>
+	</object>
+	<object>
 		<name>Catalog.ИнформационныеБазы_RepEr.TabularSection.Оповещения</name>
 		<right>
 			<name>Edit</name>
@@ -95,6 +109,13 @@
 		<right>
 			<name>Use</name>
 			<value>true</value>
+		</right>
+	</object>
+	<object>
+		<name>Catalog.НастройкиПодключений_RepEx.Attribute.СпособАвторизации</name>
+		<right>
+			<name>Edit</name>
+			<value>false</value>
 		</right>
 	</object>
 	<object>
@@ -172,7 +193,7 @@
 		</right>
 	</object>
 	<object>
-		<name>Catalog.ИнформационныеБазы_RepEr.TabularSection.Оповещения.Attribute.ТипОповещения</name>
+		<name>Catalog.ИнформационныеБазы_RepEr.TabularSection.Оповещения.Attribute.УдалитьТипОповещения</name>
 		<right>
 			<name>Edit</name>
 			<value>false</value>
@@ -218,6 +239,13 @@
 		<right>
 			<name>InteractivePostingRegular</name>
 			<value>true</value>
+		</right>
+	</object>
+	<object>
+		<name>Catalog.НастройкиПодключений_RepEx.Attribute.Провайдер</name>
+		<right>
+			<name>Edit</name>
+			<value>false</value>
 		</right>
 	</object>
 	<object>
@@ -314,7 +342,7 @@
 		</right>
 	</object>
 	<object>
-		<name>Catalog.НастройкиПодключений_RepEx.Attribute.Разделитель</name>
+		<name>Catalog.НастройкиПодключений_RepEx.Attribute.УдалитьРазделитель</name>
 		<right>
 			<name>Edit</name>
 			<value>false</value>

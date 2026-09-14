@@ -18,7 +18,8 @@
   <content>CommonModule.РегламентныеОперацииПолныеПрава_RepEr</content>
   <content>InformationRegister.Ошибки_RepEr</content>
   <content>Catalog.НастройкиПодключений_RepEx</content>
-  <content>Enum.ТипыОповещений_RepEx</content>
+  <content>Enum.Провайдер_RepEx</content>
+  <content>Enum.СпособыАвторизации_RepEx</content>
   <content>InformationRegister.КлючиОповещений_RepEx</content>
   <content>Catalog.ИнформационныеБазы_RepEr</content>
 </mdclass:Subsystem>
