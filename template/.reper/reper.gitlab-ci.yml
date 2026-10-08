@@ -1,0 +1,346 @@
+# RepEr: исправления (EF) конфигурации - сборка, проверка относительно релиза, публикация в ленту;
+# сборка .cf релиза по тегу, загрузка в рабочую базу, перезапуск кластера, обновление базы.
+#
+# Шаблон из репозитория RepEr (template/.reper/reper.gitlab-ci.yml): install.ps1 кладет его в .reper/ проекта
+# и заменяет при каждом обновлении, руками не править. Подключается из .gitlab-ci.yml проекта (include), там же -
+# значения переменных для этого проекта. Скрипты - в .reper/pipeline (копия pipeline/ RepEr),
+# настройки проекта - .reper/config.json и .reper/cluster.json.
+#
+# Как запускается:
+# - push в основную ветку: исправления по EF-коммитам из диапазона CI_COMMIT_BEFORE_SHA..CI_COMMIT_SHA;
+# - вручную (Run pipeline) с переменными EF_BEFORE_SHA и EF_HEAD_SHA;
+# - тег релиза (подходит под base_tag_match из .reper/config.json): задание Релиз (.cf в EF_CF_DIR), сразу
+#   после него - Загрузка: .cf объединяется с основной конфигурацией рабочей базы, база данных не обновляется.
+#   Вручную - Run pipeline с EF_RELEASE_TAG.
+# Ветки, кроме основной, и merge request пайплайн не запускают.
+#
+# Раннер: shell + PowerShell, Windows, с платформой 1С, EDT и Python; тег раннера - EF_RUNNER_TAG.
+# Задания на раннере определяет этот файл: основную ветку защитить.
+# Переменные проекта (Settings -> CI/CD -> Variables) - в EF_IB_URL и ниже; пароли - masked.
+
+stages:
+  - Сборка
+  - Проверка
+  - Публикация
+  - Установка
+  - Релиз
+  - Загрузка
+  - Перезапуск
+  - Обновление
+  - Разблокировка
+
+workflow:
+  rules:
+    - if: $CI_COMMIT_TAG
+    - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == "api" || $CI_PIPELINE_SOURCE == "trigger"
+
+default:
+  tags:
+    - $EF_RUNNER_TAG
+
+variables:
+  GIT_DEPTH: "1"
+  # Тег раннера, на котором стоят платформа, EDT и доступ к рабочей базе.
+  EF_RUNNER_TAG: 'reper'
+  # Скрипты и настройки RepEr в репозитории проекта.
+  REPER: '$CI_PROJECT_DIR\.reper\pipeline'
+  EF_CONFIG: '$CI_PROJECT_DIR\.reper\config.json'
+  EF_CLUSTER_CONFIG: '$CI_PROJECT_DIR\.reper\cluster.json'
+  # Голое зеркало этого репозитория на раннере: генератору нужна вся история и теги, а задание берет
+  # рабочую копию с глубиной 1. Обновляется в начале каждого задания токеном задания.
+  EF_REPO_URL: '$CI_SERVER_URL/$CI_PROJECT_PATH.git'
+  EF_MIRROR: 'D:\cicd\mirror\$CI_PROJECT_NAME.git'
+  # Python 3.10+, лучше установленный для всех пользователей: служба раннера работает под LocalSystem.
+  EF_PYTHON: 'python'
+  # Каталог bin платформы, той же версии, что агент кластера.
+  EF_PLATFORM: 'C:\Program Files\1cv8\8.3.27.0000\bin'
+  # Каталог данных автономного сервера для сборки .cfe (setup_server.ps1). Пусто - временная файловая база.
+  EF_SERVER_DATA: 'D:\cicd\ibsrv'
+  # Путь меняется при обновлении EDT.
+  EF_EDT_CLI: 'D:\EDT\components\1c-edt-0000.0.0-x86_64\1cedtcli.exe'
+  # Ограничения EDT по памяти и числу потоков, если раннер - узел кластера.
+  EF_EDT_VMARGS: '-Xmx16g -XX:ActiveProcessorCount=4'
+  # Язык отчета EDT.
+  EF_EDT_NL: 'ru_RU'
+  # Рабочая область EDT с проектом релиза: на новом теге обновляется разницей между тегами.
+  EF_EDT_WORKSPACE: 'D:\cicd\ws-release'
+  # 1 - подготовить рабочую область с нуля, а не обновлять разницей между тегами.
+  EF_EDT_FULL: ''
+  # Релиз, который работает в продуктиве. Пусто - ближайший тег к коммиту.
+  EF_BASE_REF: ''
+  # 1 - падать, если часть изменений коммита нельзя перенести в расширение (формы, метаданные).
+  EF_STRICT: '0'
+  # Лента исправлений - пакеты GitLab этого проекта (Deploy -> Package Registry, пакет ef).
+  EF_FEED_URL: '$CI_API_V4_URL/projects/$CI_PROJECT_ID/packages/generic/ef'
+  # HTTP-сервис расширения RepEr в рабочей базе, например https://<сервер>/<публикация>/hs/reperext/patches.
+  # Задается переменной проекта вместе с EF_IB_USER и EF_IB_PASSWORD (masked): пользователь базы с ролью
+  # ПроверкаИсправлений_RepEr, для заданий Загрузка, Обновление и Перезапуск - и с правом администрирования.
+  # Пусто - установка не проверяется.
+  EF_IB_URL: ''
+  # Сколько этап Установка ждет установки, секунд: регламентное задание ставит исправления раз в несколько минут.
+  EF_VERIFY_TIMEOUT: '900'
+  # release - пайплайн релиза без тега в событии (веб-хук или API). Пусто - исправления.
+  EF_MODE: ''
+  # Тег релиза для ручной сборки .cf (Run pipeline).
+  EF_RELEASE_TAG: ''
+  # Готовый .cf для одного задания Загрузка без сборки (Run pipeline), например D:/CF/3.20/system_3.20.cf.
+  EF_RELEASE_CF: ''
+  # Каталог релизов на раннере: <тег>/<applied_name>_<тег>.cf и release.md.
+  EF_CF_DIR: 'D:\CF'
+  # Сколько последних релизов хранить в EF_CF_DIR (по номеру тега); 0 - не удалять.
+  EF_CF_KEEP: '5'
+  # Рабочий каталог сборки .cf: XML, временная база и .cf.
+  EF_RELEASE_WORK: 'D:\cicd\release'
+  # Рабочая база для заданий Загрузка, Перезапуск и Обновление: <сервер>\<база>, задается переменной проекта.
+  EF_PROD_IB: ''
+  # Перезапуск кластера рабочей базы отдельным пайплайном (Run pipeline): check - только проверка, run - перезапуск
+  # и обновление базы, restart - только перезапуск, без обновления базы, блокировка снимается в конце.
+  EF_CLUSTER_RESTART: ''
+  # RAS для блокировки базы; администратор кластера, если задан, - EF_CLUSTER_USER и EF_CLUSTER_PASSWORD.
+  EF_RAS: 'localhost:1545'
+  # Сообщение блокировки сеансов. Код разрешения - переменная проекта EF_LOCK_CODE.
+  EF_LOCK_MESSAGE: 'Ведутся технические работы.'
+  # Сколько ждать завершения процессов 1С после остановки служб, секунд; потом они завершаются принудительно.
+  EF_STOP_TIMEOUT: '600'
+  # Обновление рабочей базы отдельным пайплайном (Run pipeline): run - обновление сразу.
+  EF_DB_UPDATE: ''
+  # Снятие блокировки рабочей базы отдельным пайплайном (Run pipeline): run - снять сразу.
+  EF_UNLOCK: ''
+  # Ограничение времени одного запуска 1С при обновлении (конфигурация БД, обновление версии), секунд.
+  EF_UPDATE_TIMEOUT: '3600'
+
+.fixes:
+  rules:
+    # загрузка готового .cf: отдельным правилом, в составном условии с || переменная не отсекала задания
+    - if: $EF_RELEASE_CF
+      when: never
+    - if: $EF_CLUSTER_RESTART
+      when: never
+    - if: $EF_DB_UPDATE
+      when: never
+    - if: $EF_UNLOCK
+      when: never
+    # пайплайн релиза
+    - if: $CI_COMMIT_TAG || $EF_MODE == "release" || $EF_RELEASE_TAG
+      when: never
+    # push в основную ветку, ручной запуск с заданными EF_HEAD_SHA и EF_BEFORE_SHA
+    - if: $CI_PIPELINE_SOURCE == "push" || $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == "api" || $CI_PIPELINE_SOURCE == "trigger"
+
+.release:
+  rules:
+    - if: $CI_COMMIT_TAG || $EF_MODE == "release" || $EF_RELEASE_TAG
+
+Сборка:
+  extends: .fixes
+  stage: Сборка
+  script:
+    - powershell -NoProfile -ExecutionPolicy Bypass -File "$REPER\sync_repo.ps1" -Url "$EF_REPO_URL" -Mirror "$EF_MIRROR"
+    - powershell -NoProfile -ExecutionPolicy Bypass -File "$REPER\ci_build.ps1" -Platform "$EF_PLATFORM" -Config "$EF_CONFIG" -Repo "$EF_MIRROR"
+  artifacts:
+    when: always
+    expire_in: 30 days
+    paths:
+      - build/ef/*/*.cfe
+      - build/ef/*/*.zip
+      - build/ef/*/ef.json
+      - build/ef/*/report.md
+      - build/ef/*/Manifest.xml
+      - build/ef/*/xml/
+      - build/ef/*/*.EF_*/
+
+Проверка:
+  extends: .fixes
+  stage: Проверка
+  # Рабочая область EDT общая с заданием Релиз.
+  resource_group: edt-release
+  needs:
+    - job: Сборка
+      artifacts: true
+  script:
+    - |
+      & $EF_PYTHON "$REPER\ef_check.py" --repo "$EF_MIRROR" --out build/ef --workspace "$EF_EDT_WORKSPACE" --edt-cli "$EF_EDT_CLI"
+      if ($LASTEXITCODE -eq 2) { Write-Output 'Проверять нечего'; exit 0 }
+      if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+  artifacts:
+    when: always
+    expire_in: 30 days
+    paths:
+      - build/ef/*/check.md
+      - build/ef/*/check.tsv
+      - build/ef/*/ef.json
+
+# Публикуется сразу после успешной проверки: исправление с ошибками EDT до ленты не доходит.
+Публикация:
+  extends: .fixes
+  stage: Публикация
+  needs:
+    - job: Сборка
+      artifacts: true
+    - job: Проверка
+      artifacts: false
+  script:
+    - |
+      $found = $false
+      foreach ($dir in Get-ChildItem build/ef -Directory -ErrorAction SilentlyContinue) {
+        # Собранный архив публикуется, отзыв (ef.json с revoke) помечает сборки в ленте отозванными.
+        $info = Join-Path $dir.FullName 'ef.json'
+        $revoke = (Test-Path $info) -and (Get-Content $info -Raw -Encoding UTF8 | ConvertFrom-Json).revoke
+        if (-not $revoke -and -not (Test-Path (Join-Path $dir.FullName "$($dir.Name).zip"))) { continue }
+        $found = $true
+        & $EF_PYTHON "$REPER\ef_publish.py" --ef-dir $dir.FullName --feed-url "$EF_FEED_URL"
+        if ($LASTEXITCODE -ne 0) { exit 1 }
+      }
+      if (-not $found) { Write-Output 'Собранных исправлений нет' }
+
+# Ждет, пока база поставит опубликованные исправления (регламентным заданием или вручную), и проверяет,
+# что они подключаются. Не дождались - задание падает; после ручной установки его достаточно перезапустить.
+Установка:
+  extends: .fixes
+  stage: Установка
+  needs:
+    - job: Сборка
+      artifacts: true
+    - job: Публикация
+      artifacts: false
+  # С запасом к EF_VERIFY_TIMEOUT.
+  timeout: 30m
+  script:
+    - |
+      & $EF_PYTHON "$REPER\ef_verify.py" --out build/ef --url "$EF_IB_URL" --timeout $EF_VERIFY_TIMEOUT
+      if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+  artifacts:
+    when: always
+    expire_in: 30 days
+    paths:
+      - build/ef/verify.md
+
+# .cf релиза по тегу. Рабочую область EDT готовит для тега, как проверка исправлений,
+# поэтому первая проверка после тега ее уже не готовит.
+Релиз:
+  extends: .release
+  stage: Релиз
+  resource_group: edt-release
+  # Рабочая область на новом теге обновляется разницей между тегами, с нуля - намного дольше.
+  timeout: 3h
+  script:
+    - powershell -NoProfile -ExecutionPolicy Bypass -File "$REPER\sync_repo.ps1" -Url "$EF_REPO_URL" -Mirror "$EF_MIRROR"
+    - |
+      & $EF_PYTHON "$REPER\release_cf.py" --repo "$EF_MIRROR" --workspace "$EF_EDT_WORKSPACE" --edt-cli "$EF_EDT_CLI" --platform "$EF_PLATFORM" --dest "$EF_CF_DIR" --work "$EF_RELEASE_WORK"
+      if ($LASTEXITCODE -eq 2) { exit 0 }
+      if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+  artifacts:
+    when: always
+    expire_in: 30 days
+    paths:
+      - build/release/*/release.md
+    reports:
+      # RELEASE_TAG и RELEASE_CF для задания Загрузка; нет файла - релиз не собирался.
+      dotenv: build/release/release.env
+
+# Загружает .cf релиза в основную конфигурацию рабочей базы объединением (merge-all.xml: все из файла,
+# объекты, которых нет в релизе, удаляются). Конфигурацию базы данных не обновляет. Запуск - сразу после
+# задания Релиз.
+Загрузка:
+  stage: Загрузка
+  rules:
+    # только загрузка готового .cf: Run pipeline с EF_RELEASE_CF, сборки нет
+    - if: $EF_RELEASE_CF
+    - if: $CI_COMMIT_TAG || $EF_MODE == "release" || $EF_RELEASE_TAG
+  needs:
+    - job: Релиз
+      artifacts: true
+      optional: true
+  resource_group: prod-config
+  timeout: 1h
+  script:
+    - |
+      $cf = if ($env:EF_RELEASE_CF) { $env:EF_RELEASE_CF } else { $env:RELEASE_CF }
+      if (-not $cf) { Write-Output 'Релиз не собран, загружать нечего'; exit 0 }
+      powershell -NoProfile -ExecutionPolicy Bypass -File "$REPER\load_cf.ps1" -Cf "$cf" -Platform "$EF_PLATFORM"
+      if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+  artifacts:
+    when: always
+    expire_in: 30 days
+    paths:
+      - build/release/load.log
+
+# Перезапуск кластера рабочей базы (cluster_restart.ps1, узлы - .reper/cluster.json): блокировка сеансов
+# и регламентных заданий базы, остановка служб агента (и extraServices узла), ожидание и принудительное
+# завершение процессов, удаление snccntx*, запуск служб. Блокировка остается до обновления конфигурации базы
+# данных. Кнопкой после Загрузки или отдельным пайплайном с EF_CLUSTER_RESTART: check - только проверка,
+# run - перезапуск сразу, restart - перезапуск без обновления базы со снятием блокировки в конце.
+Перезапуск:
+  stage: Перезапуск
+  rules:
+    - if: $EF_CLUSTER_RESTART == "check"
+    - if: $EF_CLUSTER_RESTART == "run"
+    - if: $EF_CLUSTER_RESTART == "restart"
+    - if: $EF_RELEASE_CF
+      when: manual
+    - if: $CI_COMMIT_TAG || $EF_MODE == "release" || $EF_RELEASE_TAG
+      when: manual
+  needs:
+    - job: Загрузка
+      artifacts: false
+      optional: true
+  resource_group: prod-config
+  # С запасом к EF_STOP_TIMEOUT.
+  timeout: 1h
+  script:
+    - |
+      $check = $env:EF_CLUSTER_RESTART -eq 'check'
+      $unlock = $env:EF_CLUSTER_RESTART -eq 'restart'
+      Write-Output "Перезапуск кластера, только проверка: $check, снятие блокировки в конце: $unlock"
+      # В том же процессе: вложенный powershell с -Check завершался в задании кодом 2 без вывода.
+      & "$env:REPER\cluster_restart.ps1" -Config "$env:EF_CLUSTER_CONFIG" -Platform "$EF_PLATFORM" -Check:$check -ThenUnlock:$unlock
+
+# Обновление рабочей базы под блокировкой (update_db.ps1, код разрешения EF_LOCK_CODE): /UpdateDBCfg, затем
+# Предприятие с ЗапуститьОбновлениеИнформационнойБазы - обработчики обновления, удаление неприменимых исправлений.
+# Сразу после Перезапуска или отдельным пайплайном с EF_DB_UPDATE=run. Блокировку не снимает.
+Обновление:
+  stage: Обновление
+  rules:
+    - if: $EF_DB_UPDATE == "run"
+    - if: $EF_CLUSTER_RESTART == "run"
+    - if: $EF_RELEASE_CF
+    - if: $CI_COMMIT_TAG || $EF_MODE == "release" || $EF_RELEASE_TAG
+  needs:
+    - job: Перезапуск
+      artifacts: false
+      optional: true
+  resource_group: prod-config
+  # Два запуска 1С по EF_UPDATE_TIMEOUT.
+  timeout: 2h 10m
+  script:
+    - |
+      & "$env:REPER\update_db.ps1" -Platform "$EF_PLATFORM"
+  artifacts:
+    when: always
+    expire_in: 30 days
+    paths:
+      - build/release/update_db.log
+      - build/release/enterprise.log
+
+# Снимает блокировку сеансов и регламентных заданий рабочей базы (cluster_restart.ps1 -Unlock): кнопкой, после
+# проверки базы. Отдельным пайплайном с EF_UNLOCK=run - сразу.
+Снятие блокировки:
+  stage: Разблокировка
+  rules:
+    - if: $EF_UNLOCK == "run"
+    - if: $EF_DB_UPDATE == "run"
+      when: manual
+    - if: $EF_CLUSTER_RESTART == "run"
+      when: manual
+    - if: $EF_RELEASE_CF
+      when: manual
+    - if: $CI_COMMIT_TAG || $EF_MODE == "release" || $EF_RELEASE_TAG
+      when: manual
+  needs:
+    - job: Обновление
+      artifacts: false
+      optional: true
+  resource_group: prod-config
+  script:
+    - |
+      & "$env:REPER\cluster_restart.ps1" -Config "$env:EF_CLUSTER_CONFIG" -Platform "$EF_PLATFORM" -Unlock

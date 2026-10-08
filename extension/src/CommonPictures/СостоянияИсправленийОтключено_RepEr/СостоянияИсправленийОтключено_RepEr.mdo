@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:CommonPicture xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="de0b6101-a5a6-4c4c-bf51-8c42c3e60059">
+  <name>СостоянияИсправленийОтключено_RepEr</name>
+  <synonym>
+    <key>ru</key>
+    <value>Состояния исправлений: отключено</value>
+  </synonym>
+  <comment>Снят флажок «Подключать», шестая картинка СостоянияИсправлений_RepEr</comment>
+</mdclass:CommonPicture>

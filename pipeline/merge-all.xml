@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Settings xmlns="http://v8.1c.ru/8.3/config/merge/settings" version="1.2" platformVersion="8.3.27">
+	<Parameters>
+		<ConfigurationsRelation>SecondConfigurationIsDescendantOfMainConfiguration</ConfigurationsRelation>
+		<AllowMainConfigurationObjectDeletion>true</AllowMainConfigurationObjectDeletion>
+	</Parameters>
+	<Objects>
+		<Configuration>
+			<MergeRule>GetFromSecondConfiguration</MergeRule>
+			<ObjectOrder>GetFromSecondConfiguration</ObjectOrder>
+		</Configuration>
+	</Objects>
+</Settings>

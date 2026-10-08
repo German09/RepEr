@@ -1,0 +1,16 @@
+{
+  "src_root": "УТ/src",
+  "task_regex": "SYSTEM-(\d+)",
+  "commit_url": "https://gitlab.domain.ru/user/system/-/commit/{sha}",
+  "ef_regex": "(?<![0-9A-Za-zА-Яа-яЁё_])EF(?![0-9A-Za-zА-Яа-яЁё_])",
+  "base_tag_match": "[0-9]*",
+  "extension_name": "EF_{fire}{rev}{task}_{n}",
+  "method_prefix": "P_{task}_{n}_",
+  "compatibility_mode": "8.3.27",
+  "xml_format": "2.20",
+  "edt_base_project": "УТ",
+  "manifest": true,
+  "applied_name": "system",
+  "version_module": "CommonModules/ОбновлениеИнформационнойБазы_system/Module.bsl",
+  "version_regex": "Описание\.Версия\s*=\s*\"([^\"]+)\""
+}

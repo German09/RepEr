@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:CommonPicture xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="2237b094-96cf-4690-a0b2-2902aa99888b">
+  <name>СостоянияИсправленийНеИзРепозитория_RepEr</name>
+  <synonym>
+    <key>ru</key>
+    <value>Состояния исправлений: установлена сборка не из репозитория</value>
+  </synonym>
+</mdclass:CommonPicture>

@@ -1,0 +1,22 @@
+{
+  "$comment": "Серверы кластера рабочей базы для cluster_restart.ps1. Порядок узлов - порядок остановки и запуска служб. extraServices - другие службы 1С узла (например, автономный сервер сборки исправлений из setup_server.ps1): останавливаются перед агентом, запускаются после него. Пути - через прямой слэш. Узел раннера обслуживается локально, остальные - по SSH ключом sshKey; ключи узлов - в known_hosts рядом.",
+  "sshUser": "user",
+  "sshKey": "C:\Windows\System32\config\systemprofile\.ssh\id_ed25519",
+  "hosts": [
+    {
+      "name": "app01",
+      "address": "app01",
+      "os": "windows",
+      "service": "1C:Enterprise 8.3 Server Agent (x86-64)",
+      "extraServices": ["release-ibsrv"],
+      "srvinfo": "D:/srvinfo"
+    },
+    {
+      "name": "app02",
+      "address": "app02",
+      "os": "linux",
+      "service": "srv1cv8-8.3.27.0000@default",
+      "srvinfo": "/srv/srvinfo"
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+# known_hosts читает ssh: без преобразования переводов строк
+known_hosts -text

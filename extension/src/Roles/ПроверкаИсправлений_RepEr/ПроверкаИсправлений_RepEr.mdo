@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Role xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="c5e0e493-2b9d-40fe-9564-c802f9250b26">
+  <name>ПроверкаИсправлений_RepEr</name>
+  <synonym>
+    <key>ru</key>
+    <value>Проверка исправлений из репозитория</value>
+  </synonym>
+  <comment>Техническому пользователю пайплайна: чтение состояния исправлений через HTTP-сервис</comment>
+</mdclass:Role>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" xmlns:mdclassExtension="http://g5.1c.ru/v8/dt/metadata/mdclass/extension" uuid="88b85f64-be7a-4669-b63f-08ccfb1c6844">
+  <name>RepEr</name>
+  <synonym>
+    <key>ru</key>
+    <value>RepEr</value>
+  </synonym>
+  <comment>Клиент RepEr: загрузка исправлений (EF) из пакетов GitLab</comment>
+  <objectBelonging>Adopted</objectBelonging>
+  <extension xsi:type="mdclassExtension:ConfigurationExtension">
+    <defaultLanguage>Checked</defaultLanguage>
+  </extension>
+  <containedObjects classId="9cd510cd-abfc-11d4-9434-004095e12fc7" objectId="10752403-37d6-414f-b3f6-b4dce04a6619"/>
+  <containedObjects classId="9fcd25a0-4822-11d4-9414-008048da11f9" objectId="29b5ce56-453d-497f-9e99-751f4a050464"/>
+  <containedObjects classId="e3687481-0a87-462c-a166-9f34594f9bba" objectId="f9bb0296-2733-45ec-a488-b890d5e75609"/>
+  <containedObjects classId="9de14907-ec23-4a07-96f0-85521cb6b53b" objectId="2acaa87b-85c6-4d27-9c44-1cb0fdb230ca"/>
+  <containedObjects classId="51f2d5d8-ea4d-4064-8892-82951750031e" objectId="5cb8cae5-5a8b-4cde-9cd2-aa0a0687a0a0"/>
+  <containedObjects classId="e68182ea-4237-4383-967f-90c1e3370bc7" objectId="5a14334b-291f-41df-bf3c-d1711e88339b"/>
+  <containedObjects classId="fb282519-d103-4dd3-bc12-cb271d631dfc" objectId="c7f01ce8-47de-43cf-b887-10b583cb9430"/>
+  <namePrefix>RepEr</namePrefix>
+  <configurationExtensionCompatibilityMode>8.3.27</configurationExtensionCompatibilityMode>
+  <configurationExtensionPurpose>Customization</configurationExtensionPurpose>
+  <scriptVariant>Russian</scriptVariant>
+  <version>2.0.0.1</version>
+  <usedMobileApplicationFunctionalities>
+    <functionality>
+      <use>true</use>
+    </functionality>
+    <functionality>
+      <functionality>OSBackup</functionality>
+      <use>true</use>
+    </functionality>
+  </usedMobileApplicationFunctionalities>
+  <defaultLanguage>Language.Русский</defaultLanguage>
+  <dataLockControlMode>Managed</dataLockControlMode>
+  <objectAutonumerationMode>NotAutoFree</objectAutonumerationMode>
+  <synchronousPlatformExtensionAndAddInCallUseMode>DontUse</synchronousPlatformExtensionAndAddInCallUseMode>
+  <languages uuid="e882e96d-428c-4528-8a04-5375d72ba245" extendedConfigurationObject="0663bf5b-bcba-4a40-a862-a0b3baa2d884">
+    <name>Русский</name>
+    <objectBelonging>Adopted</objectBelonging>
+    <extension xsi:type="mdclassExtension:LanguageExtension">
+      <extendedConfigurationObject>Checked</extendedConfigurationObject>
+      <languageCode>Checked</languageCode>
+    </extension>
+    <languageCode>ru</languageCode>
+  </languages>
+  <styleItems>StyleItem.ПоясняющийТекст</styleItems>
+  <commonPictures>CommonPicture.ДлительнаяОперация48</commonPictures>
+  <commonPictures>CommonPicture.СостоянияРасширенийКонфигурации</commonPictures>
+  <commonPictures>CommonPicture.СостоянияРасширенийПодключено</commonPictures>
+  <commonPictures>CommonPicture.СостоянияРасширенийБудетПодключено</commonPictures>
+  <commonPictures>CommonPicture.СостоянияРасширенийОшибка</commonPictures>
+  <commonPictures>CommonPicture.Информация16_2</commonPictures>
+  <commonPictures>CommonPicture.ОжидаемаяДлительнаяОперация16</commonPictures>
+  <commonPictures>CommonPicture.ЗначокЩита</commonPictures>
+  <commonPictures>CommonPicture.СостоянияИсправлений_RepEr</commonPictures>
+  <commonPictures>CommonPicture.СостоянияИсправленийДругаяСборка_RepEr</commonPictures>
+  <commonPictures>CommonPicture.СостоянияИсправленийНеИзРепозитория_RepEr</commonPictures>
+  <commonPictures>CommonPicture.СрочноеИсправление_RepEr</commonPictures>
+  <commonPictures>CommonPicture.СостоянияИсправленийОтключено_RepEr</commonPictures>
+  <commonPictures>CommonPicture.СостоянияИсправленийНетВРепозитории_RepEr</commonPictures>
+  <roles>Role.ПроверкаИсправлений_RepEr</roles>
+  <commonModules>CommonModule.РепозиторийИсправлений_RepEr</commonModules>
+  <commonModules>CommonModule.ПолучениеОбновленийПрограммы</commonModules>
+  <httpServices>HTTPService.СостояниеИсправлений_RepEr</httpServices>
+  <commonForms>CommonForm.УстановленныеИсправления</commonForms>
+  <commonForms>CommonForm.НастройкиРепозитория_RepEr</commonForms>
+  <dataProcessors>DataProcessor.УстановкаОбновлений</dataProcessors>
+  <dataProcessors>DataProcessor.ИсправленияИзРепозитория_RepEr</dataProcessors>
+</mdclass:Configuration>

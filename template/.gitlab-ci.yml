@@ -1,0 +1,17 @@
+# Пайплайн RepEr: задания - в .reper/reper.gitlab-ci.yml (обновляется install.ps1 из RepEr, руками не править),
+# здесь - значения переменных для этого проекта. Описание переменных - в .reper/reper.gitlab-ci.yml.
+# Пароли и адреса рабочей базы - переменными проекта (Settings -> CI/CD -> Variables), не здесь:
+# EF_IB_URL, EF_IB_USER, EF_IB_PASSWORD, EF_PROD_IB, EF_LOCK_CODE, EF_CLUSTER_USER, EF_CLUSTER_PASSWORD.
+
+include:
+  - local: .reper/reper.gitlab-ci.yml
+
+variables:
+  EF_RUNNER_TAG: 'reper'
+  EF_PYTHON: 'python'
+  EF_PLATFORM: 'C:\Program Files\1cv8\8.3.27.0000\bin'
+  EF_EDT_CLI: 'D:\EDT\components\1c-edt-0000.0.0-x86_64\1cedtcli.exe'
+  EF_SERVER_DATA: 'D:\cicd\ibsrv'
+  EF_EDT_WORKSPACE: 'D:\cicd\ws-release'
+  EF_RELEASE_WORK: 'D:\cicd\release'
+  EF_CF_DIR: 'D:\CF'

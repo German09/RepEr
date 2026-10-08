@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:CommonPicture xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="fd0c0f2d-2902-4637-81d8-859af70c0cfd">
+  <name>СостоянияИсправленийНетВРепозитории_RepEr</name>
+  <synonym>
+    <key>ru</key>
+    <value>Состояния исправлений: подключено, в репозитории нет</value>
+  </synonym>
+</mdclass:CommonPicture>
