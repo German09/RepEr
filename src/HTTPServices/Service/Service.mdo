@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:HTTPService xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="963d3b7b-1dea-4591-8c17-03ea7c50d957">
+  <name>Service</name>
+  <synonym>
+    <key>ru</key>
+    <value>Service</value>
+  </synonym>
+  <rootURL>service</rootURL>
+  <reuseSessions>AutoUse</reuseSessions>
+  <sessionMaxAge>20</sessionMaxAge>
+  <urlTemplates uuid="baeb39b3-7c35-4cff-b952-1d1f1f05e93a">
+    <name>ПользователиЗадачи</name>
+    <synonym>
+      <key>ru</key>
+      <value>Пользователи задачи</value>
+    </synonym>
+    <template>/{InfoBaseCode}/issue/{IssueKey}/users</template>
+    <methods uuid="66b71a3d-0552-4665-99c8-be7fe4c42aa3">
+      <name>Получить</name>
+      <synonym>
+        <key>ru</key>
+        <value>Получить</value>
+      </synonym>
+      <handler>ПользователиЗадачиПолучить</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="37befc2d-1f12-4e70-9c4a-311952f07f9f">
+    <name>КоличествоПользователейЗадач</name>
+    <synonym>
+      <key>ru</key>
+      <value>Количество пользователей задач</value>
+    </synonym>
+    <template>/{InfoBaseCode}/issues/users/count</template>
+    <methods uuid="b7665d18-8d81-4713-bdc0-3234da5dc848">
+      <name>Получить</name>
+      <synonym>
+        <key>ru</key>
+        <value>Получить</value>
+      </synonym>
+      <httpMethod>POST</httpMethod>
+      <handler>КоличествоПользователейЗадачПолучить</handler>
+    </methods>
+  </urlTemplates>
+</mdclass:HTTPService>
