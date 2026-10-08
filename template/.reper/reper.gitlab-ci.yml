@@ -44,6 +44,20 @@ workflow:
 default:
   tags:
     - $EF_RUNNER_TAG
+  hooks:
+    # Рабочая копия - только .gitlab-ci.yml и .reper (sparse checkout): исходники конфигурации заданиям не нужны,
+    # история берется из зеркала EF_MIRROR, а пути в исходниках бывают длиннее 260 символов, и полный checkout
+    # на Windows падает (Filename too long). reapply убирает из рабочей копии все остальное, если оно там уже есть.
+    pre_get_sources_script:
+      - |
+        $dir = $env:CI_PROJECT_DIR
+        New-Item -ItemType Directory -Force $dir | Out-Null
+        git -C $dir init -q
+        git -C $dir config core.sparseCheckout true
+        git -C $dir config core.sparseCheckoutCone false
+        Set-Content -Path (Join-Path $dir '.git\info\sparse-checkout') -Value '/.gitlab-ci.yml', '/.reper/' -Encoding ASCII
+        if (Test-Path (Join-Path $dir '.git\index')) { git -C $dir sparse-checkout reapply }
+        Write-Output 'Рабочая копия: только .gitlab-ci.yml и .reper'
 
 variables:
   GIT_DEPTH: "1"
