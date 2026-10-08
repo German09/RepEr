@@ -16,6 +16,10 @@
 #
 # Раннер: shell + PowerShell, Windows, с платформой 1С, EDT и Python; тег раннера - EF_RUNNER_TAG.
 # Задания на раннере определяет этот файл: основную ветку защитить.
+# Релиз запускают только защищенные теги (Settings -> Repository -> Protected tags): тег, который может
+# поставить любой разработчик, пайплайн не создает. Задания, которые меняют рабочую базу (Загрузка, Перезапуск,
+# Обновление, Снятие блокировки), выполняются только от пользователей из EF_RELEASE_USERS. Перезапуск кластера
+# после загрузки .cf - только кнопкой: до нее пайплайн стоит.
 # Переменные проекта (Settings -> CI/CD -> Variables) - в EF_IB_URL и ниже; пароли - masked.
 
 stages:
@@ -31,6 +35,9 @@ stages:
 
 workflow:
   rules:
+    # тег, который может поставить не только релиз-менеджер, релиз не запускает
+    - if: $CI_COMMIT_TAG && $CI_COMMIT_REF_PROTECTED != "true"
+      when: never
     - if: $CI_COMMIT_TAG
     - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
     - if: $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == "api" || $CI_PIPELINE_SOURCE == "trigger"
@@ -43,6 +50,10 @@ variables:
   GIT_DEPTH: "1"
   # Тег раннера, на котором стоят платформа, EDT и доступ к рабочей базе.
   EF_RUNNER_TAG: 'reper'
+  # Логины GitLab через запятую, от которых выполняются задания, меняющие рабочую базу; для кнопки - кто нажал.
+  # Задавать переменной проекта (Settings -> CI/CD -> Variables): ее, в отличие от этого файла, меняют только
+  # мейнтейнеры. Пусто - без проверки.
+  EF_RELEASE_USERS: ''
   # Скрипты и настройки RepEr в репозитории проекта.
   REPER: '$CI_PROJECT_DIR\.reper\pipeline'
   EF_CONFIG: '$CI_PROJECT_DIR\.reper\config.json'
@@ -130,6 +141,18 @@ variables:
 .release:
   rules:
     - if: $CI_COMMIT_TAG || $EF_MODE == "release" || $EF_RELEASE_TAG
+
+# Задания, которые меняют рабочую базу: только от пользователей из EF_RELEASE_USERS. У кнопки GITLAB_USER_LOGIN -
+# кто нажал, у остальных - кто запустил пайплайн или поставил тег.
+.prod:
+  resource_group: prod-config
+  before_script:
+    - |
+      $allowed = @($env:EF_RELEASE_USERS -split '[,;\s]+' | Where-Object { $_ })
+      if ($allowed.Count -and $allowed -notcontains $env:GITLAB_USER_LOGIN) {
+        Write-Output "Задание меняет рабочую базу: запускать могут $($allowed -join ', '), а не $env:GITLAB_USER_LOGIN"
+        exit 1
+      }
 
 Сборка:
   extends: .fixes
@@ -242,6 +265,7 @@ variables:
 # объекты, которых нет в релизе, удаляются). Конфигурацию базы данных не обновляет. Запуск - сразу после
 # задания Релиз.
 Загрузка:
+  extends: .prod
   stage: Загрузка
   rules:
     # только загрузка готового .cf: Run pipeline с EF_RELEASE_CF, сборки нет
@@ -251,7 +275,6 @@ variables:
     - job: Релиз
       artifacts: true
       optional: true
-  resource_group: prod-config
   timeout: 1h
   script:
     - |
@@ -271,20 +294,23 @@ variables:
 # данных. Кнопкой после Загрузки или отдельным пайплайном с EF_CLUSTER_RESTART: check - только проверка,
 # run - перезапуск сразу, restart - перезапуск без обновления базы со снятием блокировки в конце.
 Перезапуск:
+  extends: .prod
   stage: Перезапуск
   rules:
     - if: $EF_CLUSTER_RESTART == "check"
     - if: $EF_CLUSTER_RESTART == "run"
     - if: $EF_CLUSTER_RESTART == "restart"
+    # после загрузки .cf - только кнопкой; allow_failure: false - пайплайн стоит, Обновление ждет нажатия
     - if: $EF_RELEASE_CF
       when: manual
+      allow_failure: false
     - if: $CI_COMMIT_TAG || $EF_MODE == "release" || $EF_RELEASE_TAG
       when: manual
+      allow_failure: false
   needs:
     - job: Загрузка
       artifacts: false
       optional: true
-  resource_group: prod-config
   # С запасом к EF_STOP_TIMEOUT.
   timeout: 1h
   script:
@@ -299,6 +325,7 @@ variables:
 # Предприятие с ЗапуститьОбновлениеИнформационнойБазы - обработчики обновления, удаление неприменимых исправлений.
 # Сразу после Перезапуска или отдельным пайплайном с EF_DB_UPDATE=run. Блокировку не снимает.
 Обновление:
+  extends: .prod
   stage: Обновление
   rules:
     - if: $EF_DB_UPDATE == "run"
@@ -309,7 +336,6 @@ variables:
     - job: Перезапуск
       artifacts: false
       optional: true
-  resource_group: prod-config
   # Два запуска 1С по EF_UPDATE_TIMEOUT.
   timeout: 2h 10m
   script:
@@ -325,6 +351,7 @@ variables:
 # Снимает блокировку сеансов и регламентных заданий рабочей базы (cluster_restart.ps1 -Unlock): кнопкой, после
 # проверки базы. Отдельным пайплайном с EF_UNLOCK=run - сразу.
 Снятие блокировки:
+  extends: .prod
   stage: Разблокировка
   rules:
     - if: $EF_UNLOCK == "run"
@@ -340,7 +367,6 @@ variables:
     - job: Обновление
       artifacts: false
       optional: true
-  resource_group: prod-config
   script:
     - |
       & "$env:REPER\cluster_restart.ps1" -Config "$env:EF_CLUSTER_CONFIG" -Platform "$EF_PLATFORM" -Unlock

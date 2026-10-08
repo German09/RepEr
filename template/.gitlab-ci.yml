@@ -1,7 +1,8 @@
 # Пайплайн RepEr: задания - в .reper/reper.gitlab-ci.yml (обновляется install.ps1 из RepEr, руками не править),
 # здесь - значения переменных для этого проекта. Описание переменных - в .reper/reper.gitlab-ci.yml.
 # Пароли и адреса рабочей базы - переменными проекта (Settings -> CI/CD -> Variables), не здесь:
-# EF_IB_URL, EF_IB_USER, EF_IB_PASSWORD, EF_PROD_IB, EF_LOCK_CODE, EF_CLUSTER_USER, EF_CLUSTER_PASSWORD.
+# EF_IB_URL, EF_IB_USER, EF_IB_PASSWORD, EF_PROD_IB, EF_LOCK_CODE, EF_CLUSTER_USER, EF_CLUSTER_PASSWORD,
+# EF_RELEASE_USERS (кто может менять рабочую базу). Теги релиза - защищенные (Settings -> Repository -> Protected tags).
 
 include:
   - local: .reper/reper.gitlab-ci.yml
