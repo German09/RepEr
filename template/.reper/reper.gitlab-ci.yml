@@ -17,9 +17,8 @@
 # Раннер: shell + PowerShell, Windows, с платформой 1С, EDT и Python; тег раннера - EF_RUNNER_TAG.
 # Задания на раннере определяет этот файл: основную ветку защитить.
 # Релиз запускают только защищенные теги (Settings -> Repository -> Protected tags): тег, который может
-# поставить любой разработчик, пайплайн не создает. Задания, которые меняют рабочую базу (Загрузка, Перезапуск,
-# Обновление, Снятие блокировки), выполняются только от пользователей из EF_RELEASE_USERS. Перезапуск кластера
-# после загрузки .cf - только кнопкой: до нее пайплайн стоит.
+# поставить любой разработчик, пайплайн не создает. Перезапуск кластера после загрузки .cf - только кнопкой:
+# до нее пайплайн стоит.
 # Переменные проекта (Settings -> CI/CD -> Variables) - в EF_IB_URL и ниже; пароли - masked.
 
 stages:
@@ -50,10 +49,6 @@ variables:
   GIT_DEPTH: "1"
   # Тег раннера, на котором стоят платформа, EDT и доступ к рабочей базе.
   EF_RUNNER_TAG: 'reper'
-  # Логины GitLab через запятую, от которых выполняются задания, меняющие рабочую базу; для кнопки - кто нажал.
-  # Задавать переменной проекта (Settings -> CI/CD -> Variables): ее, в отличие от этого файла, меняют только
-  # мейнтейнеры. Пусто - без проверки.
-  EF_RELEASE_USERS: ''
   # Скрипты и настройки RepEr в репозитории проекта.
   REPER: '$CI_PROJECT_DIR\.reper\pipeline'
   EF_CONFIG: '$CI_PROJECT_DIR\.reper\config.json'
@@ -142,17 +137,9 @@ variables:
   rules:
     - if: $CI_COMMIT_TAG || $EF_MODE == "release" || $EF_RELEASE_TAG
 
-# Задания, которые меняют рабочую базу: только от пользователей из EF_RELEASE_USERS. У кнопки GITLAB_USER_LOGIN -
-# кто нажал, у остальных - кто запустил пайплайн или поставил тег.
+# Задания, которые меняют рабочую базу: по одному.
 .prod:
   resource_group: prod-config
-  before_script:
-    - |
-      $allowed = @($env:EF_RELEASE_USERS -split '[,;\s]+' | Where-Object { $_ })
-      if ($allowed.Count -and $allowed -notcontains $env:GITLAB_USER_LOGIN) {
-        Write-Output "Задание меняет рабочую базу: запускать могут $($allowed -join ', '), а не $env:GITLAB_USER_LOGIN"
-        exit 1
-      }
 
 Сборка:
   extends: .fixes
