@@ -19,7 +19,7 @@
   <defaultRoles>Role.АдминистраторСистемы</defaultRoles>
   <defaultRoles>Role.ИнтерактивноеОткрытиеВнешнихОтчетовИОбработок</defaultRoles>
   <vendor>https://github.com/German09/RepEr</vendor>
-  <version>3.4.1.0</version>
+  <version>3.5.0.0</version>
   <usedMobileApplicationFunctionalities>
     <functionality>
       <use>true</use>
@@ -303,6 +303,7 @@
   <sessionParameters>SessionParameter.ТекущийПользователь</sessionParameters>
   <sessionParameters>SessionParameter.УстановленныеРасширения</sessionParameters>
   <roles>Role.ПросмотрИРегистрация_RepEr</roles>
+  <roles>Role.ПолучениеИсправлений_RepEr</roles>
   <roles>Role.АдминистраторСистемы</roles>
   <roles>Role.Администрирование</roles>
   <roles>Role.БазовыеПраваБСП</roles>

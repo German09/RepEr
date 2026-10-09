@@ -65,11 +65,10 @@
     </type>
     <toolTip>
       <key>ru</key>
-      <value>Базовый адрес сервиса, например https://jira.company.ru</value>
+      <value>Базовый адрес API сервиса, например https://jira.company.ru. Заполняется при записи по ссылке на проект</value>
     </toolTip>
     <minValue xsi:type="core:UndefinedValue"/>
     <maxValue xsi:type="core:UndefinedValue"/>
-    <fillChecking>ShowError</fillChecking>
     <fillValue xsi:type="core:UndefinedValue"/>
     <fullTextSearch>Use</fullTextSearch>
     <dataHistory>Use</dataHistory>
@@ -85,11 +84,10 @@
     </type>
     <toolTip>
       <key>ru</key>
-      <value>По паролю - логин и пароль пользователя, по токену - персональный токен доступа</value>
+      <value>По паролю - логин и пароль пользователя, по токену - персональный токен доступа. Заполняется при записи: по паролю, если указан логин Jira</value>
     </toolTip>
     <minValue xsi:type="core:UndefinedValue"/>
     <maxValue xsi:type="core:UndefinedValue"/>
-    <fillChecking>ShowError</fillChecking>
     <fillValue xsi:type="core:UndefinedValue"/>
     <fullTextSearch>Use</fullTextSearch>
     <dataHistory>Use</dataHistory>
@@ -130,7 +128,7 @@
     </type>
     <toolTip>
       <key>ru</key>
-      <value>Идентификатор проекта: ключ проекта Jira, имя репозитория GitHub, идентификатор проекта GitLab</value>
+      <value>Идентификатор проекта: ключ проекта Jira, имя репозитория GitHub, путь или идентификатор проекта GitLab. Заполняется при записи по ссылке на проект</value>
     </toolTip>
     <minValue xsi:type="core:UndefinedValue"/>
     <maxValue xsi:type="core:UndefinedValue"/>
@@ -194,6 +192,29 @@
     </toolTip>
     <minValue xsi:type="core:UndefinedValue"/>
     <maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+  </attributes>
+  <attributes uuid="32365364-16a0-4578-859d-1ef21ba3832a">
+    <name>СсылкаНаПроект</name>
+    <synonym>
+      <key>ru</key>
+      <value>Ссылка на проект</value>
+    </synonym>
+    <type>
+      <types>String</types>
+      <stringQualifiers>
+        <length>500</length>
+      </stringQualifiers>
+    </type>
+    <toolTip>
+      <key>ru</key>
+      <value>Ссылка на проект, как он открывается в браузере: проект Jira, репозиторий GitHub или проект GitLab. По ней при записи заполняются адрес сервиса и проект</value>
+    </toolTip>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fillChecking>ShowError</fillChecking>
     <fillValue xsi:type="core:UndefinedValue"/>
     <fullTextSearch>Use</fullTextSearch>
     <dataHistory>Use</dataHistory>

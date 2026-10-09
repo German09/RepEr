@@ -15,4 +15,15 @@
 		<nature>org.eclipse.xtext.ui.shared.xtextNature</nature>
 		<nature>com._1c.g5.v8.dt.core.V8ConfigurationNature</nature>
 	</natures>
+	<filteredResources>
+		<filter>
+			<id>1760000000000</id>
+			<name></name>
+			<type>10</type>
+			<matcher>
+				<id>org.eclipse.ui.ide.multiFilter</id>
+				<arguments>1.0-name-matches-false-false-extension</arguments>
+			</matcher>
+		</filter>
+	</filteredResources>
 </projectDescription>

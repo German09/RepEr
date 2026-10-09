@@ -41,4 +41,36 @@
       <handler>КоличествоПользователейЗадачПолучить</handler>
     </methods>
   </urlTemplates>
+  <urlTemplates uuid="d70156ea-bae7-4051-a066-c6ce55275fb9">
+    <name>ИсправленияВерсии</name>
+    <synonym>
+      <key>ru</key>
+      <value>Исправления версии</value>
+    </synonym>
+    <template>/{InfoBaseCode}/patches/{Version}</template>
+    <methods uuid="1027036f-eba8-4571-b8e3-303a1f5348b9">
+      <name>Получить</name>
+      <synonym>
+        <key>ru</key>
+        <value>Получить</value>
+      </synonym>
+      <handler>ИсправленияВерсииПолучить</handler>
+    </methods>
+  </urlTemplates>
+  <urlTemplates uuid="ab5cc6da-28c0-4ebc-8368-a9967180b9da">
+    <name>ФайлИсправлений</name>
+    <synonym>
+      <key>ru</key>
+      <value>Файл исправлений</value>
+    </synonym>
+    <template>/{InfoBaseCode}/patches/{Version}/{FileName}</template>
+    <methods uuid="4bb64043-ed02-481e-9dd9-88a7d4e2e6bd">
+      <name>Получить</name>
+      <synonym>
+        <key>ru</key>
+        <value>Получить</value>
+      </synonym>
+      <handler>ФайлИсправленийПолучить</handler>
+    </methods>
+  </urlTemplates>
 </mdclass:HTTPService>

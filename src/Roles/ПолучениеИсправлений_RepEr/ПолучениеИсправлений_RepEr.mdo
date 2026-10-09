@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Role xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="b2b9faac-4bce-42e8-81d4-eae7979bc5a5">
+  <name>ПолучениеИсправлений_RepEr</name>
+  <synonym>
+    <key>ru</key>
+    <value>Получение исправлений и пользователей ошибок</value>
+  </synonym>
+  <comment>Пользователю RepEr в настройках расширения RepEr: лента исправлений и пользователи ошибок по задачам через HTTP-сервис Service</comment>
+</mdclass:Role>
