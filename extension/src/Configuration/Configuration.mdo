@@ -21,7 +21,7 @@
   <configurationExtensionCompatibilityMode>8.3.27</configurationExtensionCompatibilityMode>
   <configurationExtensionPurpose>Customization</configurationExtensionPurpose>
   <scriptVariant>Russian</scriptVariant>
-  <version>2.0.0.3</version>
+  <version>2.0.0.4</version>
   <usedMobileApplicationFunctionalities>
     <functionality>
       <use>true</use>
@@ -63,6 +63,7 @@
   <commonModules>CommonModule.РепозиторийИсправлений_RepEr</commonModules>
   <commonModules>CommonModule.ПолучениеОбновленийПрограммы</commonModules>
   <httpServices>HTTPService.СостояниеИсправлений_RepEr</httpServices>
+  <commonCommands>CommonCommand.ЖурналРегистрацииПоОшибке_RepEr</commonCommands>
   <commonForms>CommonForm.УстановленныеИсправления</commonForms>
   <commonForms>CommonForm.НастройкиРепозитория_RepEr</commonForms>
   <dataProcessors>DataProcessor.УстановкаОбновлений</dataProcessors>

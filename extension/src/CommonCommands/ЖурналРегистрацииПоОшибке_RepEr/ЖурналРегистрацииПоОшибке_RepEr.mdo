@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:CommonCommand xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="1b65965f-d4e4-4b7e-9521-a6485a9ed3aa">
+  <name>ЖурналРегистрацииПоОшибке_RepEr</name>
+  <synonym>
+    <key>ru</key>
+    <value>Журнал регистрации по ошибке</value>
+  </synonym>
+  <comment>Открывается по ссылке из задачи RepEr: пользователь и период ошибки закодированы в ссылках параметра</comment>
+  <group>FormNavigationPanelImportant</group>
+  <commandParameterType/>
+  <parameterUseMode>Multiple</parameterUseMode>
+  <representation>Auto</representation>
+</mdclass:CommonCommand>

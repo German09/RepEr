@@ -32,6 +32,10 @@
     <autoMaxWidth>true</autoMaxWidth>
     <autoMaxHeight>true</autoMaxHeight>
     <extInfo xsi:type="form:LabelDecorationExtInfo">
+      <handlers>
+        <event>URLProcessing</event>
+        <name>ПояснениеОбработкаНавигационнойСсылки</name>
+      </handlers>
       <horizontalAlign>Left</horizontalAlign>
     </extInfo>
   </items>
@@ -233,20 +237,145 @@
         <group>InCell</group>
       </extInfo>
     </items>
-    <items xsi:type="form:FormField">
-      <name>ПланКоммит</name>
-      <id>85</id>
+    <items xsi:type="form:FormGroup">
+      <name>ПланГруппаКоммит</name>
+      <id>240</id>
+      <items xsi:type="form:FormField">
+        <name>ПланКоммит</name>
+        <id>85</id>
+        <visible>true</visible>
+        <enabled>true</enabled>
+        <userVisible>
+          <common>true</common>
+        </userVisible>
+        <dataPath xsi:type="form:DataPath">
+          <segments>План.Коммит</segments>
+        </dataPath>
+        <extendedTooltip>
+          <name>ПланКоммитРасширеннаяПодсказка</name>
+          <id>87</id>
+          <type>Label</type>
+          <autoMaxWidth>true</autoMaxWidth>
+          <autoMaxHeight>true</autoMaxHeight>
+          <extInfo xsi:type="form:LabelDecorationExtInfo">
+            <horizontalAlign>Left</horizontalAlign>
+          </extInfo>
+        </extendedTooltip>
+        <contextMenu>
+          <name>ПланКоммитКонтекстноеМеню</name>
+          <id>86</id>
+          <autoFill>true</autoFill>
+        </contextMenu>
+        <type>LabelField</type>
+        <editMode>Enter</editMode>
+        <cellHyperlink>true</cellHyperlink>
+        <showInHeader>true</showInHeader>
+        <headerHorizontalAlign>Left</headerHorizontalAlign>
+        <showInFooter>true</showInFooter>
+        <extInfo xsi:type="form:LabelFieldExtInfo">
+          <autoMaxWidth>true</autoMaxWidth>
+          <autoMaxHeight>true</autoMaxHeight>
+        </extInfo>
+      </items>
+      <items xsi:type="form:FormField">
+        <name>ПланДатаКоммита</name>
+        <id>231</id>
+        <title>
+          <key>ru</key>
+          <value>Дата коммита</value>
+        </title>
+        <visible>true</visible>
+        <enabled>true</enabled>
+        <userVisible>
+          <common>true</common>
+        </userVisible>
+        <dataPath xsi:type="form:DataPath">
+          <segments>План.ДатаКоммита</segments>
+        </dataPath>
+        <titleLocation>None</titleLocation>
+        <toolTip>
+          <key>ru</key>
+          <value>Дата последнего коммита исправления. Пустая - исправления нет в репозитории или оно опубликовано без даты коммита.</value>
+        </toolTip>
+        <extendedTooltip>
+          <name>ПланДатаКоммитаРасширеннаяПодсказка</name>
+          <id>233</id>
+          <type>Label</type>
+          <autoMaxWidth>true</autoMaxWidth>
+          <autoMaxHeight>true</autoMaxHeight>
+          <extInfo xsi:type="form:LabelDecorationExtInfo">
+            <horizontalAlign>Left</horizontalAlign>
+          </extInfo>
+        </extendedTooltip>
+        <contextMenu>
+          <name>ПланДатаКоммитаКонтекстноеМеню</name>
+          <id>232</id>
+          <autoFill>true</autoFill>
+        </contextMenu>
+        <type>InputField</type>
+        <editMode>Enter</editMode>
+        <showInHeader>true</showInHeader>
+        <headerHorizontalAlign>Left</headerHorizontalAlign>
+        <showInFooter>true</showInFooter>
+        <extInfo xsi:type="form:InputFieldExtInfo">
+          <width>10</width>
+          <autoMaxWidth>true</autoMaxWidth>
+          <autoMaxHeight>true</autoMaxHeight>
+          <horizontalStretch>false</horizontalStretch>
+          <wrap>true</wrap>
+          <format>
+            <key>ru</key>
+            <value>ДФ='dd.MM.yy HH:mm'</value>
+          </format>
+          <chooseType>true</chooseType>
+          <typeDomainEnabled>true</typeDomainEnabled>
+          <textEdit>true</textEdit>
+        </extInfo>
+      </items>
       <visible>true</visible>
       <enabled>true</enabled>
       <userVisible>
         <common>true</common>
       </userVisible>
-      <dataPath xsi:type="form:DataPath">
-        <segments>План.Коммит</segments>
-      </dataPath>
+      <title>
+        <key>ru</key>
+        <value>Коммит</value>
+      </title>
       <extendedTooltip>
-        <name>ПланКоммитРасширеннаяПодсказка</name>
-        <id>87</id>
+        <name>ПланГруппаКоммитРасширеннаяПодсказка</name>
+        <id>241</id>
+        <type>Label</type>
+        <autoMaxWidth>true</autoMaxWidth>
+        <autoMaxHeight>true</autoMaxHeight>
+        <extInfo xsi:type="form:LabelDecorationExtInfo">
+          <horizontalAlign>Left</horizontalAlign>
+        </extInfo>
+      </extendedTooltip>
+      <type>ColumnGroup</type>
+      <extInfo xsi:type="form:ColumnGroupExtInfo">
+        <group>InCell</group>
+      </extInfo>
+    </items>
+    <items xsi:type="form:FormField">
+      <name>ПланЗадача</name>
+      <id>237</id>
+      <title>
+        <key>ru</key>
+        <value>Задача</value>
+      </title>
+      <visible>true</visible>
+      <enabled>true</enabled>
+      <userVisible/>
+      <dataPath xsi:type="form:DataPath">
+        <segments>План.Задача</segments>
+      </dataPath>
+      <toolTip>
+        <key>ru</key>
+        <value>Код задачи исправления: имя библиотеки и номер. По нему RepEr считает пользователей с ошибками.</value>
+      </toolTip>
+      <extendedTooltip>
+        <name>ПланЗадачаРасширеннаяПодсказка</name>
+        <id>239</id>
         <type>Label</type>
         <autoMaxWidth>true</autoMaxWidth>
         <autoMaxHeight>true</autoMaxHeight>
@@ -255,73 +384,18 @@
         </extInfo>
       </extendedTooltip>
       <contextMenu>
-        <name>ПланКоммитКонтекстноеМеню</name>
-        <id>86</id>
+        <name>ПланЗадачаКонтекстноеМеню</name>
+        <id>238</id>
         <autoFill>true</autoFill>
       </contextMenu>
       <type>LabelField</type>
       <editMode>Enter</editMode>
-      <cellHyperlink>true</cellHyperlink>
       <showInHeader>true</showInHeader>
       <headerHorizontalAlign>Left</headerHorizontalAlign>
       <showInFooter>true</showInFooter>
       <extInfo xsi:type="form:LabelFieldExtInfo">
         <autoMaxWidth>true</autoMaxWidth>
         <autoMaxHeight>true</autoMaxHeight>
-      </extInfo>
-    </items>
-    <items xsi:type="form:FormField">
-      <name>ПланДатаКоммита</name>
-      <id>231</id>
-      <title>
-        <key>ru</key>
-        <value>Дата коммита</value>
-      </title>
-      <visible>true</visible>
-      <enabled>true</enabled>
-      <userVisible>
-        <common>true</common>
-      </userVisible>
-      <dataPath xsi:type="form:DataPath">
-        <segments>План.ДатаКоммита</segments>
-      </dataPath>
-      <toolTip>
-        <key>ru</key>
-        <value>Дата последнего коммита исправления. Пустая - исправления нет в репозитории или оно опубликовано без даты коммита.</value>
-      </toolTip>
-      <extendedTooltip>
-        <name>ПланДатаКоммитаРасширеннаяПодсказка</name>
-        <id>233</id>
-        <type>Label</type>
-        <autoMaxWidth>true</autoMaxWidth>
-        <autoMaxHeight>true</autoMaxHeight>
-        <extInfo xsi:type="form:LabelDecorationExtInfo">
-          <horizontalAlign>Left</horizontalAlign>
-        </extInfo>
-      </extendedTooltip>
-      <contextMenu>
-        <name>ПланДатаКоммитаКонтекстноеМеню</name>
-        <id>232</id>
-        <autoFill>true</autoFill>
-      </contextMenu>
-      <type>InputField</type>
-      <editMode>Enter</editMode>
-      <showInHeader>true</showInHeader>
-      <headerHorizontalAlign>Left</headerHorizontalAlign>
-      <showInFooter>true</showInFooter>
-      <extInfo xsi:type="form:InputFieldExtInfo">
-        <width>10</width>
-        <autoMaxWidth>true</autoMaxWidth>
-        <autoMaxHeight>true</autoMaxHeight>
-        <horizontalStretch>false</horizontalStretch>
-        <wrap>true</wrap>
-        <format>
-          <key>ru</key>
-          <value>ДФ='dd.MM.yy HH:mm'</value>
-        </format>
-        <chooseType>true</chooseType>
-        <typeDomainEnabled>true</typeDomainEnabled>
-        <textEdit>true</textEdit>
       </extInfo>
     </items>
     <items xsi:type="form:FormField">
@@ -398,6 +472,60 @@
       <extInfo xsi:type="form:LabelFieldExtInfo">
         <autoMaxWidth>true</autoMaxWidth>
         <autoMaxHeight>true</autoMaxHeight>
+      </extInfo>
+    </items>
+    <items xsi:type="form:FormField">
+      <name>ПланПользователей</name>
+      <id>234</id>
+      <title>
+        <key>ru</key>
+        <value>Пострадавшие</value>
+      </title>
+      <visible>true</visible>
+      <enabled>true</enabled>
+      <userVisible>
+        <common>true</common>
+      </userVisible>
+      <dataPath xsi:type="form:DataPath">
+        <segments>План.Пользователей</segments>
+      </dataPath>
+      <toolTip>
+        <key>ru</key>
+        <value>Пользователи, у которых возникали ошибки по задаче исправления, по данным RepEr: отчеты об ошибках, зарегистрированных под задачей, и их повторы. По нажатию - список пользователей, выбранный открывается.</value>
+      </toolTip>
+      <extendedTooltip>
+        <name>ПланПользователейРасширеннаяПодсказка</name>
+        <id>236</id>
+        <type>Label</type>
+        <autoMaxWidth>true</autoMaxWidth>
+        <autoMaxHeight>true</autoMaxHeight>
+        <extInfo xsi:type="form:LabelDecorationExtInfo">
+          <horizontalAlign>Left</horizontalAlign>
+        </extInfo>
+      </extendedTooltip>
+      <contextMenu>
+        <name>ПланПользователейКонтекстноеМеню</name>
+        <id>235</id>
+        <autoFill>true</autoFill>
+      </contextMenu>
+      <type>LabelField</type>
+      <editMode>Enter</editMode>
+      <cellHyperlink>true</cellHyperlink>
+      <showInHeader>true</showInHeader>
+      <headerPicture xsi:type="core:PictureRef">
+        <picture>StdPicture.User</picture>
+      </headerPicture>
+      <headerHorizontalAlign>Left</headerHorizontalAlign>
+      <showInFooter>true</showInFooter>
+      <extInfo xsi:type="form:LabelFieldExtInfo">
+        <width>12</width>
+        <autoMaxWidth>true</autoMaxWidth>
+        <autoMaxHeight>true</autoMaxHeight>
+        <horizontalStretch>false</horizontalStretch>
+        <format>
+          <key>ru</key>
+          <value>ЧГ=0</value>
+        </format>
       </extInfo>
     </items>
     <items xsi:type="form:FormGroup">
@@ -2594,6 +2722,45 @@
       </edit>
     </columns>
     <columns>
+      <name>Пользователей</name>
+      <title>
+        <key>ru</key>
+        <value>Пострадавшие</value>
+      </title>
+      <id>231</id>
+      <valueType>
+        <types>Number</types>
+        <numberQualifiers>
+          <precision>10</precision>
+          <nonNegative>true</nonNegative>
+        </numberQualifiers>
+      </valueType>
+      <view>
+        <common>true</common>
+      </view>
+      <edit>
+        <common>true</common>
+      </edit>
+    </columns>
+    <columns>
+      <name>Задача</name>
+      <title>
+        <key>ru</key>
+        <value>Задача</value>
+      </title>
+      <id>232</id>
+      <valueType>
+        <types>String</types>
+        <stringQualifiers/>
+      </valueType>
+      <view>
+        <common>true</common>
+      </view>
+      <edit>
+        <common>true</common>
+      </edit>
+    </columns>
+    <columns>
       <name>СсылкаНаКоммит</name>
       <id>15</id>
       <valueType>
@@ -2900,6 +3067,20 @@
       <common>true</common>
     </edit>
   </attributes>
+  <attributes>
+    <name>ПояснениеПолностью</name>
+    <id>7</id>
+    <valueType>
+      <types>String</types>
+      <stringQualifiers/>
+    </valueType>
+    <view>
+      <common>true</common>
+    </view>
+    <edit>
+      <common>true</common>
+    </edit>
+  </attributes>
   <formCommands>
     <name>Обновить</name>
     <title>
@@ -2925,7 +3106,7 @@
     <name>Настройки</name>
     <title>
       <key>ru</key>
-      <value>Настройки репозитория</value>
+      <value>Настройки</value>
     </title>
     <id>3</id>
     <toolTip>

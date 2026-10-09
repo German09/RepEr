@@ -7,7 +7,7 @@
   <name>ИсправленияИзРепозитория_RepEr</name>
   <synonym>
     <key>ru</key>
-    <value>Исправления из репозитория</value>
+    <value>Исправления из RepEr</value>
   </synonym>
   <useStandardCommands>true</useStandardCommands>
   <defaultForm>DataProcessor.ИсправленияИзРепозитория_RepEr.Form.Форма</defaultForm>
@@ -15,7 +15,7 @@
     <name>Форма</name>
     <synonym>
       <key>ru</key>
-      <value>Исправления из репозитория</value>
+      <value>Исправления из RepEr</value>
     </synonym>
     <usePurposes>PersonalComputer</usePurposes>
     <usePurposes>MobileDevice</usePurposes>

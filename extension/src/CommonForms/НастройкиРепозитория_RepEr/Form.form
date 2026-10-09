@@ -1,6 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form:Form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:form="http://g5.1c.ru/v8/dt/form">
   <items xsi:type="form:FormField">
+    <name>Адрес</name>
+    <id>5</id>
+    <title>
+      <key>ru</key>
+      <value>RepEr</value>
+    </title>
+    <visible>true</visible>
+    <enabled>true</enabled>
+    <userVisible>
+      <common>true</common>
+    </userVisible>
+    <dataPath xsi:type="form:DataPath">
+      <segments>Адрес</segments>
+    </dataPath>
+    <toolTip>
+      <key>ru</key>
+      <value>Адрес HTTP-сервиса RepEr, через который база читает ленту исправлений: адрес сервиса обработки ошибок из настроек обработки ошибок, в котором /hs/reper/ заменен на /hs/service/.</value>
+    </toolTip>
+    <toolTipRepresentation>ShowBottom</toolTipRepresentation>
+    <extendedTooltip>
+      <name>АдресРасширеннаяПодсказка</name>
+      <id>7</id>
+      <formatted>true</formatted>
+      <type>Label</type>
+      <autoMaxWidth>true</autoMaxWidth>
+      <autoMaxHeight>true</autoMaxHeight>
+      <extInfo xsi:type="form:LabelDecorationExtInfo">
+        <horizontalAlign>Left</horizontalAlign>
+      </extInfo>
+    </extendedTooltip>
+    <contextMenu>
+      <name>АдресКонтекстноеМеню</name>
+      <id>6</id>
+      <autoFill>true</autoFill>
+    </contextMenu>
+    <type>InputField</type>
+    <readOnly>true</readOnly>
+    <editMode>Enter</editMode>
+    <showInHeader>true</showInHeader>
+    <headerHorizontalAlign>Left</headerHorizontalAlign>
+    <showInFooter>true</showInFooter>
+    <extInfo xsi:type="form:InputFieldExtInfo">
+      <handlers>
+        <event>Opening</event>
+        <name>АдресОткрытие</name>
+      </handlers>
+      <autoMaxWidth>true</autoMaxWidth>
+      <autoMaxHeight>true</autoMaxHeight>
+      <wrap>true</wrap>
+      <openButton>true</openButton>
+      <chooseType>true</chooseType>
+      <typeDomainEnabled>true</typeDomainEnabled>
+      <textEdit>true</textEdit>
+    </extInfo>
+  </items>
+  <items xsi:type="form:FormField">
     <name>Библиотека</name>
     <id>22</id>
     <visible>true</visible>
@@ -13,7 +69,7 @@
     </dataPath>
     <toolTip>
       <key>ru</key>
-      <value>Библиотека из версий подсистем. По ее версии выбирается каталог репозитория, а код задачи - имя библиотеки и номер. У каждой библиотеки свои адрес и токен.</value>
+      <value>Библиотека из версий подсистем: по ее версии выбирается каталог ленты исправлений, код задачи - имя библиотеки и номер. Если код базы в RepEr совпадает с именем библиотеки, используется она.</value>
     </toolTip>
     <toolTipRepresentation>ShowBottom</toolTipRepresentation>
     <handlers>
@@ -51,116 +107,6 @@
     </extInfo>
   </items>
   <items xsi:type="form:FormField">
-    <name>Адрес</name>
-    <id>5</id>
-    <title>
-      <key>ru</key>
-      <value>Репозиторий</value>
-    </title>
-    <visible>true</visible>
-    <enabled>true</enabled>
-    <userVisible>
-      <common>true</common>
-    </userVisible>
-    <dataPath xsi:type="form:DataPath">
-      <segments>Адрес</segments>
-    </dataPath>
-    <toolTip>
-      <key>ru</key>
-      <value>Ссылка на страницу пакетов проекта в GitLab (Deploy - Package Registry) или адрес пакета в API: https://&lt;сервер GitLab>/api/v4/projects/&lt;ID проекта>/packages/generic/ef</value>
-    </toolTip>
-    <toolTipRepresentation>ShowBottom</toolTipRepresentation>
-    <handlers>
-      <event>OnChange</event>
-      <name>АдресПриИзменении</name>
-    </handlers>
-    <extendedTooltip>
-      <name>АдресРасширеннаяПодсказка</name>
-      <id>7</id>
-      <formatted>true</formatted>
-      <type>Label</type>
-      <autoMaxWidth>true</autoMaxWidth>
-      <autoMaxHeight>true</autoMaxHeight>
-      <extInfo xsi:type="form:LabelDecorationExtInfo">
-        <horizontalAlign>Left</horizontalAlign>
-      </extInfo>
-    </extendedTooltip>
-    <contextMenu>
-      <name>АдресКонтекстноеМеню</name>
-      <id>6</id>
-      <autoFill>true</autoFill>
-    </contextMenu>
-    <type>InputField</type>
-    <editMode>Enter</editMode>
-    <showInHeader>true</showInHeader>
-    <headerHorizontalAlign>Left</headerHorizontalAlign>
-    <showInFooter>true</showInFooter>
-    <extInfo xsi:type="form:InputFieldExtInfo">
-      <handlers>
-        <event>Opening</event>
-        <name>АдресОткрытие</name>
-      </handlers>
-      <autoMaxWidth>true</autoMaxWidth>
-      <autoMaxHeight>true</autoMaxHeight>
-      <wrap>true</wrap>
-      <openButton>true</openButton>
-      <chooseType>true</chooseType>
-      <typeDomainEnabled>true</typeDomainEnabled>
-      <textEdit>true</textEdit>
-      <inputHint>
-        <key>ru</key>
-        <value>https://&lt;сервер GitLab>/&lt;группа>/&lt;проект></value>
-      </inputHint>
-    </extInfo>
-  </items>
-  <items xsi:type="form:FormField">
-    <name>Токен</name>
-    <id>11</id>
-    <visible>true</visible>
-    <enabled>true</enabled>
-    <userVisible>
-      <common>true</common>
-    </userVisible>
-    <dataPath xsi:type="form:DataPath">
-      <segments>Токен</segments>
-    </dataPath>
-    <toolTip>
-      <key>ru</key>
-      <value>Как получить: в GitLab откройте проект - Settings - Repository - Deploy tokens - Add token, отметьте только read_package_registry и нажмите Create deploy token. Имя пользователя и токен показываются один раз - сразу скопируйте их сюда. Можно также токен доступа проекта (Settings - Access tokens, scope read_api) - тогда пользователь не нужен.</value>
-    </toolTip>
-    <toolTipRepresentation>ShowBottom</toolTipRepresentation>
-    <extendedTooltip>
-      <name>ТокенРасширеннаяПодсказка</name>
-      <id>13</id>
-      <formatted>true</formatted>
-      <type>Label</type>
-      <autoMaxWidth>true</autoMaxWidth>
-      <autoMaxHeight>true</autoMaxHeight>
-      <extInfo xsi:type="form:LabelDecorationExtInfo">
-        <horizontalAlign>Left</horizontalAlign>
-      </extInfo>
-    </extendedTooltip>
-    <contextMenu>
-      <name>ТокенКонтекстноеМеню</name>
-      <id>12</id>
-      <autoFill>true</autoFill>
-    </contextMenu>
-    <type>InputField</type>
-    <editMode>Enter</editMode>
-    <showInHeader>true</showInHeader>
-    <headerHorizontalAlign>Left</headerHorizontalAlign>
-    <showInFooter>true</showInFooter>
-    <extInfo xsi:type="form:InputFieldExtInfo">
-      <autoMaxWidth>true</autoMaxWidth>
-      <autoMaxHeight>true</autoMaxHeight>
-      <wrap>true</wrap>
-      <passwordMode>true</passwordMode>
-      <chooseType>true</chooseType>
-      <typeDomainEnabled>true</typeDomainEnabled>
-      <textEdit>true</textEdit>
-    </extInfo>
-  </items>
-  <items xsi:type="form:FormField">
     <name>Пользователь</name>
     <id>8</id>
     <visible>true</visible>
@@ -173,12 +119,13 @@
     </dataPath>
     <toolTip>
       <key>ru</key>
-      <value>Имя пользователя deploy-токена: GitLab показывает его вместе с токеном при создании. Для токена доступа проекта или личного токена оставьте пустым.</value>
+      <value>Пользователь RepEr с ролью «Получение исправлений и пользователей ошибок»: от его имени база читает ленту исправлений и число пользователей с ошибками по задачам. Доступ к GitLab базе не нужен: токен проекта - в настройке подключения в RepEr.</value>
     </toolTip>
     <toolTipRepresentation>ShowBottom</toolTipRepresentation>
     <extendedTooltip>
       <name>ПользовательРасширеннаяПодсказка</name>
       <id>10</id>
+      <formatted>true</formatted>
       <type>Label</type>
       <autoMaxWidth>true</autoMaxWidth>
       <autoMaxHeight>true</autoMaxHeight>
@@ -203,10 +150,47 @@
       <chooseType>true</chooseType>
       <typeDomainEnabled>true</typeDomainEnabled>
       <textEdit>true</textEdit>
-      <inputHint>
-        <key>ru</key>
-        <value>gitlab+deploy-token-&lt;номер></value>
-      </inputHint>
+    </extInfo>
+  </items>
+  <items xsi:type="form:FormField">
+    <name>Пароль</name>
+    <id>11</id>
+    <visible>true</visible>
+    <enabled>true</enabled>
+    <userVisible>
+      <common>true</common>
+    </userVisible>
+    <dataPath xsi:type="form:DataPath">
+      <segments>Пароль</segments>
+    </dataPath>
+    <extendedTooltip>
+      <name>ПарольРасширеннаяПодсказка</name>
+      <id>13</id>
+      <type>Label</type>
+      <autoMaxWidth>true</autoMaxWidth>
+      <autoMaxHeight>true</autoMaxHeight>
+      <extInfo xsi:type="form:LabelDecorationExtInfo">
+        <horizontalAlign>Left</horizontalAlign>
+      </extInfo>
+    </extendedTooltip>
+    <contextMenu>
+      <name>ПарольКонтекстноеМеню</name>
+      <id>12</id>
+      <autoFill>true</autoFill>
+    </contextMenu>
+    <type>InputField</type>
+    <editMode>Enter</editMode>
+    <showInHeader>true</showInHeader>
+    <headerHorizontalAlign>Left</headerHorizontalAlign>
+    <showInFooter>true</showInFooter>
+    <extInfo xsi:type="form:InputFieldExtInfo">
+      <autoMaxWidth>true</autoMaxWidth>
+      <autoMaxHeight>true</autoMaxHeight>
+      <wrap>true</wrap>
+      <passwordMode>true</passwordMode>
+      <chooseType>true</chooseType>
+      <typeDomainEnabled>true</typeDomainEnabled>
+      <textEdit>true</textEdit>
     </extInfo>
   </items>
   <items xsi:type="form:FormField">
@@ -381,7 +365,7 @@
     <name>Адрес</name>
     <title>
       <key>ru</key>
-      <value>Адрес репозитория</value>
+      <value>Адрес RepEr</value>
     </title>
     <id>1</id>
     <valueType>
@@ -399,7 +383,7 @@
     <name>Пользователь</name>
     <title>
       <key>ru</key>
-      <value>Пользователь токена</value>
+      <value>Пользователь RepEr</value>
     </title>
     <id>2</id>
     <valueType>
@@ -414,10 +398,10 @@
     </edit>
   </attributes>
   <attributes>
-    <name>Токен</name>
+    <name>Пароль</name>
     <title>
       <key>ru</key>
-      <value>Токен</value>
+      <value>Пароль</value>
     </title>
     <id>3</id>
     <valueType>
