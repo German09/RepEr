@@ -20,6 +20,8 @@ class Commit:
     subject: str
     author: str
     date: str
+    # Дата и время автора коммита в ISO 8601 с часовым поясом: 2026-10-07T13:11:05+03:00.
+    iso_date: str = ""
 
     @property
     def short(self) -> str:
@@ -63,9 +65,9 @@ class Repo:
         return result
 
     def commit(self, ref: str) -> Commit:
-        out = self._run("log", "-1", "--format=%H%x1f%s%x1f%an%x1f%ad", "--date=short", ref).strip()
-        sha, subject, author, date = out.split("\x1f")
-        return Commit(sha, subject, author, date)
+        out = self._run("log", "-1", "--format=%H%x1f%s%x1f%an%x1f%ad%x1f%aI", "--date=short", ref).strip()
+        sha, subject, author, date, iso_date = out.split("\x1f")
+        return Commit(sha, subject, author, date, iso_date)
 
     def message(self, sha: str) -> str:
         """Полный текст комментария коммита."""
@@ -84,14 +86,14 @@ class Repo:
 
     def commits(self, rev_range: str, *paths: str) -> list[Commit]:
         """Коммиты диапазона без merge-коммитов, от старых к новым."""
-        args = ["log", "--no-merges", "--reverse", "--format=%H%x1f%s%x1f%an%x1f%ad", "--date=short", rev_range]
+        args = ["log", "--no-merges", "--reverse", "--format=%H%x1f%s%x1f%an%x1f%ad%x1f%aI", "--date=short", rev_range]
         if paths:
             args += ["--", *paths]
         result = []
         for line in self._run(*args).splitlines():
             if line:
-                sha, subject, author, date = line.split("\x1f")
-                result.append(Commit(sha, subject, author, date))
+                sha, subject, author, date, iso_date = line.split("\x1f")
+                result.append(Commit(sha, subject, author, date, iso_date))
         return result
 
     def changed_files(self, sha: str, root: str) -> list[tuple[str, str]]:

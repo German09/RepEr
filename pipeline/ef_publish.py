@@ -134,6 +134,7 @@ def main() -> int:
         "task": info.get("task_code", ""),
         "commit_title": info.get("commit_title", ""),
         "commit_url": info.get("commit_url", ""),
+        "commit_date": info.get("commit_date", ""),
         "fire": info.get("fire", False),
         "revert": info.get("revert", False),
         "modified_metadata": info["modified_metadata"],

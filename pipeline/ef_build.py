@@ -183,6 +183,7 @@ def build_patch(repo: Repo, config: dict, args, patch: Patch, applied_versions: 
             "task_code": title.task_code,
             "commit_title": commit_title,
             "commit_url": commit_url,
+            "commit_date": head.iso_date,
             "fire": patch.fire,
             "revert": patch.revert,
             "base": plan.base_ref,

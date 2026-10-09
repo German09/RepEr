@@ -271,6 +271,60 @@
       </extInfo>
     </items>
     <items xsi:type="form:FormField">
+      <name>ПланДатаКоммита</name>
+      <id>231</id>
+      <title>
+        <key>ru</key>
+        <value>Дата коммита</value>
+      </title>
+      <visible>true</visible>
+      <enabled>true</enabled>
+      <userVisible>
+        <common>true</common>
+      </userVisible>
+      <dataPath xsi:type="form:DataPath">
+        <segments>План.ДатаКоммита</segments>
+      </dataPath>
+      <toolTip>
+        <key>ru</key>
+        <value>Дата последнего коммита исправления. Пустая - исправления нет в репозитории или оно опубликовано без даты коммита.</value>
+      </toolTip>
+      <extendedTooltip>
+        <name>ПланДатаКоммитаРасширеннаяПодсказка</name>
+        <id>233</id>
+        <type>Label</type>
+        <autoMaxWidth>true</autoMaxWidth>
+        <autoMaxHeight>true</autoMaxHeight>
+        <extInfo xsi:type="form:LabelDecorationExtInfo">
+          <horizontalAlign>Left</horizontalAlign>
+        </extInfo>
+      </extendedTooltip>
+      <contextMenu>
+        <name>ПланДатаКоммитаКонтекстноеМеню</name>
+        <id>232</id>
+        <autoFill>true</autoFill>
+      </contextMenu>
+      <type>InputField</type>
+      <editMode>Enter</editMode>
+      <showInHeader>true</showInHeader>
+      <headerHorizontalAlign>Left</headerHorizontalAlign>
+      <showInFooter>true</showInFooter>
+      <extInfo xsi:type="form:InputFieldExtInfo">
+        <width>10</width>
+        <autoMaxWidth>true</autoMaxWidth>
+        <autoMaxHeight>true</autoMaxHeight>
+        <horizontalStretch>false</horizontalStretch>
+        <wrap>true</wrap>
+        <format>
+          <key>ru</key>
+          <value>ДФ='dd.MM.yy HH:mm'</value>
+        </format>
+        <chooseType>true</chooseType>
+        <typeDomainEnabled>true</typeDomainEnabled>
+        <textEdit>true</textEdit>
+      </extInfo>
+    </items>
+    <items xsi:type="form:FormField">
       <name>ПланПорядок</name>
       <id>27</id>
       <enabled>true</enabled>
@@ -2513,6 +2567,24 @@
       <valueType>
         <types>String</types>
         <stringQualifiers/>
+      </valueType>
+      <view>
+        <common>true</common>
+      </view>
+      <edit>
+        <common>true</common>
+      </edit>
+    </columns>
+    <columns>
+      <name>ДатаКоммита</name>
+      <title>
+        <key>ru</key>
+        <value>Дата коммита</value>
+      </title>
+      <id>230</id>
+      <valueType>
+        <types>Date</types>
+        <dateQualifiers/>
       </valueType>
       <view>
         <common>true</common>
