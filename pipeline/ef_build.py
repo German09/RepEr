@@ -62,6 +62,10 @@ def report(patch: Patch, settings: Settings, notes: list[str]) -> str:
         lines.append(f"- {module_plan.ref.title}")
         lines += [f"  - &Вместо: {m.name}" for m in module_plan.overrides]
         lines += [f"  - добавлен: {m.name}" for m in module_plan.additions]
+        if module_plan.adopted:
+            names = [f"{m.name} ({', '.join(a.name for a in m.attributes)})" if m.is_tabular and m.attributes
+                     else m.name for m in module_plan.adopted]
+            lines.append(f"  - заимствованы реквизиты: {', '.join(names)}")
     if plan.unsupported:
         lines += ["", "## Не вошло в исправление - нужна ручная доработка", ""]
         lines += [f"- {item}" for item in plan.unsupported]

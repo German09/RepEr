@@ -6,6 +6,7 @@ import os
 import re
 from xml.sax.saxutils import escape
 
+from .adopt import Member
 from .kinds import COLLECTION_ORDER, KINDS, Kind
 from .planner import ModulePlan, Plan
 from .render import Settings, manifest_xml, module_text
@@ -75,12 +76,149 @@ class Objects:
             ref = module_plan.ref
             item = self.items.setdefault((ref.kind.folder, ref.object_name), {
                 "kind": ref.kind, "name": ref.object_name, "modules": [], "is_new": module_plan.is_new,
-                "mdo": mdo_reader(ref.mdo_path, module_plan.is_new),
+                "mdo": mdo_reader(ref.mdo_path, module_plan.is_new), "adopted": [],
             })
             item["modules"].append(module_plan)
+            item["adopted"] += module_plan.adopted
 
     def ordered(self) -> list[dict]:
         return sorted(self.items.values(), key=lambda it: (COLLECTION_ORDER.index(it["kind"].folder), it["name"]))
+
+
+# ---------------------------------------------------------------------------------------------
+# Заимствованные реквизиты и табличные части: тип копируется из релиза и контролируется.
+
+# Примитивные типы EDT -> тип в XML-выгрузке.
+XML_TYPES = {
+    "Boolean": "xs:boolean", "String": "xs:string", "Number": "xs:decimal", "Date": "xs:dateTime",
+    "UUID": "v8:UUID", "ValueStorage": "v8:ValueStorage", "BinaryData": "xs:base64Binary",
+}
+# Наборы типов: определяемый тип, характеристика, любая ссылка.
+XML_TYPE_SETS = ("DefinedType.", "Characteristic.")
+XML_QUALIFIERS = ["numberQualifiers", "stringQualifiers", "dateQualifiers", "binaryDataQualifiers"]
+
+
+def _xml_type(name: str) -> str:
+    if name in XML_TYPES:
+        return f"<v8:Type>{XML_TYPES[name]}</v8:Type>"
+    if name == "AnyRef":
+        return "<v8:TypeSet>cfg:AnyIBRef</v8:TypeSet>"
+    if name.startswith(XML_TYPE_SETS) or "." not in name:
+        # CatalogRef без имени - любая ссылка на справочник.
+        return f"<v8:TypeSet>cfg:{name}</v8:TypeSet>"
+    return f"<v8:Type>cfg:{name}</v8:Type>"
+
+
+def _xml_qualifiers(tag: str, values: dict[str, str]) -> list[str]:
+    allowed = "Fixed" if values.get("fixed") == "true" else "Variable"
+    if tag == "numberQualifiers":
+        sign = "Nonnegative" if values.get("nonNegative") == "true" else "Any"
+        return ["<v8:NumberQualifiers>", f"\t<v8:Digits>{values.get('precision', '10')}</v8:Digits>",
+                f"\t<v8:FractionDigits>{values.get('scale', '0')}</v8:FractionDigits>",
+                f"\t<v8:AllowedSign>{sign}</v8:AllowedSign>", "</v8:NumberQualifiers>"]
+    if tag == "stringQualifiers":
+        return ["<v8:StringQualifiers>", f"\t<v8:Length>{values.get('length', '0')}</v8:Length>",
+                f"\t<v8:AllowedLength>{allowed}</v8:AllowedLength>", "</v8:StringQualifiers>"]
+    if tag == "dateQualifiers":
+        return ["<v8:DateQualifiers>",
+                f"\t<v8:DateFractions>{values.get('dateFractions', 'DateTime')}</v8:DateFractions>",
+                "</v8:DateQualifiers>"]
+    if tag == "binaryDataQualifiers":
+        return ["<v8:BinaryDataQualifiers>", f"\t<v8:Length>{values.get('length', '0')}</v8:Length>",
+                f"\t<v8:AllowedLength>{allowed}</v8:AllowedLength>", "</v8:BinaryDataQualifiers>"]
+    return []
+
+
+def _xml_members(members: list[Member], cls: str, name: str, settings: Settings, tab: str) -> str:
+    """Элементы ChildObjects: Attribute и TabularSection."""
+    out = []
+    for member in members:
+        if member.is_tabular:
+            continue
+        lines = ["<InternalInfo/>", "<Properties>", "\t<ObjectBelonging>Adopted</ObjectBelonging>",
+                 f"\t<Name>{member.name}</Name>", "\t<Comment/>"]
+        if member.type:
+            lines.append("\t<Type>")
+            lines += [f"\t\t{_xml_type(t)}" for t in member.type.types]
+            quals = sorted(member.type.qualifiers,
+                           key=lambda q: XML_QUALIFIERS.index(q[0]) if q[0] in XML_QUALIFIERS else 99)
+            for tag, values in quals:
+                lines += [f"\t\t{line}" for line in _xml_qualifiers(tag, dict(values))]
+            lines.append("\t</Type>")
+        lines.append("</Properties>")
+        out.append(f'{tab}<Attribute uuid="{settings.uid(cls, name, "attribute", member.name)}">\n'
+                   + "".join(f"{tab}\t{line}\n" for line in lines) + f"{tab}</Attribute>\n")
+    for member in members:
+        if not member.is_tabular:
+            continue
+        uid = ("tabular", member.name)
+        generated = "".join(
+            f'{tab}\t\t<xr:GeneratedType name="{cls}{suffix}.{name}.{member.name}" category="{category}">\n'
+            f"{tab}\t\t\t<xr:TypeId>{settings.uid(cls, name, *uid, element, 'type')}</xr:TypeId>\n"
+            f"{tab}\t\t\t<xr:ValueId>{settings.uid(cls, name, *uid, element, 'value')}</xr:ValueId>\n"
+            f"{tab}\t\t</xr:GeneratedType>\n"
+            for element, suffix, category in (("objectType", "TabularSection", "TabularSection"),
+                                              ("rowType", "TabularSectionRow", "TabularSectionRow")))
+        children = _xml_members(member.attributes, cls, f"{name}.{member.name}", settings, tab + "\t\t")
+        out.append(
+            f'{tab}<TabularSection uuid="{settings.uid(cls, name, *uid)}">\n'
+            f"{tab}\t<InternalInfo>\n{generated}{tab}\t</InternalInfo>\n"
+            f"{tab}\t<Properties>\n{tab}\t\t<ObjectBelonging>Adopted</ObjectBelonging>\n"
+            f"{tab}\t\t<Name>{member.name}</Name>\n{tab}\t\t<Comment/>\n{tab}\t</Properties>\n"
+            + (f"{tab}\t<ChildObjects>\n{children}{tab}\t</ChildObjects>\n" if children
+               else f"{tab}\t<ChildObjects/>\n")
+            + f"{tab}</TabularSection>\n")
+    return "".join(out)
+
+
+def _edt_members(members: list[Member], cls: str, name: str, settings: Settings, pad: str) -> str:
+    """Элементы attributes и tabularSections в .mdo.
+
+    Ссылка на объект, которого нет в расширении (CatalogRef, EnumRef, DefinedType ...), в проекте EDT
+    не разрешается, поэтому в typeExtension только примитивные типы - так же EDT импортирует .cfe.
+    Полный тип для контроля платформой - в XML-выгрузке, из которой собирается .cfe.
+    """
+    out = []
+    for member in members:
+        if member.is_tabular:
+            continue
+        lines = [f"<name>{member.name}</name>", "<objectBelonging>Adopted</objectBelonging>",
+                 '<extension xsi:type="mdclassExtension:BasicFeatureExtension">']
+        primitive = [t for t in member.type.types if t in XML_TYPES] if member.type else []
+        if primitive:
+            lines.append("  <typeExtension>")
+            for type_name in primitive:
+                lines += ["    <types>", "      <state>Checked</state>", f"      <type>{type_name}</type>",
+                          "    </types>"]
+            for tag, values in member.type.qualifiers:
+                if not values:
+                    lines.append(f"    <{tag}/>")
+                    continue
+                lines.append(f"    <{tag}>")
+                lines += [f"      <{key}>{value}</{key}>" for key, value in values]
+                lines.append(f"    </{tag}>")
+            lines.append("  </typeExtension>")
+        else:
+            lines.append("  <typeExtension/>")
+        lines.append("</extension>")
+        out.append(f'{pad}<attributes uuid="{settings.uid(cls, name, "attribute", member.name)}">\n'
+                   + "".join(f"{pad}  {line}\n" for line in lines) + f"{pad}</attributes>\n")
+    for member in members:
+        if not member.is_tabular:
+            continue
+        uid = ("tabular", member.name)
+        produced = "".join(
+            f'{pad}    <{element} typeId="{settings.uid(cls, name, *uid, element, "type")}" '
+            f'valueTypeId="{settings.uid(cls, name, *uid, element, "value")}"/>\n'
+            for element in ("objectType", "rowType"))
+        out.append(
+            f'{pad}<tabularSections uuid="{settings.uid(cls, name, *uid)}">\n'
+            f"{pad}  <producedTypes>\n{produced}{pad}  </producedTypes>\n"
+            f"{pad}  <name>{member.name}</name>\n{pad}  <objectBelonging>Adopted</objectBelonging>\n"
+            f'{pad}  <extension xsi:type="mdclassExtension:MdObjectExtension"/>\n'
+            + _edt_members(member.attributes, cls, f"{name}.{member.name}", settings, pad + "  ")
+            + f"{pad}</tabularSections>\n")
+    return "".join(out)
 
 
 # ---------------------------------------------------------------------------------------------
@@ -166,7 +304,9 @@ def write_xml(root: str, plan: Plan, settings: Settings, objects: Objects) -> No
             props += f"\t\t\t<Privileged>{_mdo_value(item['mdo'], 'privileged', 'false')}</Privileged>\n"
             props += ("\t\t\t<ReturnValuesReuse>"
                       f"{_mdo_value(item['mdo'], 'returnValuesReuse', 'DontUse')}</ReturnValuesReuse>\n")
-        child = "\t\t<ChildObjects/>\n" if kind.produced else ""
+        members = _xml_members(item["adopted"], kind.cls, name, settings, "\t\t\t")
+        child = f"\t\t<ChildObjects>\n{members}\t\t</ChildObjects>\n" if members else (
+            "\t\t<ChildObjects/>\n" if kind.produced else "")
         _write(root, f"{kind.folder}/{name}.xml", head + (
             f'\t<{kind.cls} uuid="{settings.uid(kind.cls, name)}">\n'
             "\t\t<InternalInfo>\n" + generated + "\t\t</InternalInfo>\n"
@@ -267,4 +407,5 @@ def write_edt(root: str, plan: Plan, settings: Settings, objects: Objects, base_
             f'<mdclass:{kind.cls} {MDO_NS} uuid="{settings.uid(kind.cls, name)}">\n' + produced +
             f"  <name>{name}</name>\n  <objectBelonging>Adopted</objectBelonging>\n"
             f'  <extension xsi:type="mdclassExtension:{kind.cls}Extension">\n' + extension + "  </extension>\n" +
-            values + standard + f"</mdclass:{kind.cls}>\n"))
+            values + standard + _edt_members(item["adopted"], kind.cls, name, settings, "  ") +
+            f"</mdclass:{kind.cls}>\n"))

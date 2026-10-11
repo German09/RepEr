@@ -10,6 +10,7 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass, field
 
+from .adopt import OBJECT_KINDS, Member, adopted_members
 from .bsl import IDENT, Method, Module, parse_module
 from .gitutil import Commit, Repo
 from .kinds import KINDS, ModuleRef, classify
@@ -26,6 +27,7 @@ class ModulePlan:
     additions: list[Method] = field(default_factory=list)   # нет в релизе -> добавить как есть
     source: str = ""                                        # полный текст (только для is_new)
     touched_by: dict[str, list[str]] = field(default_factory=dict)  # метод -> коммиты задачи
+    adopted: list[Member] = field(default_factory=list)     # реквизиты и табличные части для модуля объекта
 
 
 @dataclass
@@ -178,7 +180,11 @@ class Planner:
         # 3. Зависимости от кода, которого в релизе нет.
         self._resolve_dependencies(plan, pull_deps)
 
-        # 4. Чужие правки тех же методов после релиза.
+        # 4. Реквизиты, к которым обращаются перенесенные методы модуля объекта.
+        for module_plan in plan.modules:
+            self._adopt(plan, module_plan)
+
+        # 5. Чужие правки тех же методов после релиза.
         for module_plan in plan.modules:
             if module_plan.is_new:
                 continue
@@ -193,6 +199,18 @@ class Planner:
                         f"{module_plan.ref.title}.{mine[key]}: после релиза метод меняли и вне этой задачи - "
                         f"{commit.short} \"{commit.subject}\". Эти правки тоже попадут в исправление")
         return plan
+
+    def _adopt(self, plan: Plan, module_plan: ModulePlan) -> None:
+        ref = module_plan.ref
+        if module_plan.is_new or ref.module_file != "ObjectModule.bsl" or ref.kind.folder not in OBJECT_KINDS:
+            return
+        mdo = f"{self.src_root}/{ref.mdo_path}"
+        module_plan.adopted, missing = adopted_members(
+            module_plan.overrides + module_plan.additions,
+            self.repo.show(plan.base_sha, mdo), self.repo.show(plan.head.sha, mdo))
+        for name in missing:
+            plan.warnings.append(f"{ref.title}: реквизита {name} нет в релизе {plan.base_ref}, "
+                                 f"добавление реквизитов не автоматизировано")
 
     def _resolve_dependencies(self, plan: Plan, pull_deps: bool) -> None:
         """Ищет вызовы методов, которых нет в релизе и нет в самом исправлении."""
