@@ -572,6 +572,48 @@
         </extInfo>
       </items>
       <items xsi:type="form:FormField">
+        <name>ПланОткачено</name>
+        <id>249</id>
+        <visible>true</visible>
+        <enabled>true</enabled>
+        <userVisible>
+          <common>true</common>
+        </userVisible>
+        <dataPath xsi:type="form:DataPath">
+          <segments>План.Откачено</segments>
+        </dataPath>
+        <titleLocation>None</titleLocation>
+        <toolTip>
+          <key>ru</key>
+          <value>EF-коммит откачен (git revert): исправления больше нет в репозитории, синхронизация удалит его из базы.</value>
+        </toolTip>
+        <extendedTooltip>
+          <name>ПланОткаченоРасширеннаяПодсказка</name>
+          <id>251</id>
+          <type>Label</type>
+          <autoMaxWidth>true</autoMaxWidth>
+          <autoMaxHeight>true</autoMaxHeight>
+          <extInfo xsi:type="form:LabelDecorationExtInfo">
+            <horizontalAlign>Left</horizontalAlign>
+          </extInfo>
+        </extendedTooltip>
+        <contextMenu>
+          <name>ПланОткаченоКонтекстноеМеню</name>
+          <id>250</id>
+          <autoFill>true</autoFill>
+        </contextMenu>
+        <type>PictureField</type>
+        <editMode>Enter</editMode>
+        <showInHeader>true</showInHeader>
+        <headerHorizontalAlign>Left</headerHorizontalAlign>
+        <showInFooter>true</showInFooter>
+        <extInfo xsi:type="form:ImageFieldExtInfo">
+          <width>2</width>
+          <autoMaxWidth>true</autoMaxWidth>
+          <autoMaxHeight>true</autoMaxHeight>
+        </extInfo>
+      </items>
+      <items xsi:type="form:FormField">
         <name>ПланСостояние</name>
         <id>38</id>
         <visible>true</visible>
@@ -652,7 +694,7 @@
       </dataPath>
       <toolTip>
         <key>ru</key>
-        <value>Начатые до подключения исправления: фоновые задания + остальные сеансы. В фоновых заданиях исправление не подключено, в остальных сеансах подключится после перезапуска. По нажатию - список активных пользователей.</value>
+        <value>Начатые до подключения исправления: фоновые задания + остальные сеансы. В фоновых заданиях исправление не подключено, в остальных сеансах подключится после перезапуска. У откаченного исправления не показываются. По нажатию - список активных пользователей.</value>
       </toolTip>
       <extendedTooltip>
         <name>ПланСеансовДоРасширеннаяПодсказка</name>
@@ -1084,6 +1126,56 @@
             </extInfo>
           </extendedTooltip>
           <commandName>Form.Command.УстановитьВыбранные</commandName>
+          <representation>Auto</representation>
+          <autoMaxWidth>true</autoMaxWidth>
+          <autoMaxHeight>true</autoMaxHeight>
+          <placementArea>UserCmds</placementArea>
+          <representationInContextMenu>Auto</representationInContextMenu>
+        </items>
+        <items xsi:type="form:Button">
+          <name>ПланКонтекстноеМенюОтключитьВыбранные</name>
+          <id>245</id>
+          <visible>true</visible>
+          <enabled>true</enabled>
+          <userVisible>
+            <common>true</common>
+          </userVisible>
+          <extendedTooltip>
+            <name>ПланКонтекстноеМенюОтключитьВыбранныеРасширеннаяПодсказка</name>
+            <id>246</id>
+            <type>Label</type>
+            <autoMaxWidth>true</autoMaxWidth>
+            <autoMaxHeight>true</autoMaxHeight>
+            <extInfo xsi:type="form:LabelDecorationExtInfo">
+              <horizontalAlign>Left</horizontalAlign>
+            </extInfo>
+          </extendedTooltip>
+          <commandName>Form.Command.ОтключитьВыбранные</commandName>
+          <representation>Auto</representation>
+          <autoMaxWidth>true</autoMaxWidth>
+          <autoMaxHeight>true</autoMaxHeight>
+          <placementArea>UserCmds</placementArea>
+          <representationInContextMenu>Auto</representationInContextMenu>
+        </items>
+        <items xsi:type="form:Button">
+          <name>ПланКонтекстноеМенюПодключитьВыбранные</name>
+          <id>247</id>
+          <visible>true</visible>
+          <enabled>true</enabled>
+          <userVisible>
+            <common>true</common>
+          </userVisible>
+          <extendedTooltip>
+            <name>ПланКонтекстноеМенюПодключитьВыбранныеРасширеннаяПодсказка</name>
+            <id>248</id>
+            <type>Label</type>
+            <autoMaxWidth>true</autoMaxWidth>
+            <autoMaxHeight>true</autoMaxHeight>
+            <extInfo xsi:type="form:LabelDecorationExtInfo">
+              <horizontalAlign>Left</horizontalAlign>
+            </extInfo>
+          </extendedTooltip>
+          <commandName>Form.Command.ПодключитьВыбранные</commandName>
           <representation>Auto</representation>
           <autoMaxWidth>true</autoMaxWidth>
           <autoMaxHeight>true</autoMaxHeight>
@@ -2078,7 +2170,7 @@
             <id>217</id>
             <title>
               <key>ru</key>
-              <value>Расширение установлено в базе, а в репозиториях настроенных библиотек его нет: обычно поставлено вручную из файла. Синхронизация такие исправления не трогает, удалить - «Удалить выбранные».
+              <value>Расширение установлено в базе, а в репозиториях настроенных библиотек его нет: обычно поставлено вручную из файла. Синхронизация такие исправления не трогает, удалить - «Удалить выбранные» в контекстном меню.
 Из EF-коммита автоматически собирается не все: переносятся только изменения процедур и функций в общих модулях и в модулях объекта, менеджера и набора записей справочников, документов, обработок, отчетов, регистров сведений и накопления.
 Точно не соберется автоматически:
 - модули форм и общих форм;
@@ -2263,7 +2355,7 @@
           <id>207</id>
           <title>
             <key>ru</key>
-            <value>Откат (REV)</value>
+            <value>Откачено или откат (REV)</value>
           </title>
           <visible>true</visible>
           <enabled>true</enabled>
@@ -2276,7 +2368,7 @@
             <id>209</id>
             <title>
               <key>ru</key>
-              <value>Откат EF-коммита (git revert), REV_ в имени расширения: возвращает методы к прежнему тексту поверх более поздних исправлений</value>
+              <value>EF-коммит откачен (git revert): исправления больше нет в репозитории, синхронизация удалит его из базы. Если откат должен вернуть методы к прежнему тексту поверх более поздних исправлений, ставится откат - исправление с REV_ в имени расширения</value>
             </title>
             <type>Label</type>
             <autoMaxWidth>true</autoMaxWidth>
@@ -2405,16 +2497,16 @@
       <representationInContextMenu>Auto</representationInContextMenu>
     </items>
     <items xsi:type="form:Button">
-      <name>ФормаУдалитьВыбранные</name>
-      <id>46</id>
+      <name>ФормаОтключитьВыбранные</name>
+      <id>243</id>
       <visible>true</visible>
       <enabled>true</enabled>
       <userVisible>
         <common>true</common>
       </userVisible>
       <extendedTooltip>
-        <name>ФормаУдалитьВыбранныеРасширеннаяПодсказка</name>
-        <id>47</id>
+        <name>ФормаОтключитьВыбранныеРасширеннаяПодсказка</name>
+        <id>244</id>
         <type>Label</type>
         <autoMaxWidth>true</autoMaxWidth>
         <autoMaxHeight>true</autoMaxHeight>
@@ -2422,7 +2514,7 @@
           <horizontalAlign>Left</horizontalAlign>
         </extInfo>
       </extendedTooltip>
-      <commandName>Form.Command.УдалитьВыбранные</commandName>
+      <commandName>Form.Command.ОтключитьВыбранные</commandName>
       <representation>Auto</representation>
       <autoMaxWidth>true</autoMaxWidth>
       <autoMaxHeight>true</autoMaxHeight>
@@ -2818,6 +2910,19 @@
       </edit>
     </columns>
     <columns>
+      <name>Отозвано</name>
+      <id>242</id>
+      <valueType>
+        <types>Boolean</types>
+      </valueType>
+      <view>
+        <common>true</common>
+      </view>
+      <edit>
+        <common>true</common>
+      </edit>
+    </columns>
+    <columns>
       <name>ФоновыхДо</name>
       <id>114</id>
       <valueType>
@@ -2960,6 +3065,23 @@
         <value>Откат (REV)</value>
       </title>
       <id>166</id>
+      <valueType>
+        <types>Picture</types>
+      </valueType>
+      <view>
+        <common>true</common>
+      </view>
+      <edit>
+        <common>true</common>
+      </edit>
+    </columns>
+    <columns>
+      <name>Откачено</name>
+      <title>
+        <key>ru</key>
+        <value>Откачено</value>
+      </title>
+      <id>252</id>
       <valueType>
         <types>Picture</types>
       </valueType>
@@ -3132,7 +3254,7 @@
     <id>4</id>
     <toolTip>
       <key>ru</key>
-      <value>Привести все исправления базы в соответствие с репозиториями, как регламентное задание: поставить новые исправления и новые сборки, удалить отозванные.</value>
+      <value>Привести все исправления базы в соответствие с репозиториями, как регламентное задание: поставить новые исправления и новые сборки, удалить откаченные.</value>
     </toolTip>
     <use>
       <common>true</common>
@@ -3153,7 +3275,7 @@
     <id>5</id>
     <toolTip>
       <key>ru</key>
-      <value>Установить выделенные в списке исправления из репозитория: текущая сборка ставится, прежняя удаляется, отозванное исправление удаляется. Остальные исправления не меняются.</value>
+      <value>Установить выделенные в списке исправления из репозитория: текущая сборка ставится, прежняя удаляется, откаченное исправление удаляется. Остальные исправления не меняются.</value>
     </toolTip>
     <use>
       <common>true</common>
@@ -3174,7 +3296,7 @@
     <id>6</id>
     <toolTip>
       <key>ru</key>
-      <value>Удалить из базы выделенные в списке исправления. В репозитории они остаются и при синхронизации будут установлены снова.</value>
+      <value>Удалить из базы выделенные в списке исправления. В репозитории они остаются, и автоматическая загрузка установит их снова: чтобы исправление не работало, лучше его отключить.</value>
     </toolTip>
     <use>
       <common>true</common>
@@ -3182,6 +3304,48 @@
     <action xsi:type="form:FormCommandHandlerContainer">
       <handler>
         <name>УдалитьВыбранные</name>
+      </handler>
+    </action>
+    <currentRowUse>Auto</currentRowUse>
+  </formCommands>
+  <formCommands>
+    <name>ОтключитьВыбранные</name>
+    <title>
+      <key>ru</key>
+      <value>Отключить выбранные</value>
+    </title>
+    <id>8</id>
+    <toolTip>
+      <key>ru</key>
+      <value>Отключить выделенные в списке исправления: снять флажок «Подключать». Исправление остается в базе, но в новых сеансах не подключается, и синхронизация его не трогает - в отличие от удаления, оно не вернется. Включить снова - «Подключить выбранные» в контекстном меню.</value>
+    </toolTip>
+    <use>
+      <common>true</common>
+    </use>
+    <action xsi:type="form:FormCommandHandlerContainer">
+      <handler>
+        <name>ОтключитьВыбранные</name>
+      </handler>
+    </action>
+    <currentRowUse>Auto</currentRowUse>
+  </formCommands>
+  <formCommands>
+    <name>ПодключитьВыбранные</name>
+    <title>
+      <key>ru</key>
+      <value>Подключить выбранные</value>
+    </title>
+    <id>9</id>
+    <toolTip>
+      <key>ru</key>
+      <value>Подключить выделенные в списке отключенные исправления: установить флажок «Подключать». Исправление подключится в новых сеансах.</value>
+    </toolTip>
+    <use>
+      <common>true</common>
+    </use>
+    <action xsi:type="form:FormCommandHandlerContainer">
+      <handler>
+        <name>ПодключитьВыбранные</name>
       </handler>
     </action>
     <currentRowUse>Auto</currentRowUse>
