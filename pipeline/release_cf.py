@@ -6,7 +6,8 @@
 из XML файл .cf во временной файловой базе. Файл и описание release.md (коммит, версия, sha256,
 задачи и коммиты после предыдущего тега) кладутся в <dest>/<тег>/. Повторная сборка тега
 перезаписывает его файлы. В <dest> остаются последние --keep релизов по номеру тега (по умолчанию 5).
-Тег и путь к файлу пишутся в <report-dir>/release.env для задания Загрузка (load_cf.ps1).
+Тег, путь к файлу и предыдущий релиз пишутся в <report-dir>/release.env для заданий Загрузка (load_cf.ps1)
+и Обновление (update_db.ps1).
 
 Тег берется из --tag (переменная EF_RELEASE_TAG), иначе из тега пайплайна (CI_COMMIT_TAG), иначе из события
 tag push веб-хука (файл TRIGGER_PAYLOAD).
@@ -84,10 +85,11 @@ def release_notes(tag: str, head: Commit, version: str, previous: str | None, co
     return "\n".join(lines)
 
 
-def release_env(tag: str, cf: str) -> str:
-    """Переменные для задания Загрузка (dotenv-артефакт). Путь - с прямыми слэшами: обратные dotenv GitLab
-    может принять за экранирование, а Windows понимает и прямые."""
-    return f"RELEASE_TAG={tag}\nRELEASE_CF={cf.replace(os.sep, '/')}\n"
+def release_env(tag: str, cf: str, previous: str | None = None) -> str:
+    """Переменные для заданий Загрузка и Обновление (dotenv-артефакт). Путь - с прямыми слэшами: обратные dotenv
+    GitLab может принять за экранирование, а Windows понимает и прямые. RELEASE_PREVIOUS - предыдущий релиз:
+    в его каталог Обновление сохраняет удаляемые исправления без манифеста."""
+    return f"RELEASE_TAG={tag}\nRELEASE_CF={cf.replace(os.sep, '/')}\nRELEASE_PREVIOUS={previous or ''}\n"
 
 
 def ibcmd(platform: str, args: list[str], timeout: int) -> None:
@@ -228,7 +230,7 @@ def main() -> int:
         with open(path, "w", encoding="utf-8") as f:
             f.write(notes)
     with open(env_path, "w", encoding="utf-8", newline="\n") as f:
-        f.write(release_env(tag, target))
+        f.write(release_env(tag, target, previous))
 
     for path in (xml, ib, cf):
         if os.path.isdir(path):

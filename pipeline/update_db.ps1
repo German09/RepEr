@@ -2,7 +2,9 @@
 #
 #   0. Полное применение требований назначения функциональности (rac rule apply --full).
 #   1. Конфигуратор: /UpdateDBCfg - конфигурация базы данных по основной конфигурации.
-#   1а. Удаление исправлений без манифеста (собранных вручную): БСП их не удаляет никогда.
+#   1а. Удаление исправлений без манифеста (собранных вручную): БСП их не удаляет никогда. Перед удалением каждое
+#       выгружается в <SaveDir>\<имя>.cfe - каталог релиза, который был в базе до обновления: при откате на него
+#       исправления ставятся обратно. -SaveDir не задан - в артефакт задания <LogDir>\patches.
 #   2. Предприятие: /C"ЗапуститьОбновлениеИнформационнойБазы;ЗавершитьРаботуСистемы" - обновление версии БСП
 #      (обработчики обновления; исправления, не применимые к новой версии, удаляются), как в скрипте обновления БСП.
 #   3. Ожидание фоновых заданий пользователя (rac session list): обновление идет фоновым заданием в монопольном
@@ -25,6 +27,8 @@ param(
     [string]$ClusterUser = $env:EF_CLUSTER_USER,
     [string]$ClusterPassword = $env:EF_CLUSTER_PASSWORD,
     [string]$LogDir = 'build/release',
+    # Каталог предыдущего релиза (<EF_CF_DIR>\<тег>) для удаляемых исправлений без манифеста.
+    [string]$SaveDir = '',
     [int]$TimeoutSec = $(if ($env:EF_UPDATE_TIMEOUT) { [int]$env:EF_UPDATE_TIMEOUT } else { 3600 })
 )
 
@@ -90,7 +94,21 @@ foreach ($file in Get-ChildItem $dump -Recurse -Depth 1 -Filter 'Configuration.x
     if ($purpose -eq 'Patch' -and $name.StartsWith('EF') -and -not $manifest) { $manual += $name }
 }
 Remove-Item $dump -Recurse -Force
+# Исправления без манифеста нужны релизу, который был в базе до обновления: при откате на него их ставят обратно.
+# Не выгрузилось - обновление останавливается до удаления.
+if ($manual) {
+    if (-not $SaveDir) {
+        $SaveDir = Join-Path $LogDir 'patches'
+        Write-Step "ВНИМАНИЕ: предыдущий релиз неизвестен (EF_PREVIOUS_RELEASE, RELEASE_PREVIOUS): исправления сохраняются только в артефакт задания $SaveDir"
+    }
+    New-Item -ItemType Directory -Force $SaveDir | Out-Null
+}
 foreach ($name in $manual) {
+    $cfe = Join-Path $SaveDir "$name.cfe"
+    Remove-Item $cfe -Force -ErrorAction SilentlyContinue
+    Invoke-1C 'DESIGNER' @('/DumpCfg', $cfe, '-Extension', $name) (Join-Path $LogDir "save_$name.log")
+    if (-not (Test-Path $cfe)) { throw "Исправление $name не выгружено в ${cfe}: оно и следующие не удалены, обновление версии не выполнено" }
+    Write-Step "Исправление $name сохранено: $cfe"
     Invoke-1C 'DESIGNER' @('/DeleteCfg', '-Extension', $name) (Join-Path $LogDir "delete_$name.log")
     Write-Step "Удалено исправление без манифеста: $name"
 }

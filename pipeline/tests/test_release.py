@@ -104,7 +104,12 @@ class ReleaseEnvTest(unittest.TestCase):
 
     def test_env_for_load_job(self):
         cf = os.path.join("D:" + os.sep, "CF", "3.20", "SYSTEM_3.20.cf")
-        self.assertEqual(release_env("3.20", cf), "RELEASE_TAG=3.20\nRELEASE_CF=D:/CF/3.20/SYSTEM_3.20.cf\n")
+        self.assertEqual(release_env("3.20", cf, "3.19.02"),
+                         "RELEASE_TAG=3.20\nRELEASE_CF=D:/CF/3.20/SYSTEM_3.20.cf\nRELEASE_PREVIOUS=3.19.02\n")
+
+    def test_env_without_previous_release(self):
+        cf = os.path.join("D:" + os.sep, "CF", "3.20", "SYSTEM_3.20.cf")
+        self.assertTrue(release_env("3.20", cf).endswith("\nRELEASE_PREVIOUS=\n"))
 
 
 if __name__ == "__main__":
