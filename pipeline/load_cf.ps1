@@ -14,6 +14,8 @@ param(
     # Пользователь рабочей базы с правом администрирования - тот же, что у этапа Установка.
     [string]$User = $env:EF_IB_USER,
     [string]$Password = $env:EF_IB_PASSWORD,
+    # Код разрешения блокировки сеансов: блокировку перед релизом ставят заранее, Конфигуратор без кода в базу не войдет.
+    [string]$PermissionCode = $env:EF_LOCK_CODE,
     # Пусто - merge-all.xml рядом со скриптом ($PSScriptRoot в значениях параметров PowerShell 5.1 пуст).
     [string]$Settings = '',
     [string]$Log = 'build/release/load.log',
@@ -35,6 +37,7 @@ Remove-Item $Log -Force -ErrorAction SilentlyContinue
 $arguments = @('DESIGNER', '/S', $Server)
 if ($User) { $arguments += @('/N', $User) }
 if ($Password) { $arguments += @('/P', $Password) }
+if ($PermissionCode) { $arguments += "/UC$PermissionCode" }
 $arguments += @('/DisableStartupDialogs', '/DisableStartupMessages', '/AppAutoCheckVersion-', '/Out', $Log,
     '/MergeCfg', $Cf, '-Settings', $Settings, '-force')
 $line = ($arguments | ForEach-Object { if ($_ -match '\s' -or $_ -eq '') { '"' + $_ + '"' } else { $_ } }) -join ' '

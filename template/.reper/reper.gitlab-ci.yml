@@ -17,8 +17,9 @@
 # Раннер: shell + PowerShell, Windows, с платформой 1С, EDT и Python; тег раннера - EF_RUNNER_TAG.
 # Задания на раннере определяет этот файл: основную ветку защитить.
 # Релиз запускают только защищенные теги (Settings -> Repository -> Protected tags): тег, который может
-# поставить любой разработчик, пайплайн не создает. Перезапуск кластера после загрузки .cf - только кнопкой:
-# до нее пайплайн стоит.
+# поставить любой разработчик, пайплайн не создает. Перезапуск кластера после загрузки .cf идет сам, но только
+# если рабочая база уже заблокирована средствами 1С с кодом разрешения EF_LOCK_CODE: иначе задание падает,
+# ничего не меняя, и после блокировки его перезапускают (Retry).
 # Переменные проекта (Settings -> CI/CD -> Variables) - в EF_IB_URL и ниже; пароли - masked.
 
 stages:
@@ -292,8 +293,10 @@ variables:
 # Перезапуск кластера рабочей базы (cluster_restart.ps1, узлы - .reper/cluster.json): блокировка сеансов
 # и регламентных заданий базы, остановка служб агента (и extraServices узла), ожидание и принудительное
 # завершение процессов, удаление snccntx*, запуск служб. Блокировка остается до обновления конфигурации базы
-# данных. Кнопкой после Загрузки или отдельным пайплайном с EF_CLUSTER_RESTART: check - только проверка,
-# run - перезапуск сразу, restart - перезапуск без обновления базы со снятием блокировки в конце.
+# данных. Сразу после Загрузки - только при блокировке сеансов, поставленной заранее средствами 1С (-RequireLock):
+# ее скрипт не меняет, без нее падает, ничего не трогая. Отдельным пайплайном с EF_CLUSTER_RESTART: check - только
+# проверка, run - перезапуск сразу, restart - перезапуск без обновления базы со снятием блокировки в конце;
+# блокировку скрипт ставит сам, если ее еще нет.
 Перезапуск:
   extends: .prod
   stage: Перезапуск
@@ -301,13 +304,9 @@ variables:
     - if: $EF_CLUSTER_RESTART == "check"
     - if: $EF_CLUSTER_RESTART == "run"
     - if: $EF_CLUSTER_RESTART == "restart"
-    # после загрузки .cf - только кнопкой; allow_failure: false - пайплайн стоит, Обновление ждет нажатия
+    # после загрузки .cf - сразу, под блокировкой, поставленной заранее
     - if: $EF_RELEASE_CF
-      when: manual
-      allow_failure: false
     - if: $CI_COMMIT_TAG || $EF_MODE == "release" || $EF_RELEASE_TAG
-      when: manual
-      allow_failure: false
   needs:
     - job: Загрузка
       artifacts: false
@@ -318,9 +317,11 @@ variables:
     - |
       $check = $env:EF_CLUSTER_RESTART -eq 'check'
       $unlock = $env:EF_CLUSTER_RESTART -eq 'restart'
-      Write-Output "Перезапуск кластера, только проверка: $check, снятие блокировки в конце: $unlock"
+      # Пайплайн релиза: блокировку ставят заранее, без нее перезапуска нет.
+      $require = -not $env:EF_CLUSTER_RESTART
+      Write-Output "Перезапуск кластера, только проверка: $check, снятие блокировки в конце: $unlock, только под блокировкой: $require"
       # В том же процессе: вложенный powershell с -Check завершался в задании кодом 2 без вывода.
-      & "$env:REPER\cluster_restart.ps1" -Config "$env:EF_CLUSTER_CONFIG" -Platform "$EF_PLATFORM" -Check:$check -ThenUnlock:$unlock
+      & "$env:REPER\cluster_restart.ps1" -Config "$env:EF_CLUSTER_CONFIG" -Platform "$EF_PLATFORM" -Check:$check -ThenUnlock:$unlock -RequireLock:$require
 
 # Обновление рабочей базы под блокировкой (update_db.ps1, код разрешения EF_LOCK_CODE): /UpdateDBCfg, затем
 # Предприятие с ЗапуститьОбновлениеИнформационнойБазы - обработчики обновления, удаление неприменимых исправлений.

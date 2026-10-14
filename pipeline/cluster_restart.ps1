@@ -2,6 +2,8 @@
 #
 # По шагам:
 #   1. блокировка начала сеансов и регламентных заданий базы через RAS (rac infobase update), с текущего момента;
+#      если блокировка сеансов уже действует (поставлена заранее средствами 1С), она не меняется - блокируются
+#      только регламентные задания;
 #   2. остановка служб агента на узлах из cluster.json, в их порядке; перед агентом - других служб 1С узла
 #      (extraServices, например release-ibsrv - автономный сервер сборки исправлений, он тоже держит файлы платформы);
 #   3. ожидание завершения ragent, rmngr и rphost; не завершились за -StopTimeoutSec - принудительно (kill -9 / Stop-Process);
@@ -10,6 +12,8 @@
 #   6. полное применение требований назначения функциональности (rac rule apply --full).
 # Блокировка остается: конфигурация базы данных обновляется с кодом разрешения (/UC), затем блокировка снимается.
 # -ThenUnlock - перезапуск без обновления базы: блокировка снимается сразу после запуска служб и применения ТНФ.
+# -RequireLock - перезапуск только при действующей блокировке сеансов с кодом разрешения $PermissionCode (релиз:
+# блокировку ставят заранее средствами 1С); без нее скрипт ничего не меняет и падает.
 #
 # Узел раннера обслуживается локально, остальные - по SSH (учетка и ключ - sshUser и sshKey в настройках узлов), на Linux через sudo -n.
 # -Check ничего не меняет: проверяет доступ по SSH, sudo, службы, процессы, каталоги snccntx и базу в RAS.
@@ -33,7 +37,8 @@ param(
     [string]$KnownHosts = '',
     [switch]$Check,
     [switch]$Unlock,
-    [switch]$ThenUnlock
+    [switch]$ThenUnlock,
+    [switch]$RequireLock
 )
 
 $ErrorActionPreference = 'Stop'
@@ -129,14 +134,45 @@ if ($Unlock) {
     exit 0
 }
 
+# Дата из rac (denied-from, denied-to); пусто или 0001-01-01 - не задана.
+function Get-LockDate([string]$Value) {
+    $date = [datetime]::MinValue
+    if ([datetime]::TryParse($Value, [Globalization.CultureInfo]::InvariantCulture, [Globalization.DateTimeStyles]::None, [ref]$date) -and $date.Year -gt 1) {
+        return $date
+    }
+    return $null
+}
+
+# Блокировка сеансов действует сейчас: включена, начало наступило, окончание не задано или не наступило.
+function Test-SessionsDenied($info) {
+    if ($info.'sessions-deny' -ne 'on') { return $false }
+    $now = Get-Date
+    $from = Get-LockDate $info.'denied-from'
+    $to = Get-LockDate $info.'denied-to'
+    return (-not $from -or $from -le $now) -and (-not $to -or $to -gt $now)
+}
+
 # Проверка: в режиме -Check - весь результат, перед перезапуском - чтобы не остановить кластер наполовину.
 $target = $null
+$locked = $false
 try {
     $target = Find-Infobase
     $info = Get-InfobaseInfo $target
-    Write-Step "База $($target.Name) в кластере $($target.Cluster) ($($target.Host)): блокировка сеансов $($info.'sessions-deny'), с $($info.'denied-from'), регламентные задания $($info.'scheduled-jobs-deny')"
+    $locked = Test-SessionsDenied $info
+    Write-Step "База $($target.Name) в кластере $($target.Cluster) ($($target.Host)): блокировка сеансов $($info.'sessions-deny'), с $($info.'denied-from'), по $($info.'denied-to'), действует: $locked, регламентные задания $($info.'scheduled-jobs-deny')"
 }
 catch { $problems.Add("RAS: $($_.Exception.Message)") }
+# Блокировка, поставленная заранее, не меняется, поэтому Обновление войдет в базу только с ее кодом разрешения.
+# Сам код не выводится.
+if ($locked -and $PermissionCode -and $info.'permission-code' -ne $PermissionCode) {
+    $problems.Add('Блокировка сеансов стоит с другим кодом разрешения: нужен код из переменной EF_LOCK_CODE')
+}
+if ($target -and -not $locked -and $RequireLock) {
+    $problems.Add('База не заблокирована: поставить блокировку сеансов средствами 1С с кодом разрешения из EF_LOCK_CODE и перезапустить задание')
+}
+if ($locked -and (Get-LockDate $info.'denied-to')) {
+    Write-Step "ВНИМАНИЕ: блокировка сеансов задана до $($info.'denied-to'): после этого пользователи смогут войти, даже если обновление не закончено"
+}
 
 # Рабочие серверы кластера и их требования назначения функциональности - только в режиме проверки.
 if ($Check -and $target) {
@@ -191,14 +227,23 @@ foreach ($node in $nodes) {
 if ($problems.Count) { throw ("Проверка не пройдена:`n" + (($problems | ForEach-Object { " - $_" }) -join "`n")) }
 if ($Check) { Write-Step 'Проверка пройдена, ничего не изменено'; exit 0 }
 
-# 1. Блокировка.
-$from = (Get-Date).ToString('yyyy-MM-ddTHH:mm:ss')
+# 1. Блокировка. Действующая блокировка сеансов (поставленная заранее средствами 1С) не меняется:
+# блокируются только регламентные задания.
+if ($locked) {
+    $lock = @('--scheduled-jobs-deny=on')
+    $text = "Блокировка сеансов базы $($target.Name) уже стоит с $($info.'denied-from'), регламентные задания заблокированы"
+}
+else {
+    $from = (Get-Date).ToString('yyyy-MM-ddTHH:mm:ss')
+    $lock = @('--sessions-deny=on', "--denied-from=$from", "--denied-message=$Message", "--permission-code=$PermissionCode",
+        '--scheduled-jobs-deny=on')
+    $text = "Блокировка сеансов и регламентных заданий базы $($target.Name) с $from"
+}
 Invoke-Rac (@('infobase', 'update', "--cluster=$($target.Cluster)", "--infobase=$($target.Infobase)",
-    "--infobase-user=$User", "--infobase-pwd=$Password", '--sessions-deny=on', "--denied-from=$from",
-    "--denied-message=$Message", "--permission-code=$PermissionCode", '--scheduled-jobs-deny=on') + (Get-ClusterAuth)) | Out-Null
+    "--infobase-user=$User", "--infobase-pwd=$Password") + $lock + (Get-ClusterAuth)) | Out-Null
 $info = Get-InfobaseInfo $target
 if ($info.'sessions-deny' -ne 'on' -or $info.'scheduled-jobs-deny' -ne 'on') { throw "Блокировка не установилась: сеансы $($info.'sessions-deny'), регламентные задания $($info.'scheduled-jobs-deny')" }
-Write-Step "Блокировка сеансов и регламентных заданий базы $($target.Name) с $from"
+Write-Step $text
 
 # 2. Остановка служб: на узле сначала другие службы 1С, потом агент.
 foreach ($node in $nodes) {
