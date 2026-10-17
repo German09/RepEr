@@ -5,10 +5,14 @@
 #   1а. Удаление исправлений без манифеста (собранных вручную): БСП их не удаляет никогда. Перед удалением каждое
 #       выгружается в <SaveDir>\<имя>.cfe - каталог релиза, который был в базе до обновления: при откате на него
 #       исправления ставятся обратно. -SaveDir не задан - в артефакт задания <LogDir>\patches.
-#   2. Предприятие: /C"ЗапуститьОбновлениеИнформационнойБазы;ЗавершитьРаботуСистемы" - обновление версии БСП
-#      (обработчики обновления; исправления, не применимые к новой версии, удаляются), как в скрипте обновления БСП.
-#   3. Ожидание фоновых заданий пользователя (rac session list): обновление идет фоновым заданием в монопольном
-#      режиме, и клиент Предприятия завершается раньше него.
+#   2. Предприятие: /C"ЗапуститьОбновлениеИнформационнойБазы" - обновление версии БСП (обработчики обновления;
+#      исправления, не применимые к новой версии, удаляются), как в скрипте обновления БСП.
+#   3. Ожидание толстых клиентов пользователя с этого компьютера и его фоновых заданий (rac session list): после
+#      удаления устаревших исправлений БСП перезапускает клиент новым процессом, и обновление выполняет уже он,
+#      а обработчики обновления идут фоновыми заданиями. Сам клиент в клиент-серверной базе не завершается: после
+#      обновления он открывает рабочий стол. Когда фоновых заданий нет, а клиент -IdleSec не выполняет вызовов
+#      сервера, обновление закончено: сеансы клиентов завершаются, процессы 1cv8 этого задания снимаются.
+#      Не дождались за -TimeoutSec - то же, и задание падает.
 # Блокировка не снимается: это отдельный шаг после проверки. Регламентные задания заблокированы, поэтому
 # отложенные обработчики обновления пойдут после снятия блокировки.
 #
@@ -29,7 +33,9 @@ param(
     [string]$LogDir = 'build/release',
     # Каталог предыдущего релиза (<EF_CF_DIR>\<тег>) для удаляемых исправлений без манифеста.
     [string]$SaveDir = '',
-    [int]$TimeoutSec = $(if ($env:EF_UPDATE_TIMEOUT) { [int]$env:EF_UPDATE_TIMEOUT } else { 3600 })
+    [int]$TimeoutSec = $(if ($env:EF_UPDATE_TIMEOUT) { [int]$env:EF_UPDATE_TIMEOUT } else { 3600 }),
+    # Сколько секунд клиент без вызовов сервера и без фоновых заданий, чтобы считать обновление законченным.
+    [int]$IdleSec = $(if ($env:EF_UPDATE_IDLE) { [int]$env:EF_UPDATE_IDLE } else { 120 })
 )
 
 $ErrorActionPreference = 'Stop'
@@ -114,29 +120,83 @@ foreach ($name in $manual) {
 }
 if (-not $manual) { Write-Step 'Исправлений без манифеста нет' }
 
-Write-Step "Обновление версии в режиме Предприятия $Server"
-Invoke-1C 'ENTERPRISE' @('/C', 'ЗапуститьОбновлениеИнформационнойБазы;ЗавершитьРаботуСистемы') (Join-Path $LogDir 'enterprise.log')
+# Сеансы обновления: толстые клиенты $User с этого компьютера (запущенный здесь и перезапущенные БСП) и фоновые
+# задания $User. Под блокировкой других таких сеансов нет.
+function Get-UpdateSessions {
+    @(Get-InfobaseSessions $target | Where-Object {
+        $_.'user-name' -eq $User -and
+        ($_.'app-id' -eq 'BackgroundJob' -or ($_.'app-id' -eq '1CV8' -and ($_.host -split '\.')[0] -ieq $env:COMPUTERNAME))
+    })
+}
 
-# Обновление идет фоновым заданием (сеанс "Фоновое задание" пользователя $User) в монопольном режиме, клиент
-# завершается раньше него. Ждем, пока таких сеансов не останется; если за минуту ни один не появился - обновление
-# уже закончилось.
+# Завершает сеансы клиентов через RAS и снимает процессы 1cv8, запущенные в этом сеансе Windows после $Since:
+# клиент без пользователя не закроет сообщение о завершении сеанса и остался бы висеть.
+function Stop-UpdateClients([datetime]$Since) {
+    foreach ($session in @(Get-UpdateSessions | Where-Object { $_.'app-id' -eq '1CV8' })) {
+        try {
+            Invoke-Rac (@('session', 'terminate', "--cluster=$($target.Cluster)", "--session=$($session.session)") + (Get-ClusterAuth)) | Out-Null
+            Write-Step "Сеанс клиента $($session.'session-id') на $($session.host) завершен"
+        }
+        catch { Write-Step "Сеанс клиента $($session.'session-id') не завершен: $($_.Exception.Message)" }
+    }
+    $windowsSession = (Get-Process -Id $PID).SessionId
+    foreach ($process in @(Get-Process -Name '1cv8' -ErrorAction SilentlyContinue |
+            Where-Object { $_.SessionId -eq $windowsSession -and $_.StartTime -ge $Since })) {
+        Stop-Process -Id $process.Id -Force -ErrorAction SilentlyContinue
+        Write-Step "Процесс 1cv8 $($process.Id) снят"
+    }
+}
+
+Write-Step "Обновление версии в режиме Предприятия $Server"
+$enterpriseStarted = Get-Date
+try {
+    Invoke-1C 'ENTERPRISE' @('/C', 'ЗапуститьОбновлениеИнформационнойБазы') (Join-Path $LogDir 'enterprise.log')
+}
+catch {
+    Stop-UpdateClients $enterpriseStarted
+    throw
+}
+
+# Процесс, которого ждал Invoke-1C, мог не довести обновление до конца: после удаления устаревших исправлений БСП
+# перезапускает клиент новым процессом, и обновляет базу уже он; обработчики обновления идут фоновыми заданиями.
+# Сам клиент не завершается: после обновления он открывает рабочий стол. Пока идет обновление, клиент выполняет
+# вызов сервера (duration-current) или ждет фоновое задание; простой -IdleSec без того и другого - обновление
+# закончено, клиенты снимаются. Если за минуту ни один сеанс обновления не появился - обновление уже закончилось.
 $started = Get-Date
 $seen = @{}
+$idleSince = $null
+$stopped = $null
 while ($true) {
-    $jobs = @(Get-InfobaseSessions $target | Where-Object { $_.'user-name' -eq $User -and $_.'app-id' -eq 'BackgroundJob' })
-    foreach ($job in $jobs) {
-        if (-not $seen.ContainsKey($job.'session-id')) {
-            $seen[$job.'session-id'] = $true
-            Write-Step "Фоновое задание ${User}: сеанс $($job.'session-id') на $($job.host), начат $($job.'started-at')"
+    $sessions = Get-UpdateSessions
+    foreach ($session in $sessions) {
+        if (-not $seen.ContainsKey($session.'session-id')) {
+            $seen[$session.'session-id'] = $true
+            $kind = if ($session.'app-id' -eq 'BackgroundJob') { 'Фоновое задание' } else { 'Клиент' }
+            Write-Step "$kind ${User}: сеанс $($session.'session-id') на $($session.host), начат $($session.'started-at')"
         }
     }
     $elapsed = ((Get-Date) - $started).TotalSeconds
-    if (-not $jobs -and ($seen.Count -or $elapsed -ge 60)) { break }
-    if ($elapsed -gt $TimeoutSec) {
-        throw "Фоновые задания $User не завершились за $TimeoutSec с: сеансы $(($jobs | ForEach-Object { $_.'session-id' }) -join ', ')"
+    if (-not $sessions -and ($seen.Count -or $elapsed -ge 60)) { break }
+    $clients = @($sessions | Where-Object { $_.'app-id' -eq '1CV8' })
+    $busy = @($sessions | Where-Object { $_.'app-id' -eq 'BackgroundJob' -or [long]$_.'duration-current' -gt 0 })
+    if ($busy -or -not $clients) { $idleSince = $null } elseif (-not $idleSince) { $idleSince = Get-Date }
+    if ($stopped) {
+        if (((Get-Date) - $stopped).TotalSeconds -ge 60) {
+            throw "Клиенты $User не завершились: сеансы $(($clients | ForEach-Object { $_.'session-id' }) -join ', ')"
+        }
+    }
+    elseif ($idleSince -and ((Get-Date) - $idleSince).TotalSeconds -ge $IdleSec) {
+        Write-Step "Фоновых заданий нет, клиенты без вызовов сервера $IdleSec с: обновление закончено, клиенты снимаются"
+        Stop-UpdateClients $enterpriseStarted
+        $stopped = Get-Date
+    }
+    elseif ($elapsed -gt $TimeoutSec) {
+        $list = ($sessions | ForEach-Object { "$($_.'session-id') ($($_.'app-id'))" }) -join ', '
+        Stop-UpdateClients $enterpriseStarted
+        throw "Сеансы обновления $User не завершились за $TimeoutSec с: $list"
     }
     Start-Sleep -Seconds 15
 }
-Write-Step ("Фоновых заданий {0}: {1}, все завершены; ожидание {2:N0} с" -f $User, $seen.Count, ((Get-Date) - $started).TotalSeconds)
+Write-Step ("Сеансов обновления {0} (клиенты и фоновые задания): {1}, все завершены; ожидание {2:N0} с" -f $User, $seen.Count, ((Get-Date) - $started).TotalSeconds)
 
 Write-Step 'База обновлена. Блокировка сеансов и регламентных заданий остается: проверить и снять отдельным шагом'
