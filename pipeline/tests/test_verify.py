@@ -3,14 +3,19 @@
 
 Запуск: python -m unittest discover -s tests
 """
+import contextlib
+import io
 import json
 import os
 import sys
 import tempfile
 import unittest
+import urllib.error
+from unittest import mock
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 
+import ef_verify  # noqa: E402
 from ef_verify import FAIL, OK, WAIT, Expected, evaluate, expected_patches  # noqa: E402
 
 UUID = "23129ec2-c038-11f1-8853-e89e4925478b"
@@ -88,6 +93,40 @@ class ExpectedPatchesTest(unittest.TestCase):
 
     def test_no_dir(self):
         self.assertEqual(expected_patches(os.path.join(tempfile.gettempdir(), "no-such-ef-dir")), [])
+
+
+class MainTest(unittest.TestCase):
+    """Опрос базы: на какие ответы HTTP-сервиса задание ждет, а на какие падает сразу."""
+
+    def run_main(self, *answers) -> int:
+        with tempfile.TemporaryDirectory() as root:
+            os.makedirs(os.path.join(root, "EF_1_1"))
+            with open(os.path.join(root, "EF_1_1", "ef.json"), "w", encoding="utf-8") as f:
+                json.dump({"name": "EF_1_1", "uuid": UUID, "version": "1.3.19.01.2"}, f)
+            with open(os.path.join(root, "EF_1_1", "EF_1_1.zip"), "wb") as f:
+                f.write(b"zip")
+            argv = ["ef_verify.py", "--out", root, "--url", "https://server/base/hs/reperext/patches"]
+            with mock.patch.object(sys, "argv", argv), \
+                    mock.patch.object(ef_verify.Base, "state", side_effect=list(answers)) as state, \
+                    mock.patch.object(ef_verify.time, "sleep"), \
+                    contextlib.redirect_stdout(io.StringIO()):
+                code = ef_verify.main()
+            self.calls = state.call_count
+            return code
+
+    @staticmethod
+    def http(code: int) -> urllib.error.HTTPError:
+        return urllib.error.HTTPError("https://server", code, "error", {}, None)
+
+    def test_404_waits(self):
+        # Пока база подключает исправление, сеанс сервиса стартует без расширения RepEr: 404, потом ответ.
+        state = {"now": "2026-10-22T18:40:00", "auto_install": True, "patches": list(base().values())}
+        self.assertEqual(self.run_main(self.http(404), state), 0)
+        self.assertEqual(self.calls, 2)
+
+    def test_401_fails_at_once(self):
+        self.assertEqual(self.run_main(self.http(401)), 1)
+        self.assertEqual(self.calls, 1)
 
 
 if __name__ == "__main__":

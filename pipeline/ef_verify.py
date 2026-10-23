@@ -179,11 +179,14 @@ def main() -> int:
             state = base.state(since)
             problem = ""
         except urllib.error.HTTPError as error:
-            if error.code in (401, 403, 404):
-                # Неверные учетные данные, нет роли или в базе расширение RepEr без HTTP-сервиса: ожидание не поможет.
+            if error.code in (401, 403):
+                # Неверные учетные данные или нет роли: ожидание не поможет.
                 print(f"Ошибка запроса к базе: HTTP {error.code} {error.reason}")
                 return 1
             problem = f"HTTP {error.code} {error.reason}"
+            if error.code == 404:
+                # Сеанс начался без расширения RepEr: база как раз подключает исправление - или в ней RepEr без сервиса.
+                problem += " (нет HTTP-сервиса RepEr)"
         except (urllib.error.URLError, TimeoutError, OSError, ValueError) as error:
             problem = str(error)
 
