@@ -94,6 +94,27 @@
       <dataHistory>Use</dataHistory>
       <fullTextSearch>Use</fullTextSearch>
     </attributes>
+    <attributes uuid="69ff2807-dd52-4375-bf16-95e4b2526f72">
+      <name>Расширение</name>
+      <synonym>
+        <key>ru</key>
+        <value>Расширение</value>
+      </synonym>
+      <type>
+        <types>String</types>
+        <stringQualifiers>
+          <length>100</length>
+        </stringQualifiers>
+      </type>
+      <toolTip>
+        <key>ru</key>
+        <value>Имя расширения, как в стеке отчета об ошибке. Для ошибок этого расширения используются только его строки. Строка без расширения - для всех остальных ошибок</value>
+      </toolTip>
+      <minValue xsi:type="core:UndefinedValue"/>
+      <maxValue xsi:type="core:UndefinedValue"/>
+      <dataHistory>Use</dataHistory>
+      <fullTextSearch>Use</fullTextSearch>
+    </attributes>
   </tabularSections>
   <tabularSections uuid="63c8e490-3de0-4d1b-8931-8e4234f6c775">
     <producedTypes>
@@ -128,6 +149,27 @@
       <type>
         <types>CatalogRef.НастройкиПодключений_RepEx</types>
       </type>
+      <minValue xsi:type="core:UndefinedValue"/>
+      <maxValue xsi:type="core:UndefinedValue"/>
+      <dataHistory>Use</dataHistory>
+      <fullTextSearch>Use</fullTextSearch>
+    </attributes>
+    <attributes uuid="85032bca-6f09-43c7-b84e-1b3ab25d28a5">
+      <name>Расширение</name>
+      <synonym>
+        <key>ru</key>
+        <value>Расширение</value>
+      </synonym>
+      <type>
+        <types>String</types>
+        <stringQualifiers>
+          <length>100</length>
+        </stringQualifiers>
+      </type>
+      <toolTip>
+        <key>ru</key>
+        <value>Имя расширения, как в стеке отчета об ошибке. Для ошибок этого расширения используются только его строки. Строка без расширения - для всех остальных ошибок; лента исправлений берется только из таких строк</value>
+      </toolTip>
       <minValue xsi:type="core:UndefinedValue"/>
       <maxValue xsi:type="core:UndefinedValue"/>
       <dataHistory>Use</dataHistory>
