@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:CommonModule xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="2dd5d795-bcde-4d6d-9d37-7f51c44ba9f0">
+  <name>РепозиторииGitHub_RepEr</name>
+  <synonym>
+    <key>ru</key>
+    <value>Репозитории GitHub</value>
+  </synonym>
+  <server>true</server>
+  <externalConnection>true</externalConnection>
+  <clientOrdinaryApplication>true</clientOrdinaryApplication>
+</mdclass:CommonModule>
