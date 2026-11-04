@@ -163,9 +163,15 @@ try {
 }
 catch { $problems.Add("RAS: $($_.Exception.Message)") }
 # Блокировка, поставленная заранее, не меняется, поэтому Обновление войдет в базу только с ее кодом разрешения.
-# Сам код не выводится.
-if ($locked -and $PermissionCode -and $info.'permission-code' -ne $PermissionCode) {
-    $problems.Add('Блокировка сеансов стоит с другим кодом разрешения: нужен код из переменной EF_LOCK_CODE')
+# Сам код не выводится. Поле не прочитано из вывода rac - отдельная ошибка, а не "другой код".
+if ($locked -and $PermissionCode) {
+    $fields = @($info.PSObject.Properties.Name)
+    if ($fields -notcontains 'permission-code') {
+        $problems.Add("rac не вернул код разрешения (permission-code), прочитаны поля: $($fields -join ', ')")
+    }
+    elseif ($info.'permission-code' -ne $PermissionCode) {
+        $problems.Add('Блокировка сеансов стоит с другим кодом разрешения: нужен код из переменной EF_LOCK_CODE')
+    }
 }
 if ($target -and -not $locked -and $RequireLock) {
     $problems.Add('База не заблокирована: поставить блокировку сеансов средствами 1С с кодом разрешения из EF_LOCK_CODE и перезапустить задание')

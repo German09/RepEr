@@ -15,16 +15,54 @@ function Invoke-Native([string]$Executable, [string[]]$Arguments) {
     finally { $ErrorActionPreference = $previous }
 }
 
-# rac: вывод - блоки "ключ : значение", разделенные пустой строкой.
 function Invoke-Rac([string[]]$Arguments) {
     $result = Invoke-Native (Join-Path $Platform 'rac.exe') (@($Ras) + $Arguments)
     if ($result.ExitCode -ne 0) { throw "rac $($Arguments[0..1] -join ' '): код $($result.ExitCode)`n$($result.Output -join "`n")" }
-    $items = @(); $item = [ordered]@{}
-    foreach ($line in $result.Output + '') {
-        if ($line -match '^\s*([\w-]+)\s*:\s*(.*)$') { $item[$Matches[1]] = $Matches[2].Trim('"', ' ') }
-        elseif ($item.Count) { $items += [pscustomobject]$item; $item = [ordered]@{} }
+    return ConvertFrom-RacOutput $result.Output
+}
+
+# Число кавычек в строке нечетное: значение, начатое кавычкой, еще не закрыто (кавычки внутри удвоены).
+function Test-OddQuotes([string]$Text) { (($Text.ToCharArray() | Where-Object { $_ -eq '"' }) | Measure-Object).Count % 2 -eq 1 }
+
+# Вывод rac: блоки "ключ : значение", разделенные пустой строкой; ключи блока выровнены, двоеточие - в одной колонке.
+# Значение в кавычках (сообщение блокировки, описание) может занимать несколько строк, в том числе пустых: пока
+# кавычка не закрыта, строки - его продолжение, а не конец записи. Иначе хвост записи терялся: сообщение блокировки
+# с переводом строки отрезало denied-to и permission-code. Новый ключ - строка "ключ :" с двоеточием в колонке блока.
+function ConvertFrom-RacOutput([string[]]$Lines) {
+    $items = New-Object System.Collections.Generic.List[object]
+    $item = [ordered]@{}; $key = $null; $column = -1; $open = $false
+    foreach ($line in @($Lines) + '') {
+        if ($line -match '^([A-Za-z][\w-]*)\s*:(?:\s(.*))?$' -and ($column -lt 0 -or $line.IndexOf(':') -eq $column)) {
+            $key = $Matches[1]
+            $item[$key] = [string]$Matches[2]
+            $column = $line.IndexOf(':')
+            $open = $item[$key].TrimStart().StartsWith('"') -and (Test-OddQuotes $item[$key])
+        }
+        elseif ($open) {
+            $item[$key] += "`n" + $line
+            $open = Test-OddQuotes $item[$key]
+        }
+        elseif (-not $line.Trim()) {
+            if ($item.Count) { $items.Add((Complete-RacItem $item)) }
+            $item = [ordered]@{}; $key = $null; $column = -1
+        }
+        # Строка без ключа вне кавычек - продолжение значения без кавычек, а не конец записи.
+        elseif ($key) { $item[$key] += "`n" + $line }
     }
-    return $items
+    return $items.ToArray()
+}
+
+# Значения записи: без пробелов по краям, в кавычках - без внешних кавычек и с одинарными внутри.
+function Complete-RacItem($item) {
+    $result = [ordered]@{}
+    foreach ($name in $item.Keys) {
+        $value = $item[$name].Trim()
+        if ($value.Length -ge 2 -and $value.StartsWith('"') -and $value.EndsWith('"')) {
+            $value = $value.Substring(1, $value.Length - 2).Replace('""', '"')
+        }
+        $result[$name] = $value
+    }
+    return [pscustomobject]$result
 }
 
 function Get-ClusterAuth { if ($ClusterUser) { @("--cluster-user=$ClusterUser", "--cluster-pwd=$ClusterPassword") } else { @() } }
