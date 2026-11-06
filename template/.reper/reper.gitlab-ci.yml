@@ -30,7 +30,9 @@ stages:
   - Релиз
   - Загрузка
   - Перезапуск
+  - Индексы до
   - Обновление
+  - Индексы после
   - Разблокировка
 
 workflow:
@@ -137,6 +139,11 @@ variables:
   # манифеста (.cfe) для отката. Пусто - предыдущий тег из задания Релиз (RELEASE_PREVIOUS); его нет
   # (EF_RELEASE_CF, EF_DB_UPDATE) - только артефакт задания.
   EF_PREVIOUS_RELEASE: ''
+  # Свои индексы PostgreSQL (задания Индексы до и Индексы после): ODBC-драйвер PostgreSQL на раннере (как у внешних
+  # источников данных 1С). Подключение - переменные проекта PGHOST, PGPORT, PGDATABASE, PGUSER, PGPASSWORD (masked);
+  # PGUSER - владелец таблиц базы или суперпользователь. Не задана хотя бы одна из PGHOST, PGDATABASE, PGUSER,
+  # PGPASSWORD - заданий в пайплайне нет.
+  EF_PG_ODBC_DRIVER: 'PostgreSQL Unicode(x64)'
 
 .fixes:
   rules:
@@ -162,6 +169,14 @@ variables:
 # Задания, которые меняют рабочую базу: по одному.
 .prod:
   resource_group: prod-config
+
+# Свои индексы PostgreSQL: без подключения к базе заданий нет. Подключается в rules заданий через !reference.
+.indexes-configured:
+  rules:
+    - if: $PGHOST == null || $PGHOST == "" || $PGDATABASE == null || $PGDATABASE == ""
+      when: never
+    - if: $PGUSER == null || $PGUSER == "" || $PGPASSWORD == null || $PGPASSWORD == ""
+      when: never
 
 Сборка:
   extends: .fixes
@@ -330,6 +345,32 @@ variables:
       # В том же процессе: вложенный powershell с -Check завершался в задании кодом 2 без вывода.
       & "$env:REPER\cluster_restart.ps1" -Config "$env:EF_CLUSTER_CONFIG" -Platform "$EF_PLATFORM" -Check:$check -ThenUnlock:$unlock -RequireLock:$require
 
+# Снимок своих индексов PostgreSQL (созданных не платформой) перед Обновлением (indexes.ps1 -Mode Snapshot):
+# реструктуризация их теряет, задание Индексы после создает их заново по снимку. Не получилось - предупреждение,
+# Обновление идет дальше.
+Индексы до:
+  stage: Индексы до
+  rules:
+    - !reference [.indexes-configured, rules]
+    - if: $EF_DB_UPDATE == "run"
+    - if: $EF_CLUSTER_RESTART == "run"
+    - if: $EF_RELEASE_CF
+    - if: $CI_COMMIT_TAG || $EF_MODE == "release" || $EF_RELEASE_TAG
+  needs:
+    - job: Перезапуск
+      artifacts: false
+      optional: true
+  allow_failure: true
+  timeout: 10m
+  script:
+    - |
+      & "$env:REPER\indexes.ps1" -Mode Snapshot
+  artifacts:
+    when: always
+    expire_in: 30 days
+    paths:
+      - build/indexes/indexes_before.csv
+
 # Обновление рабочей базы под блокировкой (update_db.ps1, код разрешения EF_LOCK_CODE): /UpdateDBCfg, затем
 # Предприятие с ЗапуститьОбновлениеИнформационнойБазы - обработчики обновления, удаление неприменимых исправлений.
 # Исправления без манифеста перед удалением сохраняются в .cfe в каталог предыдущего релиза (EF_PREVIOUS_RELEASE).
@@ -350,6 +391,10 @@ variables:
     - job: Релиз
       artifacts: true
       optional: true
+    # снимок своих индексов - до реструктуризации
+    - job: Индексы до
+      artifacts: false
+      optional: true
   # Два запуска 1С по EF_UPDATE_TIMEOUT.
   timeout: 2h 10m
   script:
@@ -364,6 +409,41 @@ variables:
       - build/release/update_db.log
       - build/release/enterprise.log
       - build/release/patches/
+
+# Создает заново свои индексы из снимка Индексы до, которых после Обновления нет в базе (indexes.ps1 -Mode Restore):
+# CREATE INDEX CONCURRENTLY по одному, без блокировки таблиц, поэтому Снятие блокировки его не ждет. Выполняется
+# и после упавшего Обновления: реструктуризация могла успеть снять индексы. Не созданные индексы - предупреждение
+# задания и отчет indexes_after.csv.
+Индексы после:
+  stage: Индексы после
+  rules:
+    - !reference [.indexes-configured, rules]
+    - if: $EF_DB_UPDATE == "run"
+      when: always
+    - if: $EF_CLUSTER_RESTART == "run"
+      when: always
+    - if: $EF_RELEASE_CF
+      when: always
+    - if: $CI_COMMIT_TAG || $EF_MODE == "release" || $EF_RELEASE_TAG
+      when: always
+  needs:
+    - job: Обновление
+      artifacts: false
+      optional: true
+    - job: Индексы до
+      artifacts: true
+      optional: true
+  allow_failure: true
+  # Индексы больших таблиц строятся десятками минут.
+  timeout: 4h
+  script:
+    - |
+      & "$env:REPER\indexes.ps1" -Mode Restore
+  artifacts:
+    when: always
+    expire_in: 30 days
+    paths:
+      - build/indexes/indexes_after.csv
 
 # Снимает блокировку сеансов и регламентных заданий рабочей базы (cluster_restart.ps1 -Unlock): кнопкой, после
 # проверки базы. Отдельным пайплайном с EF_UNLOCK=run - сразу.
