@@ -6,23 +6,49 @@
 #              CREATE INDEX CONCURRENTLY по одному; отчет - build/indexes/indexes_after.csv (статус, команда, ошибка).
 #
 # Подключение - ODBC-драйвером PostgreSQL на раннере (тем же, через который работают внешние источники данных 1С),
-# в режиме автокоммита: CREATE/DROP INDEX CONCURRENTLY в транзакции не работает. Параметры - переменные проекта
-# PGHOST, PGPORT, PGDATABASE, PGUSER, PGPASSWORD; PGUSER - владелец таблиц базы или суперпользователь.
+# в режиме автокоммита: CREATE/DROP INDEX CONCURRENTLY в транзакции не работает. Сервер, база и пользователь СУБД -
+# из настроек рабочей базы в кластере (rac infobase info: db-server, db-name, db-user), переменные PGHOST, PGPORT,
+# PGDATABASE, PGUSER их заменяют; пароль - переменная проекта PGPASSWORD. Пользователь - владелец таблиц базы
+# или суперпользователь. СУБД базы не PostgreSQL - задание ничего не делает.
 # Не созданный индекс не блокирует обновление: Restore перечисляет такие индексы и завершается кодом 1, задание
 # с allow_failure помечается предупреждением.
 #
-#   powershell -File indexes.ps1 -Mode Snapshot
+#   powershell -File indexes.ps1 -Mode Snapshot -Platform "C:\Program Files\1cv8\8.3.27.2074\bin" -Server "server\base"
 param(
     [Parameter(Mandatory = $true)][ValidateSet('Snapshot', 'Restore')][string]$Mode,
     [string]$Driver = $(if ($env:EF_PG_ODBC_DRIVER) { $env:EF_PG_ODBC_DRIVER } else { 'PostgreSQL Unicode(x64)' }),
-    [string]$WorkDir = 'build/indexes'
+    [string]$WorkDir = 'build/indexes',
+    # Для настроек базы в кластере: платформа (rac), рабочая база <сервер>\<база> и ее пользователь, RAS.
+    [string]$Platform = $env:EF_PLATFORM,
+    [string]$Server = $env:EF_PROD_IB,
+    [string]$User = $env:EF_IB_USER,
+    [string]$Password = $env:EF_IB_PASSWORD,
+    [string]$Ras = $(if ($env:EF_RAS) { $env:EF_RAS } else { 'localhost:1545' }),
+    [string]$ClusterUser = $env:EF_CLUSTER_USER,
+    [string]$ClusterPassword = $env:EF_CLUSTER_PASSWORD
 )
 
 $ErrorActionPreference = 'Stop'
+# Find-Infobase, Get-InfobaseInfo; база для них - $Infobase.
+$Infobase = $Server
+. (Join-Path $PSScriptRoot 'rac.ps1')
 
-foreach ($name in 'PGHOST', 'PGDATABASE', 'PGUSER', 'PGPASSWORD') {
-    if (-not [Environment]::GetEnvironmentVariable($name)) { throw "Не задано подключение к базе: переменная $name" }
+if (-not $env:PGHOST -or -not $env:PGDATABASE -or -not $env:PGUSER) {
+    if (-not $Server) { throw 'Не задана рабочая база: переменная EF_PROD_IB' }
+    $info = Get-InfobaseInfo (Find-Infobase)
+    if ($info.dbms -ne 'PostgreSQL') {
+        Write-Output "СУБД рабочей базы - $($info.dbms), не PostgreSQL: своих индексов PostgreSQL нет"
+        exit 0
+    }
+    # db-server: "<сервер>" или "<сервер> port=<порт>".
+    $dbServer = [string]$info.'db-server'
+    if (-not $env:PGHOST) { $env:PGHOST = ($dbServer -split '\s+')[0] }
+    if (-not $env:PGPORT -and $dbServer -match 'port\s*=\s*(\d+)') { $env:PGPORT = $Matches[1] }
+    if (-not $env:PGDATABASE) { $env:PGDATABASE = $info.'db-name' }
+    if (-not $env:PGUSER) { $env:PGUSER = $info.'db-user' }
 }
+if (-not $env:PGPASSWORD) { throw 'Не задан пароль пользователя СУБД: переменная PGPASSWORD' }
+Write-Output "База данных: $($env:PGUSER)@$($env:PGHOST):$(if ($env:PGPORT) { $env:PGPORT } else { '5432' })/$($env:PGDATABASE)"
 New-Item -ItemType Directory -Force $WorkDir | Out-Null
 $before = Join-Path $WorkDir 'indexes_before.csv'
 $after = Join-Path $WorkDir 'indexes_after.csv'

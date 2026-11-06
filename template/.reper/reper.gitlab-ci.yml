@@ -140,9 +140,9 @@ variables:
   # (EF_RELEASE_CF, EF_DB_UPDATE) - только артефакт задания.
   EF_PREVIOUS_RELEASE: ''
   # Свои индексы PostgreSQL (задания Индексы до и Индексы после): ODBC-драйвер PostgreSQL на раннере (как у внешних
-  # источников данных 1С). Подключение - переменные проекта PGHOST, PGPORT, PGDATABASE, PGUSER, PGPASSWORD (masked);
-  # PGUSER - владелец таблиц базы или суперпользователь. Не задана хотя бы одна из PGHOST, PGDATABASE, PGUSER,
-  # PGPASSWORD - заданий в пайплайне нет.
+  # источников данных 1С). Сервер, база и пользователь СУБД - из настроек рабочей базы в кластере (rac), пароль -
+  # переменная проекта PGPASSWORD (masked); PGHOST, PGPORT, PGDATABASE, PGUSER - если нужно заменить значения
+  # из кластера. Нет PGPASSWORD - заданий в пайплайне нет.
   EF_PG_ODBC_DRIVER: 'PostgreSQL Unicode(x64)'
 
 .fixes:
@@ -170,12 +170,10 @@ variables:
 .prod:
   resource_group: prod-config
 
-# Свои индексы PostgreSQL: без подключения к базе заданий нет. Подключается в rules заданий через !reference.
+# Свои индексы PostgreSQL: без пароля СУБД заданий нет. Подключается в rules заданий через !reference.
 .indexes-configured:
   rules:
-    - if: $PGHOST == null || $PGHOST == "" || $PGDATABASE == null || $PGDATABASE == ""
-      when: never
-    - if: $PGUSER == null || $PGUSER == "" || $PGPASSWORD == null || $PGPASSWORD == ""
+    - if: $PGPASSWORD == null || $PGPASSWORD == ""
       when: never
 
 Сборка:
