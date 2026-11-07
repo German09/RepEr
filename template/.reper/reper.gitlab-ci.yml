@@ -144,6 +144,9 @@ variables:
   # переменная проекта PGPASSWORD (masked); PGHOST, PGPORT, PGDATABASE, PGUSER - если нужно заменить значения
   # из кластера. Нет PGPASSWORD - заданий в пайплайне нет.
   EF_PG_ODBC_DRIVER: 'PostgreSQL Unicode(x64)'
+  # Проверка снимка своих индексов отдельным пайплайном (Run pipeline): check - только задание Индексы до,
+  # база не меняется.
+  EF_INDEXES: ''
 
 .fixes:
   rules:
@@ -155,6 +158,8 @@ variables:
     - if: $EF_DB_UPDATE
       when: never
     - if: $EF_UNLOCK
+      when: never
+    - if: $EF_INDEXES
       when: never
     # пайплайн релиза
     - if: $CI_COMMIT_TAG || $EF_MODE == "release" || $EF_RELEASE_TAG
@@ -345,11 +350,12 @@ variables:
 
 # Снимок своих индексов PostgreSQL (созданных не платформой) перед Обновлением (indexes.ps1 -Mode Snapshot):
 # реструктуризация их теряет, задание Индексы после создает их заново по снимку. Не получилось - предупреждение,
-# Обновление идет дальше.
+# Обновление идет дальше. Отдельным пайплайном с EF_INDEXES=check - только снимок, для проверки подключения и состава.
 Индексы до:
   stage: Индексы до
   rules:
     - !reference [.indexes-configured, rules]
+    - if: $EF_INDEXES == "check"
     - if: $EF_DB_UPDATE == "run"
     - if: $EF_CLUSTER_RESTART == "run"
     - if: $EF_RELEASE_CF
