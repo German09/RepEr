@@ -36,18 +36,41 @@ Remove-Item $cfe, $zip -Force -ErrorAction SilentlyContinue
 $stdin = Join-Path $EfDir 'stdin.empty'
 Set-Content -Path $stdin -Value '' -Encoding ASCII
 
+$stdout = Join-Path $EfDir 'ibcmd.out'
+$stderr = Join-Path $EfDir 'ibcmd.err'
+
+# ibcmd при критичных ошибках импорта XML (например, неизвестный тип реквизита) пишет строки [ERROR],
+# но завершается с кодом 0 и оставляет пустой файл расширения. Поэтому ошибкой считается и код, и [ERROR] в выводе.
 function Invoke-Ibcmd {
     param([string[]]$Arguments)
     $line = ($Arguments | ForEach-Object { if ($_ -match '\s') { '"' + $_ + '"' } else { $_ } }) -join ' '
-    $process = Start-Process -FilePath $ibcmd -ArgumentList $line -NoNewWindow -PassThru -RedirectStandardInput $stdin
+    $process = Start-Process -FilePath $ibcmd -ArgumentList $line -NoNewWindow -PassThru -RedirectStandardInput $stdin `
+        -RedirectStandardOutput $stdout -RedirectStandardError $stderr
     $null = $process.Handle
     if (-not $process.WaitForExit($TimeoutSec * 1000)) {
         $process.Kill()
         throw "ibcmd $($Arguments[0..2] -join ' ') не завершился за $TimeoutSec с"
     }
+    $output = foreach ($path in $stdout, $stderr) {
+        if (Test-Path $path) { [IO.File]::ReadAllText($path, [Text.Encoding]::UTF8) }
+    }
+    $output = ($output -join "`n").Trim()
+    if ($output) { Write-Output $output }
     if ($process.ExitCode -ne 0) {
         throw "ibcmd $($Arguments[0..2] -join ' ') завершился с кодом $($process.ExitCode)"
     }
+    if ($output -match '\[ERROR\]') {
+        throw "ibcmd $($Arguments[0..2] -join ' ') сообщил об ошибках (код завершения 0)"
+    }
+}
+
+# Файл контейнера 1С (cfe): 16 байт заголовка, за ними блок оглавления, который начинается с CR LF.
+# У пустого контейнера после заголовка ничего нет: такой файл платформа не устанавливает, а при попытке
+# установки рабочий процесс сервера может аварийно завершиться.
+function Test-CfeContainer {
+    param([string]$Path)
+    $bytes = [IO.File]::ReadAllBytes($Path)
+    return $bytes.Length -gt 17 -and $bytes[16] -eq 13 -and $bytes[17] -eq 10
 }
 
 $work = $null
@@ -83,9 +106,12 @@ try {
 }
 finally {
     if ($work) { Remove-Item $work -Recurse -Force -ErrorAction SilentlyContinue }
-    Remove-Item $stdin -Force -ErrorAction SilentlyContinue
+    Remove-Item $stdin, $stdout, $stderr -Force -ErrorAction SilentlyContinue
 }
 if (-not (Test-Path $cfe)) { throw "ibcmd не создал файл $cfe" }
+if (-not (Test-CfeContainer $cfe)) {
+    throw "Файл $cfe пустой ($((Get-Item $cfe).Length) байт): расширение не собрано"
+}
 
 # Архив в формате исправлений БСП: файл расширения и Manifest.xml в корне.
 Compress-Archive -Path $cfe, (Join-Path $EfDir 'Manifest.xml') -DestinationPath $zip

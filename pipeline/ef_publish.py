@@ -21,12 +21,44 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import io
 import json
 import os
 import sys
 import urllib.error
 import urllib.request
+import zipfile
 from datetime import datetime
+
+
+def container_has_data(data: bytes) -> bool:
+    """Файл контейнера 1С (cfe) не пустой: за 16 байтами заголовка идет блок оглавления, начинающийся с CR LF.
+
+    Пустой контейнер (только заголовок) ibcmd оставляет при ошибках импорта XML, завершаясь с кодом 0.
+    Такой файл не устанавливается, а попытка установки может аварийно завершить рабочий процесс сервера.
+    """
+    return len(data) > 17 and data[16:18] == b"\r\n"
+
+
+def archive_error(archive: bytes, name: str) -> str | None:
+    """Проверяет архив исправления перед публикацией: в нем файл расширения <name>.cfe с содержимым и Manifest.xml.
+
+    Возвращает описание ошибки или None, если архив можно публиковать.
+    """
+    try:
+        with zipfile.ZipFile(io.BytesIO(archive)) as zip_file:
+            names = zip_file.namelist()
+            cfe = f"{name}.cfe"
+            if cfe not in names:
+                return f"в архиве нет файла {cfe}"
+            if "Manifest.xml" not in names:
+                return "в архиве нет Manifest.xml"
+            data = zip_file.read(cfe)
+    except zipfile.BadZipFile as error:
+        return f"архив не читается: {error}"
+    if not container_has_data(data):
+        return f"файл {cfe} пустой ({len(data)} байт): расширение не собрано"
+    return None
 
 
 def upsert(index: dict, entry: dict) -> dict:
@@ -121,6 +153,10 @@ def main() -> int:
 
     with open(os.path.join(args.ef_dir, info["name"] + ".zip"), "rb") as f:
         archive = f.read()
+    error = archive_error(archive, info["name"])
+    if error:
+        print(f"{info['name']}: не опубликовано - {error}", file=sys.stderr)
+        return 1
     file_name = f"{info['name']}_{info['version']}.zip"
 
     raw = feed.read(release, "index.json")
