@@ -240,7 +240,16 @@ def main() -> int:
     prepare_workspace(Repo(args.repo), args.edt_cli, workspace, base_ref, project_dir, args.timeout, args.vmargs)
 
     script = []
+    repo = Repo(args.repo)
+    profile = project_dir + "/.settings/Default.cset"
     for info, _, project in patches:
+        # В сгенерированный проект передаём профиль из проверяемого коммита EF.
+        sha = info["commits"][-1]
+        if "Default.cset" in repo.ls_dir(sha, project_dir + "/.settings"):
+            settings = os.path.join(project, ".settings")
+            os.makedirs(settings, exist_ok=True)
+            with open(os.path.join(settings, "Default.cset"), "wb") as f:
+                f.write(repo.blobs(sha, [profile])[profile])
         tsv = os.path.join(os.path.dirname(project), "check.tsv")
         if os.path.exists(tsv):
             os.remove(tsv)

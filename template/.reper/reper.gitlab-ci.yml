@@ -471,3 +471,23 @@ variables:
   script:
     - |
       & "$env:REPER\cluster_restart.ps1" -Config "$env:EF_CLUSTER_CONFIG" -Platform "$EF_PLATFORM" -Unlock
+
+Статистика EDT:
+  stage: Проверка
+  needs:
+    - Сборка
+  rules:
+    - if: $EDT_METHOD_STATS != "1" || $CI_PIPELINE_SOURCE != "push" || $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH
+      when: never
+    - !reference [.fixes, rules]
+  resource_group: edt-release
+  allow_failure: true
+  timeout: 3h
+  script:
+    - '& $EF_PYTHON -B "$REPER\edt_method_stats.py"'
+    - if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+  artifacts:
+    paths:
+      - build/quality/report.txt
+      - build/quality/report.html
+    expire_in: 1 year
