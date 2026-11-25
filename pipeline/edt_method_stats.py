@@ -56,6 +56,20 @@ def touched(repo, sha):
     return result
 
 
+def check_profile(repo, sha, project):
+    relative = ".settings/Default.cset"
+    expected = repo.show(sha, f"{PROJECT_DIR}/{relative}")
+    profile = project / relative
+    if expected is None and not profile.exists():
+        return
+    if expected is not None and profile.is_file():
+        # git archive на Windows может заменить LF на CRLF.
+        actual = json.loads(profile.read_text(encoding="utf-8-sig"))
+        if actual == json.loads(expected):
+            return
+    raise ValueError(f"Профиль EDT {profile} отличается от коммита {sha}")
+
+
 def snapshot(repo, sha, methods):
     workspace = ENV["EF_EDT_WORKSPACE"] + "-quality"
     cli = ENV["EF_EDT_CLI"]
@@ -66,9 +80,7 @@ def snapshot(repo, sha, methods):
     prefs.parent.mkdir(parents=True, exist_ok=True)
     prefs.write_text("eclipse.preferences.version=1\nLAUNCH_MODE=native\n", encoding="ascii")
     project = Path(workspace + "-src") / PROJECT_DIR
-    profile = project / ".settings/Default.cset"
-    if (profile.exists() or repo.show(sha, PROJECT_DIR + "/.settings/Default.cset") is not None) and profile.read_bytes() != repo.blobs(sha, [PROJECT_DIR + "/.settings/Default.cset"])[PROJECT_DIR + "/.settings/Default.cset"]:
-        raise ValueError("Профиль EDT отличается от проверяемого SHA")
+    check_profile(repo, sha, project)
     tsv = OUT / (sha + ".tsv")
     tsv.unlink(missing_ok=True)
     command = f'validate --file "{tsv}" --project-list "{project}"'
