@@ -166,7 +166,13 @@ def main():
     history = snapshots()
     repo = Repo(ENV["EF_MIRROR"])
     head, base = ENV["CI_COMMIT_SHA"], ENV["CI_COMMIT_BEFORE_SHA"]
-    if not base.strip("0"):
+    if ENV.get("CI_PIPELINE_SOURCE") == "schedule":
+        # В расписании BEFORE_SHA нулевой. Перебираем диапазон с начала учёта,
+        # опубликованные снимки пропускаются, включая снимки прерванного запуска.
+        base = repo.rev_parse(ENV["EDT_STATS_BASE"])
+        if not repo.is_ancestor(base, head):
+            raise ValueError("EDT_STATS_BASE вне истории проверяемой ветки")
+    elif not base.strip("0"):
         base = head + "^"
     commits = subprocess.check_output(["git", "-C", repo.path, "rev-list", "--first-parent", "--reverse",
                                        base + ".." + head], text=True).splitlines()

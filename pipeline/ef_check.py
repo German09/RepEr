@@ -18,6 +18,9 @@
 """
 from __future__ import annotations
 
+from contextlib import contextmanager
+from pathlib import Path
+
 import argparse
 import csv
 import glob
@@ -47,6 +50,27 @@ def is_style(finding: dict) -> bool:
     return finding["category"] in STYLE_CATEGORIES
 
 
+@contextmanager
+def connector_settings(workspace):
+    # Настройку меняем только на время запуска CLI в рабочей области релиза.
+    target = os.environ.get("EF_EDT_WORKSPACE")
+    if os.environ.get("EF_FAST_VALIDATE") != "1" or not target or Path(workspace).resolve() != Path(target).resolve():
+        yield
+        return
+    prefs = Path(workspace, ".metadata/.plugins/org.eclipse.core.runtime/.settings/com.github.malikovpro.dt.bsl.ls_connector.prefs")
+    prefs.parent.mkdir(parents=True, exist_ok=True)
+    saved = prefs.read_bytes() if prefs.exists() else None
+    lines = (saved or b"eclipse.preferences.version=1").splitlines()
+    prefs.write_bytes(b"\n".join(line for line in lines if not line.startswith(b"ENABLED=")) + b"\nENABLED=false\n")
+    try:
+        yield
+    finally:
+        if saved is None:
+            prefs.unlink(missing_ok=True)
+        else:
+            prefs.write_bytes(saved)
+
+
 def run_cli(cli: str, workspace: str, script_lines: list[str], script_path: str, timeout: int,
             vmargs: str = "") -> int:
     with open(script_path, "w", encoding="utf-8", newline="\n") as f:
@@ -58,7 +82,8 @@ def run_cli(cli: str, workspace: str, script_lines: list[str], script_path: str,
         # -vmargs забирает все аргументы после себя, поэтому идет последним.
         command += ["-vmargs", *vmargs.split()]
     print(">", " ".join(command))
-    return subprocess.run(command, stdin=subprocess.DEVNULL, timeout=timeout + 120).returncode
+    with connector_settings(workspace):
+        return subprocess.run(command, stdin=subprocess.DEVNULL, timeout=timeout + 120).returncode
 
 
 def long_path(path: str) -> str:
