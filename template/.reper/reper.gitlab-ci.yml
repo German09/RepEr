@@ -476,10 +476,10 @@ variables:
 Статистика EDT:
   stage: Проверка
   needs:
-    - Сборка
+    - job: Сборка
+      optional: true
   rules:
     - if: $CI_PIPELINE_SOURCE == "schedule" && $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $EDT_METHOD_STATS == "scheduled" && $EDT_STATS_RUN == "1"
-      needs: []
     - if: $EDT_METHOD_STATS != "1" || $CI_PIPELINE_SOURCE != "push" || $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH
       when: never
     - !reference [.fixes, rules]
