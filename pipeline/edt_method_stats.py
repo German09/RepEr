@@ -4,6 +4,7 @@ import json
 import os
 import re
 import subprocess
+import time
 from html import escape
 from collections import Counter, defaultdict
 from pathlib import Path
@@ -127,7 +128,7 @@ def snapshots():
         page += 1
 
 
-def render(history):
+def render(history, pending=()):
     months = defaultdict(dict)
     for s in sorted(history.values(), key=lambda s: (s["commit_date"], s["commit"])):
         month = s["commit_date"][:7]
@@ -141,6 +142,10 @@ def render(history):
     html = ['<!doctype html><html lang="ru"><meta charset="utf-8"><title>Статистика EDT</title>',
             '<style>body{font:16px system-ui;margin:2rem}table{border-collapse:collapse}th,td{border:1px solid #ccc;padding:.4em;text-align:left}</style>',
             '<h1>Статистика EDT</h1>', '<p>' + lines[2] + '</p>']
+    if pending:
+        note = "Отчёт частичный. Ожидают проверки: " + ", ".join(sha[:10] for sha in pending)
+        lines.extend([note, ""])
+        html.append(f"<p>{escape(note)}</p>")
     for month in sorted(months, reverse=True):
         lines.append(month)
         html.append(f'<h2>{escape(month)}</h2>')
@@ -163,6 +168,7 @@ def render(history):
 
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
+    started = time.monotonic()
     history = snapshots()
     repo = Repo(ENV["EF_MIRROR"])
     head, base = ENV["CI_COMMIT_SHA"], ENV["CI_COMMIT_BEFORE_SHA"]
@@ -176,15 +182,29 @@ def main():
         base = head + "^"
     commits = subprocess.check_output(["git", "-C", repo.path, "rev-list", "--first-parent", "--reverse",
                                        base + ".." + head], text=True).splitlines()
+    pending = {}
     for sha in commits:
-        if sha in history:
-            continue
-        methods = touched(repo, sha)
-        if methods:
-            s = snapshot(repo, sha, methods)
-            api(f"packages/generic/{PACKAGE}/{sha}/snapshot.json", json.dumps(s, ensure_ascii=False).encode())
-            history[sha] = s
-    render(history)
+        if sha not in history:
+            methods = touched(repo, sha)
+            if methods:
+                pending[sha] = methods
+    render(history, pending)
+    # Оставляем время на выгрузку артефактов; в расписании остаток очереди
+    # попадёт в следующий запуск. Первому снимку даём всё доступное окно.
+    budget = int(ENV.get("CI_JOB_TIMEOUT", 10800)) - 900
+    longest = 0
+    for sha, methods in list(pending.items()):
+        now = time.monotonic()
+        if ENV.get("CI_PIPELINE_SOURCE") == "schedule" and longest and now - started + longest >= budget:
+            print(f"До конца окна мало времени. В очереди {len(pending)} коммитов.", flush=True)
+            break
+        print(f"Проверка {sha}, в очереди {len(pending)}", flush=True)
+        s = snapshot(repo, sha, methods)
+        api(f"packages/generic/{PACKAGE}/{sha}/snapshot.json", json.dumps(s, ensure_ascii=False).encode())
+        history[sha] = s
+        del pending[sha]
+        render(history, pending)
+        longest = max(longest, time.monotonic() - now)
 
 
 if __name__ == "__main__":

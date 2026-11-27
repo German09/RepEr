@@ -480,16 +480,20 @@ variables:
       optional: true
   rules:
     - if: $CI_PIPELINE_SOURCE == "schedule" && $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $EDT_METHOD_STATS == "scheduled" && $EDT_STATS_RUN == "1"
+      allow_failure: false
     - if: $EDT_METHOD_STATS != "1" || $CI_PIPELINE_SOURCE != "push" || $CI_COMMIT_BRANCH != $CI_DEFAULT_BRANCH
       when: never
     - !reference [.fixes, rules]
   resource_group: edt-quality
   allow_failure: true
+  variables:
+    RUNNER_SCRIPT_TIMEOUT: 2h45m
   timeout: 3h
   script:
     - '& $EF_PYTHON -B "$REPER\edt_method_stats.py"'
     - if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
   artifacts:
+    when: always
     paths:
       - build/quality/report.txt
       - build/quality/report.html
